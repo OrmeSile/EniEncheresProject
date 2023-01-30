@@ -12,12 +12,13 @@
 
 		<form method="post" action="<%=request.getContextPath()%>/Login">
 			<label> Identifiant :</label><input type="text" name="identifiant" />
+			<br>
 			<label> Mot de passe :</label><input type="password" name="mdp" /> 
 			<input type="submit" value="Connexion" />
 		</form>
 
 		<div>
-			<input type="checkbox" name="Se souvenir de moi">
+			<label>Se souvenir de moi<input type="checkbox" name="seSouvenir"></label>
 		</div>
 		
 		<!-- TODO : lien à mettre pour le mdp oublié -->
