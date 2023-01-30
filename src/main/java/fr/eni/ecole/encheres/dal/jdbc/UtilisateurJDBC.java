@@ -3,7 +3,7 @@ package fr.eni.ecole.encheres.dal.jdbc;
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
-import fr.eni.ecole.encheres.dal.DAOUser;
+import fr.eni.ecole.encheres.dal.DAOUtilisateur;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class UtilisateurJDBC implements DAOUser {
+public class UtilisateurJDBC implements DAOUtilisateur {
 	private final String LOGIN = "select no_utilisateur, nom, prenom, email, telephone, rue, code_postal, ville, credit, administrateur from UTILISATEURS u WHERE pseudo = ? AND mot_de_passe = ?";
 
 	@Override
