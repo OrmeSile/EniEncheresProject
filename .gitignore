@@ -19,3 +19,7 @@ hs_err_pid*
 # Intellij
 .idea/
 *.iml
+.mvn/
+pom.xml
+build/
+target/
