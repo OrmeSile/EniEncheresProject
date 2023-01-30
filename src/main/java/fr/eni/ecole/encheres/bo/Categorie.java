@@ -43,7 +43,7 @@ public class Categorie {
 	}
 	public ArticleVendu getArticleById(int id) throws BusinessException {
 		for( ArticleVendu a : articles){
-			if(a.getNoArticle == id){
+			if(a.getNoArticle() == id){
 				return a;
 			}
 		}
