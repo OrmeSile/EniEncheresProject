@@ -10,17 +10,17 @@
 
 	<jsp:include page="/WEB-INF/fragments/_header.jsp">
 
-		<form method="get" action="<%=request.getContextPath()%>/Login">
+		<form method="post" action="<%=request.getContextPath()%>/Login">
 			<label> Identifiant :</label><input type="text" name="identifiant" />
-			<label> Mot de passe :</label><input type="password" name="mdp" /> <input
-				type="submit" value="Connexion" />
+			<label> Mot de passe :</label><input type="password" name="mdp" /> 
+			<input type="submit" value="Connexion" />
 		</form>
 
 		<div>
 			<input type="checkbox" name="Se souvenir de moi">
 		</div>
 		
-		<!-- TO DO : lien à mettre pour le mdp oublié -->
+		<!-- TODO : lien à mettre pour le mdp oublié -->
 		<div>
 		<a href="#">Mot de passe oublié</a>
 		</div>
