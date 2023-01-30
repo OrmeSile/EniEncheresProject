@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<jsp:include page="/WEB-INF/fragments/_header.jsp">
+	<jsp:include page="/WEB-INF/fragments/_header.jsp"/>
 
 		<form method="post" action="<%=request.getContextPath()%>/Login">
 			<label> Identifiant :</label><input type="text" name="identifiant" />
