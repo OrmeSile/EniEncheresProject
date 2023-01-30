@@ -1,5 +1,6 @@
 package fr.eni.ecole.encheres.dal.jdbc;
 
+import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
 import fr.eni.ecole.encheres.dal.DALexceptions.LoginErrorException;
@@ -24,7 +25,8 @@ public class UtilisateurJDBC implements DAO<Utilisateur> {
 		return null;
 	}
 
-	public Utilisateur seConnecter(String pseudo, String motDePasse) throws LoginErrorException {
+	public Utilisateur seConnecter(String pseudo, String motDePasse) throws LoginErrorException, BusinessException {
+		BusinessException ex = new BusinessException();
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement ps = con.prepareStatement(LOGIN);
 			ps.setString(1, pseudo);
@@ -43,10 +45,12 @@ public class UtilisateurJDBC implements DAO<Utilisateur> {
 				boolean administrateur = rs.getBoolean(10);
 				return new Utilisateur(id, nom, prenom, email, telephone, rue, codePostal, ville, credit, administrateur);
 			}else{
-				throw new LoginErrorException("Utilisateur introuvable !");
+				ex.addExceptionMessage("Erreur de connection");
+				throw ex;
 			}
 		} catch (SQLException e) {
-			throw new LoginErrorException(e.getMessage());
+			ex.addExceptionMessage(e.getMessage());
+			throw ex;
 		}
 	}
 }
