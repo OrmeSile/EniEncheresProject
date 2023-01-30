@@ -42,7 +42,7 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 				String ville = rs.getString(8);
 				int credit = rs.getInt(9);
 				boolean administrateur = rs.getBoolean(10);
-				return new Utilisateur(id, nom, prenom, email, telephone, rue, codePostal, ville, credit, administrateur);
+				return new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
 			}else{
 				ex.addExceptionMessage("Erreur de connection");
 				throw ex;
