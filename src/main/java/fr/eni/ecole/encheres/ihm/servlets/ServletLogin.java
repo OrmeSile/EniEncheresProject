@@ -36,7 +36,7 @@ public class ServletLogin extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		UtilisateurManager mngr = new UtilisateurManager();
+		UtilisateurManager mngr = UtilisateurManager.getUtilisateurManager();
 		String identifiant = request.getParameter("identifiant");
 		System.out.println("identifiant  " + identifiant);
 
