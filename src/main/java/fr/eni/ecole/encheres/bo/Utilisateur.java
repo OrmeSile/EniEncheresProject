@@ -1,18 +1,18 @@
 package fr.eni.ecole.encheres.bo;
 
 public class Utilisateur {
-public int noUtilisateur;
-public String pseudo;
-public String nom;
-public String prenom;
-public String email;
-public String telephone;
-public String rue;
-public String codePostal;
-public String ville;
-public String motDePasse;
-public int credit;
-public boolean administrateur;
+private int noUtilisateur;
+private String pseudo;
+private String nom;
+private String prenom;
+private String email;
+private String telephone;
+private String rue;
+private String codePostal;
+private String ville;
+private String motDePasse;
+private int credit;
+private boolean administrateur;
 
 public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
 		String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
