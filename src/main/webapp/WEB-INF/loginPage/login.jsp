@@ -12,7 +12,7 @@
 
 		<form method="get" action="<%=request.getContextPath()%>/Login">
 			<label> Identifiant :</label><input type="text" name="identifiant" />
-			<label> Mot de passe :</label><input type="text" name="mdp" /> <input
+			<label> Mot de passe :</label><input type="password" name="mdp" /> <input
 				type="submit" value="Connexion" />
 		</form>
 
@@ -24,6 +24,11 @@
 		<div>
 		<a href="#">Mot de passe oublié</a>
 		</div>
+		
+		<div>
+		<input type="submit" value="Créer un compte" />
+		</div>
+		
 		
 		
 		
