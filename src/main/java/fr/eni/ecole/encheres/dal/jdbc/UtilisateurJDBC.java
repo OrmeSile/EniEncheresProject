@@ -3,8 +3,7 @@ package fr.eni.ecole.encheres.dal.jdbc;
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
-import fr.eni.ecole.encheres.dal.DALexceptions.LoginErrorException;
-import fr.eni.ecole.encheres.dal.DAO;
+import fr.eni.ecole.encheres.dal.DAOUtilisateur;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class UtilisateurJDBC implements DAO<Utilisateur> {
+public class UtilisateurJDBC implements DAOUtilisateur {
 	private final String LOGIN = "select no_utilisateur, nom, prenom, email, telephone, rue, code_postal, ville, credit, administrateur from UTILISATEURS u WHERE pseudo = ? AND mot_de_passe = ?";
 
 	@Override
@@ -25,7 +24,7 @@ public class UtilisateurJDBC implements DAO<Utilisateur> {
 		return null;
 	}
 
-	public Utilisateur seConnecter(String pseudo, String motDePasse) throws LoginErrorException, BusinessException {
+	public Utilisateur seConnecter(String pseudo, String motDePasse) throws BusinessException {
 		BusinessException ex = new BusinessException();
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement ps = con.prepareStatement(LOGIN);
