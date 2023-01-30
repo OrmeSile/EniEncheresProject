@@ -22,11 +22,8 @@ hs_err_pid*
 # Intellij
 .idea/
 *.iml
-<<<<<<< HEAD
 /build/
-=======
 .mvn/
 pom.xml
 build/
 target/
->>>>>>> branch 'main' of https://github.com/OrmeSile/EniEncheresProject
