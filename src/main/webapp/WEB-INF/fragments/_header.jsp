@@ -1,1 +1,2 @@
-<header>ENI - Enchères</header>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<a class="navbar-brand col-2 bg" href="#">EnchÃ¨res ENI</a>
