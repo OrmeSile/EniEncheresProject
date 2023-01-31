@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link href="${requestScope.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <style>
     body{
