@@ -14,8 +14,8 @@
 		</div>
 		<div class="row d-flex justify-content-center">
 			<form method="post" action="<%=request.getContextPath()%>/Login">
-					<label for="identifiant"> Identifiant :</label>
-					<input type="text" id ="identifiant" name="identifiant" />
+				<label for="identifiant"> Identifiant :</label>
+				<input type="text" id ="identifiant" name="identifiant" />
 				<br>
 				<label for="mdp"> Mot de passe :</label>
 				<input type="password" id="mdp" name="mdp" />
