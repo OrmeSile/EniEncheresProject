@@ -30,6 +30,8 @@ public class ServletLogin extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/loginPage/login.jsp");
 
 		rd.forward(request, response);
@@ -51,6 +53,7 @@ public class ServletLogin extends HttpServlet {
 			Utilisateur utilisateur = UtilisateurManager.getUtilisateurManager().seConnecter(identifiant, motDePasse);
 		} catch (BusinessException e) {
 			e.getExceptionMessages();
+			request.setAttribute("listeCodesErreur",e.getExceptionMessages());
 		}
 
 		doGet(request, response);
