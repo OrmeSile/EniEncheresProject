@@ -9,9 +9,9 @@
 	</head>
 	<body>
 	<div class="container">
-		<div class="row">
+		<header class="row navbar navbar-expand-md bg-body-tertiary">
 			<jsp:include page="/WEB-INF/fragments/_header.jsp"/>
-		</div>
+		</header>
 		<div class="row d-flex justify-content-center">
 			<form method="post" action="<%=request.getContextPath()%>/login">
 				<label for="identifiant"> Identifiant :</label>
