@@ -10,8 +10,9 @@
 	</head>
 	<body>
 	<div class="container">
-		<div class="row">
+		<header class="row navbar navbar-expand-md bg-body-tertiary">
 			<jsp:include page="/WEB-INF/fragments/_header.jsp"/>
+<<<<<<< HEAD
 		</div>
 		
 	      	<c:if test="${!empty listeCodesErreur}">
@@ -26,6 +27,9 @@
 		</c:if>
 
 		
+=======
+		</header>
+>>>>>>> branch 'main' of https://github.com/OrmeSile/EniEncheresProject
 		<div class="row d-flex justify-content-center">
 			<form method="post" action="<%=request.getContextPath()%>/login">
 				<label for="identifiant"> Identifiant :</label>
