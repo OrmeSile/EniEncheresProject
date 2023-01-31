@@ -29,3 +29,4 @@ hs_err_pid*
 pom.xml
 build/
 target/
+/src/main/webapp/vendor/bootstrap/
