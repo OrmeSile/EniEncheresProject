@@ -49,4 +49,9 @@ public class Categorie {
 		}
 		throw new BusinessException("Article id -> "+id + "introuvable dans la catégorie "+this.libelle);
 	}
+
+	@Override
+	public String toString() {
+		return "Categorie{" + "articles=" + articles + ", libelle='" + libelle + '\'' + '}';
+	}
 }
