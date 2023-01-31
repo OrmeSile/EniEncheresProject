@@ -1,7 +1,7 @@
 package fr.eni.ecole.encheres.bo;
 
 import java.time.LocalDateTime;
-
+//TODO compléter
 public class Enchere {
 	LocalDateTime dateEnchere;
 	double montantEnchere;

@@ -15,6 +15,7 @@ public class ArticleVendu {
 	private String etatVente;
 	private String image;
 
+
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEnchere,
 			LocalDateTime dateFinEnchere, int prixInitial, int prixVente, int noUtilisateur, int noCategorie,
 			String etatVente, String image) {
