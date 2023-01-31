@@ -12,6 +12,19 @@
 		<div class="row">
 			<jsp:include page="/WEB-INF/fragments/_header.jsp"/>
 		</div>
+		
+	      	<c:if test="${!empty listeCodesErreur}">
+			<div class="alert alert-danger" role="alert">
+			  <strong>Erreur!</strong>
+			  <ul>
+			  	<c:forEach var="code" items="${listeCodesErreur}">
+			  		<li>${LecteurMessage.getMessageErreur(code)}</li>
+			  	</c:forEach>
+			  </ul>
+			</div>
+		</c:if>
+
+		
 		<div class="row d-flex justify-content-center">
 			<form method="post" action="<%=request.getContextPath()%>/login">
 				<label for="identifiant"> Identifiant :</label>
