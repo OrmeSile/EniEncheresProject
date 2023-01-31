@@ -5,8 +5,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "ServletHomepage", value = "/")
-public class ServletHomepage extends HttpServlet {
+@WebServlet(name = "ServletHome", value = "/home")
+public class ServletHome extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/homePage/homepage.jsp").forward(request, response);

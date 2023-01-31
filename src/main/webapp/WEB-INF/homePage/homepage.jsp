@@ -6,9 +6,9 @@
 </head>
 <body>
 <div class="container">
-  <div class="row">
-    <jsp:include page="../fragments/_bootstrap_import.jsp"/>
-  </div>
+  <header class="row navbar navbar-expand-md bg-body-tertiary">
+    <jsp:include page="/WEB-INF/fragments/_header.jsp"/>
+  </header>
 
 
 
