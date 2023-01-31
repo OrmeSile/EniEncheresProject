@@ -14,7 +14,7 @@
       <a class="col-2" href="${pageContext.request.contextPath}/login">S'inscrire/Se connecter</a>
     </div>
   </header>
-
+//TODO js filter for names ?
 
 
 </div>
