@@ -15,7 +15,7 @@ public class Utilisateur {
 	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
-	private List<articleVendu> article;
+	private List<ArticleVendu> article;
 
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
@@ -155,6 +155,14 @@ public class Utilisateur {
 		return "Utilisateur [pseudo=" + pseudo + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email
 				+ ", telephone=" + telephone + ", rue=" + rue + ", codePostal=" + codePostal + ", ville=" + ville
 				+ ", motDePasse=" + motDePasse + ", credit=" + credit + ", administrateur=" + administrateur + "]";
+	}
+
+	public List<ArticleVendu> getArticle() {
+		return article;
+	}
+
+	public void setArticle(List<ArticleVendu> article) {
+		this.article = article;
 	}
 
 }
