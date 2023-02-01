@@ -52,4 +52,10 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 			throw ex;
 		}
 	}
+
+	@Override
+	public Utilisateur insert(Utilisateur object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

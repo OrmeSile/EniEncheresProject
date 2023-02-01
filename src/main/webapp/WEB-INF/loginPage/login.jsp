@@ -9,7 +9,6 @@
 		<title>Connexion</title>
 	</head>
 	<body>
->>>>>>> branch 'main' of https://github.com/OrmeSile/EniEncheresProject
 	<div class="container">
 		<header class="row navbar navbar-expand-md bg-body-tertiary">
 			<jsp:include page="/WEB-INF/fragments/_header.jsp" />
@@ -39,10 +38,10 @@
 
 		<!-- TODO : lien Ã  mettre pour le mdp oubliÃ© -->
 		<div>
-			<a href="#">Mot de passe oubliÃ©</a>
+			<a href="#">Mot de passe oublié</a>
 		</div>
 		<div>
-			<input type="submit" value="CrÃ©er un compte" />
+			<a href=${pageContext.request.contextPath}/monProfil><button class="shadow__btn">Créer un compte</button></a>
 		</div>
 	</div>
 </body>

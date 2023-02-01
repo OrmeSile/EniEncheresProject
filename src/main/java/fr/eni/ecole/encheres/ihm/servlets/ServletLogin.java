@@ -52,12 +52,13 @@ public class ServletLogin extends HttpServlet {
 		try {
 			Utilisateur utilisateur = UtilisateurManager.getUtilisateurManager().seConnecter(identifiant, motDePasse);
 			request.getSession().setAttribute("utilisateur", utilisateur);
+			response.sendRedirect("/home");
 		} catch (BusinessException e) {
 			e.getExceptionMessages();
 			request.setAttribute("listeCodesErreur",e.getExceptionMessages());
 		}
 
-		doGet(request, response);
+		
 		
 
 	}
