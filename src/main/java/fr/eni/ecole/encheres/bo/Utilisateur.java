@@ -17,7 +17,7 @@ public class Utilisateur {
 	private int credit;
 	private boolean administrateur;
 	private ArrayList<Enchere> encheres;
-	private ArrayList<ArticleVendu> articlesVendus;
+	private ArrayList<ArticleVendu> articles;
 
 
 

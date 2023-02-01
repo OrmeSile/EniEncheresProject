@@ -17,10 +17,9 @@ public class ArticleVendu {
 	private Utilisateur utilisateur;
 	private Retrait lieuRetrait;
 
+	private Categorie categorieArticle;
 
-	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEnchere,
-			LocalDateTime dateFinEnchere, int prixInitial, int prixVente, int noCategorie,
-			String etatVente, Retrait lieuRetrait) {
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEnchere, LocalDateTime dateFinEnchere, int prixInitial, int prixVente, int noCategorie, String etatVente, Retrait lieuRetrait) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -34,9 +33,7 @@ public class ArticleVendu {
 		this.image = null;
 	}
 
-	public ArticleVendu(String nomArticle, String description, LocalDateTime dateDebutEnchere,
-			LocalDateTime dateFinEnchere, int prixInitial, int prixVente, int noCategorie,
-			String etatVente) {
+	public ArticleVendu(String nomArticle, String description, LocalDateTime dateDebutEnchere, LocalDateTime dateFinEnchere, int prixInitial, int prixVente, int noCategorie, String etatVente) {
 		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -45,7 +42,7 @@ public class ArticleVendu {
 		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;
 		this.etatVente = etatVente;
-		this.encheres = null;
+		this.encheres = new ArrayList<>();
 		this.image = null;
 	}
 
@@ -149,15 +146,8 @@ public class ArticleVendu {
 		this.lieuRetrait = lieuRetrait;
 	}
 
-	public void addEnchere (Enchere e){
+	public void addEnchere(Enchere e) {
 		encheres.add(e);
-	}
-
-	@Override
-	public String toString() {
-		return "ArticleVendu [nomArticle=" + nomArticle + ", description=" + description + ", dateDebutEnchere="
-				+ dateDebutEnchere + ", dateFinEnchere=" + dateFinEnchere + ", prixInitial=" + prixInitial
-				+ ", prixVente=" + prixVente + ", etatVente=" + etatVente +"]";
 	}
 
 	public Categorie getcategorieArticle() {
@@ -168,22 +158,10 @@ public class ArticleVendu {
 		this.categorieArticle = categorieArticle;
 	}
 
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
+	@Override
+	public String toString() {
+		return "ArticleVendu [nomArticle=" + nomArticle + ", description=" + description + ", dateDebutEnchere=" + dateDebutEnchere + ", dateFinEnchere=" + dateFinEnchere + ", prixInitial=" + prixInitial + ", prixVente=" + prixVente + ", etatVente=" + etatVente + "]";
 	}
-
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
-	}
-
-	public Retrait getLieuRetrait() {
-		return lieuRetrait;
-	}
-
-	public void setLieuRetrait(Retrait lieuRetrait) {
-		this.lieuRetrait = lieuRetrait;
-	}
-
 }
 /*
  * CREATE TABLE ARTICLES_VENDUS ( no_article INTEGER IDENTITY(1,1) NOT NULL,
