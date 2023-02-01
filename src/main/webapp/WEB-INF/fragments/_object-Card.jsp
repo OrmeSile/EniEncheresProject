@@ -1,21 +1,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="container" style="border: dashed black 2px">
+<div class="col-md-4 border border-primary bg-light ">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-4">
       <img src="${pageContext.request.contextPath}/resources/img/article_placeholder.jpg" alt="placeholder"/>
   </div>
     <div class="col-md">
       <div class="row">
-        ${param.nom}
+        Nom : ${param.nom}
       </div>
       <div class="row">
-        ${param.prix}
+        Prix : ${param.prix}
       </div>
       <div class="row">
-        ${param.finEnchere}
+        Fin le : ${param.finEnchere}
       </div>
       <div class="row">
-        ${param.vendeur}
+        Vendeur : ${param.vendeur}
       </div>
     </div>
   </div>
