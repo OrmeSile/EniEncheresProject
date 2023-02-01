@@ -60,11 +60,12 @@ public class ServletMonProfil extends HttpServlet {
 			be.addExceptionMessage("Les mots de passe ne sont pas identiques");
 		} else {
 			Utilisateur user = new Utilisateur();
+			Utilisateur utilisateur = mngr.ajouter();
+			request.setAttribute("utilisateurCree", utilisateur);
 		}
 		
 
-		Utilisateur utilisateur = mngr.ajouter();
-		request.setAttribute("utilisateurCree", utilisateur);
+
 		
 		doGet(request, response);
 	}
