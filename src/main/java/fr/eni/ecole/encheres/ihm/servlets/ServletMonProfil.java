@@ -59,7 +59,7 @@ public class ServletMonProfil extends HttpServlet {
 		if(!confirmationMotDePasse.equals(motDePasse)) {
 			be.addExceptionMessage("Les mots de passe ne sont pas identiques");
 		} else {
-			Utilisateur user = new Utilisateur();
+			//Utilisateur user = new Utilisateur();
 		}
 		
 
