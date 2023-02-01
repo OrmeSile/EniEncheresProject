@@ -42,8 +42,6 @@ public class ServletLogin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		UtilisateurManager mngr = UtilisateurManager.getUtilisateurManager();
 		String identifiant = request.getParameter("identifiant");
 		System.out.println("identifiant  " + identifiant);
 		String motDePasse = request.getParameter("mdp");
@@ -51,8 +49,9 @@ public class ServletLogin extends HttpServlet {
 		
 		try {
 			Utilisateur utilisateur = UtilisateurManager.getUtilisateurManager().seConnecter(identifiant, motDePasse);
+			request.getSession().setAttribute("utilisateur", utilisateur);
+			request.getRequestDispatcher("/home");
 		} catch (BusinessException e) {
-			e.getExceptionMessages();
 			request.setAttribute("listeCodesErreur",e.getExceptionMessages());
 		}
 
