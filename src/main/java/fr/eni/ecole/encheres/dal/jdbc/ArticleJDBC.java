@@ -6,6 +6,7 @@ import fr.eni.ecole.encheres.dal.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class ArticleJDBC implements DAO <ArticleVendu>{
@@ -23,7 +24,7 @@ public class ArticleJDBC implements DAO <ArticleVendu>{
 	@Override
 	public ArticleVendu insert(ArticleVendu object) {
 		try(Connection con = ConnectionProvider.getConnection()){
-			PreparedStatement ps = con.prepareStatement(INSERT);
+			PreparedStatement ps = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, object.getNomArticle());
 			ps.setString(2, object.getDescription());
 			ps.setTimestamp(3, java.sql.Timestamp.valueOf(object.getDateDebutEnchere()));
