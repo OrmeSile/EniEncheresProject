@@ -13,6 +13,7 @@ public class Retrait {
 		this.codePostal = codePostal;
 		this.ville = ville;
 		this.article = article;
+	}
 
 	public Retrait(String rue, String codePostal, String ville ,  ArrayList<ArticleVendu> articles) {
 		super();
@@ -61,14 +62,6 @@ public class Retrait {
 	@Override
 	public String toString() {
 		return "Retrait [rue=" + rue + ", codePostal=" + codePostal + ", ville=" + ville + "]";
-	}
-
-	public ArrayList<ArticleVendu> getArticles() {
-		return articles;
-	}
-
-	public void setArticles(ArrayList<ArticleVendu> articles) {
-		this.articles = articles;
 	}
 		
 }
