@@ -24,6 +24,11 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 		return null;
 	}
 
+	@Override
+	public Utilisateur insert(Utilisateur object) {
+		return null;
+	}
+
 	public Utilisateur seConnecter(String pseudo, String motDePasse) throws BusinessException {
 		BusinessException ex = new BusinessException();
 		try(Connection con = ConnectionProvider.getConnection()){
