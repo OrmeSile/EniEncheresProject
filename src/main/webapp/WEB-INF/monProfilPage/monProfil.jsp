@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page="../fragments/_bootstrap_import.jsp" />
+<jsp:include page="/WEB-INF/fragments/_bootstrap-import.jsp" />
 <title>Mon profil</title>
 </head>
 <body>
