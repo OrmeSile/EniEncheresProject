@@ -15,6 +15,7 @@ lib/
 !lib/readme.txt
 vendor/*
 !vendor/readme.txt
+/src/main/webapp/vendor/bootstrap/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 # Eclipse
@@ -29,4 +30,3 @@ hs_err_pid*
 pom.xml
 build/
 target/
-/src/main/webapp/vendor/bootstrap/

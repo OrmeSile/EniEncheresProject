@@ -1,0 +1,72 @@
+package fr.eni.ecole.encheres.ihm.servlets;
+
+import java.io.IOException;
+import java.time.LocalDate;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import fr.eni.ecole.encheres.BusinessException;
+import fr.eni.ecole.encheres.bll.UtilisateurManager;
+import fr.eni.ecole.encheres.bo.Utilisateur;
+
+
+/**
+ * Servlet implementation class ServletMonProfil
+ */
+@WebServlet("/monProfil")
+public class ServletMonProfil extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/monProfilPage/monProfil.jsp");
+
+		rd.forward(request, response);
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		
+		
+		UtilisateurManager mngr = UtilisateurManager.getUtilisateurManager();
+		
+		
+		String pseudo = request.getParameter("pseudo");
+		String nom = request.getParameter("nom");
+		String prenom = request.getParameter("prenom");
+		String email = request.getParameter("email");
+		String telephone = request.getParameter("telephone");
+		String rue = request.getParameter("rue");
+		String codePostal = request.getParameter("codePostal");
+		String ville = request.getParameter("ville");
+		String motDePasse = request.getParameter("motDePasse");
+		String confirmationMotDePasse = request.getParameter("confirmationMotDePasse");
+		
+		BusinessException be = new BusinessException();
+		
+		if(!confirmationMotDePasse.equals(motDePasse)) {
+			be.addExceptionMessage("Les mots de passe ne sont pas identiques");
+		} else {
+			Utilisateur user = new Utilisateur();
+		}
+		
+
+		Utilisateur utilisateur = mngr.ajouter();
+		request.setAttribute("utilisateurCree", utilisateur);
+		
+		doGet(request, response);
+	}
+
+}
