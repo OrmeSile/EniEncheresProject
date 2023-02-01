@@ -13,7 +13,7 @@ public class Retrait {
 		this.codePostal = codePostal;
 		this.ville = ville;
 		this.article = article;
-
+	}
 	public Retrait(String rue, String codePostal, String ville ,  ArrayList<ArticleVendu> articles) {
 		super();
 		this.rue = rue;
