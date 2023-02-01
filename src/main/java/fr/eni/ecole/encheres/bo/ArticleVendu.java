@@ -160,6 +160,30 @@ public class ArticleVendu {
 				+ ", prixVente=" + prixVente + ", etatVente=" + etatVente +"]";
 	}
 
+	public Categorie getcategorieArticle() {
+		return categorieArticle;
+	}
+
+	public void setcategorieArticle(Categorie categorieArticle) {
+		this.categorieArticle = categorieArticle;
+	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
+	public Retrait getLieuRetrait() {
+		return lieuRetrait;
+	}
+
+	public void setLieuRetrait(Retrait lieuRetrait) {
+		this.lieuRetrait = lieuRetrait;
+	}
+
 }
 /*
  * CREATE TABLE ARTICLES_VENDUS ( no_article INTEGER IDENTITY(1,1) NOT NULL,
