@@ -29,7 +29,7 @@ public class ArticleManager {
 	}
 
 	public ArrayList<ArticleVendu> getArticlesByUtilisateur(Utilisateur user) throws BusinessException{
-		//return dao.getAllByUserId(user);
+		//return dao.getAllByUser(user);
 		return null;
 	}
 
