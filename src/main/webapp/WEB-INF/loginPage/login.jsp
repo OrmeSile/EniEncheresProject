@@ -11,7 +11,7 @@
 	<body>
 	<div class="container">
 		<header class="row navbar navbar-expand-md bg-body-tertiary">
-			<jsp:include page="/WEB-INF/fragments/_header.jsp" />
+			<jsp:include page="/WEB-INF/fragments/_brand.jsp" />
 		</header>
 		<c:if test="${!empty listeCodesErreur}">
 			<div class="alert alert-danger" role="alert">
