@@ -13,14 +13,14 @@ import java.util.ArrayList;
 
 public class UtilisateurJDBC implements DAOUtilisateur {
 	private final String LOGIN = "select no_utilisateur, nom, prenom, email, telephone, rue, code_postal, ville, credit, administrateur from UTILISATEURS u WHERE pseudo = ? AND mot_de_passe = ?";
-	private final String UTILISATEUR = "INSERT INTO UTILISATEURS VALUES ( N'pseudo', N'nom', N'prenom', N'email', N'telephone', N'rue', N'code_postal', N'ville', N'mot_de_passe', credit, administrateur)";
+	private final String INSERT = "INSERT INTO UTILISATEURS VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	@Override
-	public Utilisateur getOneById(int id) {
+	public Utilisateur getOneById(int id) throws BusinessException {
 		return null;
 	}
 
 	@Override
-	public ArrayList<Utilisateur> getAll() {
+	public ArrayList<Utilisateur> getAll() throws BusinessException {
 		return null;
 	}
 
@@ -56,11 +56,5 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 			ex.addExceptionMessage(e.getMessage());
 			throw ex;
 		}
-	}
-
-	@Override
-	public Utilisateur insert(Utilisateur object) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
