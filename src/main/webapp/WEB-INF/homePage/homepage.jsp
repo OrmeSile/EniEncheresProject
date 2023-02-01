@@ -12,7 +12,15 @@
         <jsp:include page="/WEB-INF/fragments/_brand.jsp"/>
       </div>
       <div class="col-10 text-end">
-        <a href="${pageContext.request.contextPath}/login">S'inscrire/Se connecter</a>
+        <c:choose>
+          <c:when test="${sessionScope.utilisateur eq null}">
+            <a href=<c:url value="${pageContext.request.contextPath}/login"/> >S'inscrire/Se connecter</a>
+          </c:when>
+          <c:when test="${!sessionScope.utilisateur eq null}">
+            <p>Bienvenue ${sessionScope.utilisateur.nom}</p>
+            <a href="/">Se déconnecter</a>
+          </c:when>
+        </c:choose>
       </div>
     </header>
     <div class="row">

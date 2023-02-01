@@ -47,7 +47,7 @@ public class ServletLogin extends HttpServlet {
 			request.getSession().setAttribute("utilisateur", utilisateur);
 			request.getRequestDispatcher("/home");
 		} catch (BusinessException e) {
-			request.setAttribute("listeCodesErreur",e.getExceptionMessages());
+			request.setAttribute("errors",e.getExceptionMessages());
 		}
 	}
 }
