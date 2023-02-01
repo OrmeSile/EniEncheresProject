@@ -53,7 +53,7 @@ public class UtilisateurManager {
 
 	private void validerConnexionPseudo(String pseudo, BusinessException businessException) {
 
-		if (pseudo==null || pseudo.isBlank()) {
+		if (pseudo == null || pseudo.isBlank()) {
 			businessException.addExceptionMessage("Le pseudo doit être renseigné et faire plus de 6 caractères");
 		}
 
@@ -61,8 +61,9 @@ public class UtilisateurManager {
 
 	private void validerConnexionMotDePasse(String motDePasse, BusinessException businessException) {
 
-		if (motDePasse.length() < 6 || motDePasse==null || motDePasse.isBlank()) {
-			businessException.addExceptionMessage("Le mot de passe doit être renseigné et contenir plus de 6 caractères");
+		if (motDePasse.length() < 6 || motDePasse == null || motDePasse.isBlank()) {
+			businessException
+					.addExceptionMessage("Le mot de passe doit être renseigné et contenir plus de 6 caractères");
 		}
 
 	}
@@ -76,47 +77,63 @@ public class UtilisateurManager {
 	}
 
 	private void validerAjouterNom(String nom, BusinessException businessException) {
-		
-		if (nom==null || nom.isBlank()) {
+
+		if (nom == null || nom.isBlank()) {
 			
 		}
-		
 
 	}
 
 	private void validerAjouterPrenom(String prenom, BusinessException businessException) {
-		
-		if (prenom==null || prenom.isBlank()) {
-			
+
+		if (prenom == null || prenom.isBlank()) {
+
 		}
 
 	}
 
 	private void validerAjouterEmail(String email, BusinessException businessException) {
-		
-		if (email==null || email.isBlank() || !email.contains("@")) {
-			
+
+		if (email == null || email.isBlank() || !email.contains("@")) {
+
 		}
 
 	}
 
 	private void validerAjouterTelephone(String telephone, BusinessException businessException) {
 
+		if (telephone == null || telephone.isBlank()) {
+
+		}
+
 	}
 
 	private void validerAjouterRue(String rue, BusinessException businessException) {
 
+		if (rue == null || rue.isBlank()) {
+
+		}
+
 	}
 
 	private void validerAjouterCodePostal(String codePostal, BusinessException businessException) {
+		
+		if (codePostal == null || codePostal.isBlank()) {
+			
+		}
 
 	}
 
 	private void validerAjouterVille(String ville, BusinessException businessException) {
+		
+		if (ville == null || ville.isBlank()) {
+			
+		}
 
 	}
 
-	private void validerAjouterMotDePasse(String motDePasse, String confirmationMotDePasse, BusinessException businessException) {
+	private void validerAjouterMotDePasse(String motDePasse, String confirmationMotDePasse,
+			BusinessException businessException) {
 
 	}
 
