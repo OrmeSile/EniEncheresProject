@@ -1,8 +1,6 @@
 package fr.eni.ecole.encheres.bo;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-
 public class Enchere {
 	LocalDateTime dateEnchere;
 	double montantEnchere;

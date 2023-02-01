@@ -1,6 +1,7 @@
 package fr.eni.ecole.encheres.bo;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class ArticleVendu {
 	private int noArticle;
@@ -10,17 +11,16 @@ public class ArticleVendu {
 	private LocalDateTime dateFinEnchere;
 	private int prixInitial;
 	private int prixVente;
-	private int noUtilisateur;
-	private int noCategorie;
 	private String etatVente;
 	private String image;
-	private Categorie categorieArticle;
+	private ArrayList<Enchere> encheres;
 	private Utilisateur utilisateur;
 	private Retrait lieuRetrait;
 
+
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEnchere,
-			LocalDateTime dateFinEnchere, int prixInitial, int prixVente, int noUtilisateur, int noCategorie,
-			String etatVente, String image, Categorie categorieArticle,Utilisateur utilisateur, Retrait lieuRetrait ) {
+			LocalDateTime dateFinEnchere, int prixInitial, int prixVente, int noCategorie,
+			String etatVente, Retrait lieuRetrait) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -29,18 +29,14 @@ public class ArticleVendu {
 		this.dateFinEnchere = dateFinEnchere;
 		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;
-		this.noUtilisateur = noUtilisateur;
-		this.noCategorie = noCategorie;
 		this.etatVente = etatVente;
-		this.image = image;
-		this.categorieArticle = categorieArticle;
-		this.utilisateur = utilisateur;
 		this.lieuRetrait = lieuRetrait;
+		this.image = null;
 	}
 
 	public ArticleVendu(String nomArticle, String description, LocalDateTime dateDebutEnchere,
-			LocalDateTime dateFinEnchere, int prixInitial, int prixVente, int noUtilisateur, int noCategorie,
-			String etatVente, String image, Categorie categorieArticle,Utilisateur utilisateur, Retrait lieuRetrait) {
+			LocalDateTime dateFinEnchere, int prixInitial, int prixVente, int noCategorie,
+			String etatVente) {
 		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -48,13 +44,9 @@ public class ArticleVendu {
 		this.dateFinEnchere = dateFinEnchere;
 		this.prixInitial = prixInitial;
 		this.prixVente = prixVente;
-		this.noUtilisateur = noUtilisateur;
-		this.noCategorie = noCategorie;
 		this.etatVente = etatVente;
-		this.image = image;
-		this.categorieArticle = categorieArticle;
-		this.utilisateur = utilisateur;
-		this.lieuRetrait = lieuRetrait;
+		this.encheres = null;
+		this.image = null;
 	}
 
 	public ArticleVendu() {
@@ -117,22 +109,6 @@ public class ArticleVendu {
 		this.prixVente = prixVente;
 	}
 
-	public int getNoUtilisateur() {
-		return noUtilisateur;
-	}
-
-	public void setNoUtilisateur(int noUtilisateur) {
-		this.noUtilisateur = noUtilisateur;
-	}
-
-	public int getNoCategorie() {
-		return noCategorie;
-	}
-
-	public void setNoCategorie(int noCategorie) {
-		this.noCategorie = noCategorie;
-	}
-
 	public String getEtatVente() {
 		return etatVente;
 	}
@@ -149,12 +125,39 @@ public class ArticleVendu {
 		this.image = image;
 	}
 
+	public ArrayList<Enchere> getEncheres() {
+		return encheres;
+	}
+
+	public void setEncheres(ArrayList<Enchere> encheres) {
+		this.encheres = encheres;
+	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
+	public Retrait getLieuRetrait() {
+		return lieuRetrait;
+	}
+
+	public void setLieuRetrait(Retrait lieuRetrait) {
+		this.lieuRetrait = lieuRetrait;
+	}
+
+	public void addEnchere (Enchere e){
+		encheres.add(e);
+	}
+
 	@Override
 	public String toString() {
 		return "ArticleVendu [nomArticle=" + nomArticle + ", description=" + description + ", dateDebutEnchere="
 				+ dateDebutEnchere + ", dateFinEnchere=" + dateFinEnchere + ", prixInitial=" + prixInitial
-				+ ", prixVente=" + prixVente + ", noUtilisateur=" + noUtilisateur + ", noCategorie=" + noCategorie
-				+ ", etatVente=" + etatVente + ", image=" + image + "]";
+				+ ", prixVente=" + prixVente + ", etatVente=" + etatVente +"]";
 	}
 
 	public Categorie getcategorieArticle() {

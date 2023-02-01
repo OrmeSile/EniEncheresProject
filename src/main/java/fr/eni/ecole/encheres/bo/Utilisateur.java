@@ -16,7 +16,10 @@ public class Utilisateur {
 	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
-	private List<ArticleVendu> articles;
+	private ArrayList<Enchere> encheres;
+	private ArrayList<ArticleVendu> articlesVendus;
+
+
 
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur, List<ArticleVendu> articles) {
@@ -151,6 +154,22 @@ public class Utilisateur {
 
 	public void setAdministrateur(boolean administrateur) {
 		this.administrateur = administrateur;
+	}
+
+	public ArrayList<Enchere> getEncheres() {
+		return encheres;
+	}
+
+	public void setEncheres(ArrayList<Enchere> encheres) {
+		this.encheres = encheres;
+	}
+
+	public ArrayList<ArticleVendu> getArticlesVendus() {
+		return articlesVendus;
+	}
+
+	public void setArticlesVendus(ArrayList<ArticleVendu> articlesVendus) {
+		this.articlesVendus = articlesVendus;
 	}
 
 	@Override
