@@ -5,8 +5,15 @@ import fr.eni.ecole.encheres.BusinessException;
 import java.util.ArrayList;
 
 public class Categorie {
+	private int id;
 	private ArrayList<ArticleVendu> articles;
 	private String libelle;
+
+	public Categorie(int id, ArrayList<ArticleVendu> articles, String libelle) {
+		this.id = id;
+		this.articles = articles;
+		this.libelle = libelle;
+	}
 
 	public Categorie() {
 		articles = new ArrayList<>();
@@ -36,6 +43,14 @@ public class Categorie {
 
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void ajouterArticle(ArticleVendu article){

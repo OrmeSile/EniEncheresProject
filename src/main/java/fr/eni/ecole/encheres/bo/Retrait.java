@@ -3,6 +3,7 @@ package fr.eni.ecole.encheres.bo;
 import java.util.ArrayList;
 
 public class Retrait {
+	int id;
 	String rue;
 	String codePostal;
 	String ville;
@@ -18,6 +19,14 @@ public class Retrait {
 		this.rue = rue;
 		this.codePostal = codePostal;
 		this.ville = ville;
+	}
+
+	public Retrait(int id, String rue, String codePostal, String ville, ArticleVendu article) {
+		this.id = id;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.article = article;
 	}
 
 	public String getRue() {
@@ -50,6 +59,14 @@ public class Retrait {
 
 	public void setArticle(ArticleVendu article) {
 		this.article = article;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override
