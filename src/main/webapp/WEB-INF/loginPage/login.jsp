@@ -1,3 +1,5 @@
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,7 +13,18 @@
 	<div class="container">
 		<header class="row navbar navbar-expand-md bg-body-tertiary">
 			<jsp:include page="/WEB-INF/fragments/_header.jsp"/>
-		</header>
+		</div>
+	    <c:if test="${!empty listeCodesErreur}">
+			  <div class="alert alert-danger" role="alert">
+			    <strong>Erreur!</strong>
+			  <ul>
+			  	 <c:forEach var="message" items="${listeCodesErreur}">
+			  	   <li>${message}</li>
+			  	 </c:forEach>
+			  </ul>
+			</div>
+		</c:if>
+  </header>
 		<div class="row d-flex justify-content-center">
 			<form method="post" action="<%=request.getContextPath()%>/login">
 				<label for="identifiant"> Identifiant :</label>
