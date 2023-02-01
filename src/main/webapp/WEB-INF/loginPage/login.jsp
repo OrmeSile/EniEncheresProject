@@ -12,24 +12,18 @@
 	<div class="container">
 		<header class="row navbar navbar-expand-md bg-body-tertiary">
 			<jsp:include page="/WEB-INF/fragments/_header.jsp"/>
-<<<<<<< HEAD
 		</div>
-		
-	      	<c:if test="${!empty listeCodesErreur}">
-			<div class="alert alert-danger" role="alert">
-			  <strong>Erreur!</strong>
+	    <c:if test="${!empty listeCodesErreur}">
+			  <div class="alert alert-danger" role="alert">
+			    <strong>Erreur!</strong>
 			  <ul>
-			  	<c:forEach var="message" items="${listeCodesErreur}">
-			  		<li>${message}</li>
-			  	</c:forEach>
+			  	 <c:forEach var="message" items="${listeCodesErreur}">
+			  	   <li>${message}</li>
+			  	 </c:forEach>
 			  </ul>
 			</div>
 		</c:if>
-
-		
-=======
-		</header>
->>>>>>> branch 'main' of https://github.com/OrmeSile/EniEncheresProject
+  </header>
 		<div class="row d-flex justify-content-center">
 			<form method="post" action="<%=request.getContextPath()%>/login">
 				<label for="identifiant"> Identifiant :</label>
@@ -44,12 +38,12 @@
 				<label>Se souvenir de moi<input type="checkbox" name="seSouvenir"></label>
 			</div>
 
-			<!-- TODO : lien à mettre pour le mdp oublié -->
+			<!-- TODO : lien Ã  mettre pour le mdp oubliÃ© -->
 			<div>
-				<a href="#">Mot de passe oublié</a>
+				<a href="#">Mot de passe oubliÃ©</a>
 			</div>
 			<div>
-				<input type="submit" value="Créer un compte" />
+				<input type="submit" value="CrÃ©er un compte" />
 			</div>
 		</div>
 	</body>

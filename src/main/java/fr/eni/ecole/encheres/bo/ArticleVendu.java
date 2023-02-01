@@ -14,10 +14,13 @@ public class ArticleVendu {
 	private int noCategorie;
 	private String etatVente;
 	private String image;
+	private Categorie categorieArticle;
+	private Utilisateur utilisateur;
+	private Retrait lieuRetrait;
 
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEnchere,
 			LocalDateTime dateFinEnchere, int prixInitial, int prixVente, int noUtilisateur, int noCategorie,
-			String etatVente, String image) {
+			String etatVente, String image, Categorie categorieArticle,Utilisateur utilisateur, Retrait lieuRetrait ) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -30,11 +33,14 @@ public class ArticleVendu {
 		this.noCategorie = noCategorie;
 		this.etatVente = etatVente;
 		this.image = image;
+		this.categorieArticle = categorieArticle;
+		this.utilisateur = utilisateur;
+		this.lieuRetrait = lieuRetrait;
 	}
 
 	public ArticleVendu(String nomArticle, String description, LocalDateTime dateDebutEnchere,
 			LocalDateTime dateFinEnchere, int prixInitial, int prixVente, int noUtilisateur, int noCategorie,
-			String etatVente, String image) {
+			String etatVente, String image, Categorie categorieArticle,Utilisateur utilisateur, Retrait lieuRetrait) {
 		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -46,6 +52,9 @@ public class ArticleVendu {
 		this.noCategorie = noCategorie;
 		this.etatVente = etatVente;
 		this.image = image;
+		this.categorieArticle = categorieArticle;
+		this.utilisateur = utilisateur;
+		this.lieuRetrait = lieuRetrait;
 	}
 
 	public ArticleVendu() {
@@ -146,6 +155,30 @@ public class ArticleVendu {
 				+ dateDebutEnchere + ", dateFinEnchere=" + dateFinEnchere + ", prixInitial=" + prixInitial
 				+ ", prixVente=" + prixVente + ", noUtilisateur=" + noUtilisateur + ", noCategorie=" + noCategorie
 				+ ", etatVente=" + etatVente + ", image=" + image + "]";
+	}
+
+	public Categorie getcategorieArticle() {
+		return categorieArticle;
+	}
+
+	public void setcategorieArticle(Categorie categorieArticle) {
+		this.categorieArticle = categorieArticle;
+	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
+	public Retrait getLieuRetrait() {
+		return lieuRetrait;
+	}
+
+	public void setLieuRetrait(Retrait lieuRetrait) {
+		this.lieuRetrait = lieuRetrait;
 	}
 
 }

@@ -1,5 +1,8 @@
 package fr.eni.ecole.encheres.bo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Utilisateur {
 	private int noUtilisateur;
 	private String pseudo;
@@ -13,9 +16,10 @@ public class Utilisateur {
 	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
+	private List<ArticleVendu> articles;
 
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
+			String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur, List<ArticleVendu> articles) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -29,6 +33,7 @@ public class Utilisateur {
 		this.motDePasse = motDePasse;
 		this.credit = credit;
 		this.administrateur = administrateur;
+		this.articles = articles;
 	}
 
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
@@ -45,6 +50,7 @@ public class Utilisateur {
 		this.motDePasse = motDePasse;
 		this.credit = credit;
 		this.administrateur = administrateur;
+		this.articles = new ArrayList<>();
 	}
 
 	public Utilisateur() {
@@ -152,6 +158,18 @@ public class Utilisateur {
 		return "Utilisateur [pseudo=" + pseudo + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email
 				+ ", telephone=" + telephone + ", rue=" + rue + ", codePostal=" + codePostal + ", ville=" + ville
 				+ ", motDePasse=" + motDePasse + ", credit=" + credit + ", administrateur=" + administrateur + "]";
+	}
+
+	public List<ArticleVendu> getArticle() {
+		return articles;
+	}
+
+	public void setArticle(List<ArticleVendu> article) {
+		this.articles = article;
+	}
+	
+	public void addArticle(ArticleVendu article) {
+		this.articles.add(article);
 	}
 
 }
