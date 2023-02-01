@@ -38,8 +38,6 @@ public class ServletMonProfil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		
-		
 		UtilisateurManager mngr = UtilisateurManager.getUtilisateurManager();
 		
 		
@@ -59,13 +57,11 @@ public class ServletMonProfil extends HttpServlet {
 		if(!confirmationMotDePasse.equals(motDePasse)) {
 			be.addExceptionMessage("Les mots de passe ne sont pas identiques");
 		} else {
+    //TODO use user constructor
 			//Utilisateur user = new Utilisateur();
+			//Utilisateur utilisateur = mngr.ajouter();
+			//request.setAttribute("utilisateurCree", utilisateur);
 		}
-		
-
-		Utilisateur utilisateur = mngr.ajouter();
-		request.setAttribute("utilisateurCree", utilisateur);
-		
 		doGet(request, response);
 	}
 

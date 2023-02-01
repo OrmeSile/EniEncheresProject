@@ -29,15 +29,10 @@ public class ServletLogin extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		
-		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/loginPage/login.jsp");
-
 		rd.forward(request, response);
-
 	}
-
+  
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -54,10 +49,5 @@ public class ServletLogin extends HttpServlet {
 		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur",e.getExceptionMessages());
 		}
-
-		doGet(request, response);
-		
-
 	}
-
 }
