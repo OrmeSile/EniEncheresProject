@@ -39,7 +39,7 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 			ps.setString(1, pseudo);
 			ps.setString(2, motDePasse);
 			ResultSet rs = ps.executeQuery();
-			if(rs.next()){
+			if (rs.next()) {
 				int id = rs.getInt(1);
 				String nom = rs.getString(2);
 				String prenom = rs.getString(3);
