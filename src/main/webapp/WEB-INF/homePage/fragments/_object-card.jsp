@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="card text-center">
-  <img class="card-img-top" src="${pageContext.request.contextPath}/img/article_placeholder.jpg" alt="placeholder">
+  <img class="card-img" src="${pageContext.request.contextPath}/img/article_placeholder.jpg" alt="placeholder">
   <div class="card-body">
     <ul class="list-group list-group-flush">
       <li class="list-group-item">
