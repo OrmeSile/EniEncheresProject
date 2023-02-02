@@ -49,9 +49,10 @@ public class UtilisateurManager {
 			throw be;
 
 		} else {
-			Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
-					motDePasse);
-			return dao.insert(utilisateur);
+//			Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
+//					motDePasse);
+//			return dao.insert(utilisateur);
+			return null;
 		}
 
 	}

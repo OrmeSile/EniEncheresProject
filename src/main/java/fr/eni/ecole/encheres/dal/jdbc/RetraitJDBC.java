@@ -18,7 +18,37 @@ import java.util.ArrayList;
 public class RetraitJDBC implements DAO<Retrait> {
     private final String GET_ONE_BY_ID = "select rue, code_postal, ville from retraits where no_article = ?";
     private final String INSERT = "insert into retraits values ?,?,?,?";
-    private final String GET_ALL = "select r.no_article, rue, code_postal, ville, nom_article, description, date_debut_enchere, date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, etat_vente, image from retraits r join articles_vendus a on r.no_article = a.no_article ";
+    private final String GET_ALL = "select " +
+            "r.no_article," +
+            "r.rue," +
+            "r.code_postal," +
+            "r.ville," +
+            "nom_article," +
+            "a.description," +
+            "date_debut_enchere," +
+            "date_fin_enchere," +
+            "prix_initial," +
+            "prix_vente," +
+            "a.image," +
+            "a.no_utilisateur," +
+            "no_categorie," +
+            "etat_vente," +
+            "pseudo," +
+            "nom," +
+            "prenom," +
+            "email," +
+            "telephone," +
+            "u.rue," +
+            "u.code_postal," +
+            "u.ville," +
+            "mot_de_passe," +
+            "credit," +
+            "administrateur "+
+            "from retraits r " +
+            "join articles_vendus a " +
+            "on r.no_article = a.no_article " +
+            "join utilisateurs u " +
+            "on a.no_utilisateur = u.no_utilisateur";
 
     @Override
     public Retrait getOneById(int id) throws BusinessException {
@@ -55,16 +85,19 @@ public class RetraitJDBC implements DAO<Retrait> {
                 var fin = LocalDateTime.of(rs.getDate(8).toLocalDate(),rs.getTime(8).toLocalTime());
                 var prixInitial = rs.getInt(9);
                 var prixVente = rs.getInt(10);
+                var image = rs.getString(11);
+                var idUtilisateur = rs.getInt(12);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
     @Override
     public  Retrait insert(Retrait object) throws BusinessException {
         try(var con = ConnectionProvider.getConnection()){
             var ps = con.prepareStatement(INSERT);
-            ps.setInt(1,object.getArticle().getNoArticle());
+            //ps.setInt(1,object.getArticle().getNoArticle());
             ps.setString(2, object.getRue());
             ps.setString(3,object.getCodePostal());
             ps.setString(4, object.getVille());
