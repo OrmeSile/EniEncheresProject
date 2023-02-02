@@ -26,7 +26,7 @@ public class ArticleJDBC implements DAO<ArticleVendu> {
 	}
 
 	@Override
-	public ArticleVendu insert(ArticleVendu object)throws BusinessException{
+	public ArticleVendu insert(ArticleVendu object) throws BusinessException{
 		BusinessException ex = new BusinessException();
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement ps = con.prepareStatement(INSERT,java.sql.Statement.RETURN_GENERATED_KEYS);
@@ -36,8 +36,8 @@ public class ArticleJDBC implements DAO<ArticleVendu> {
 			ps.setTimestamp(4, java.sql.Timestamp.valueOf(object.getDateFinEnchere()));
 			ps.setInt(5, object.getPrixInitial());
 			ps.setInt(6, object.getPrixVente());
-			ps.setInt(7, object.getUtilisateur().getNoUtilisateur());
-			ps.setInt(8, object.getcategorieArticle().getId());
+		//	ps.setInt(7, object.getUtilisateur().getNoUtilisateur());
+		//	ps.setInt(8, object.getcategorieArticle().getId());
 			ps.setString(9, object.getEtatVente());
 			ps.setString(10, object.getImage());
 			ResultSet rs = ps.executeQuery();

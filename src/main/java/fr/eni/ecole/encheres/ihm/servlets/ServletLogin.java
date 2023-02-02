@@ -45,9 +45,12 @@ public class ServletLogin extends HttpServlet {
 		try {
 			Utilisateur utilisateur = UtilisateurManager.getUtilisateurManager().seConnecter(identifiant, motDePasse);
 			request.getSession().setAttribute("utilisateur", utilisateur);
-			request.getRequestDispatcher("/home");
+			System.out.println();
+			response.sendRedirect(request.getContextPath());
 		} catch (BusinessException e) {
+			System.out.println("in catch");
 			request.setAttribute("listeCodesErreur",e.getExceptionMessages());
+			doGet(request, response);
 		}
 	}
 }
