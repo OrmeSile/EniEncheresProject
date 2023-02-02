@@ -16,12 +16,12 @@
           <c:choose>
             <c:when test="${sessionScope.utilisateur eq null}">
               <li class="nav-item active">
-                <a class="col" href=<c:url value="${pageContext.request.contextPath}/login"/>>S'inscrire/Se connecter</a>
+                <a class="col" href=<c:url value="/login"/>>S'inscrire/Se connecter</a>
               </li>
             </c:when>
             <c:otherwise>
               <li class="nav-item">
-                <a class="col" href=<c:url value="${pageContext.request.contextPath}/logout"/>>Déconnexion</a>
+                <a class="col" href=<c:url value="/logout"/>>Déconnexion</a>
               </li>
             </c:otherwise>
           </c:choose>
