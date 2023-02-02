@@ -1,22 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="container" style="border: dashed black 2px">
-  <div class="row">
-    <div class="col-md-4">
-      <img src="${pageContext.request.contextPath}/resources/img/article_placeholder.jpg" alt="placeholder"/>
-  </div>
-    <div class="col-md">
-      <div class="row">
+<div class="card text-center">
+  <img class="card-img-top" src="${pageContext.request.contextPath}/img/article_placeholder.jpg" alt="placeholder">
+  <div class="card-body">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
         ${param.nom}
-      </div>
-      <div class="row">
+      </li>
+      <li class="list-group-item">
         ${param.prix}
-      </div>
-      <div class="row">
+      </li>
+      <li class="list-group-item">
         ${param.finEnchere}
-      </div>
-      <div class="row">
+      </li>
+      <li class="list-group-item">
         ${param.vendeur}
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
 </div>
