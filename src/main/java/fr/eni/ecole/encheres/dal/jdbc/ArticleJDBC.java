@@ -18,8 +18,22 @@ public class ArticleJDBC implements DAO<ArticleVendu>, UserFetchable<ArticleVend
 	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
 	private final String ALL = "select * from ARTICLES_VENDUS";
 	private final String USERID = "select * from ARTICLES_VENDUS where no_utilisateur =?";
+	private final String ID = "select * from ARTICLES_VENDUS where no_article = ?";
 	@Override
 	public ArticleVendu getOneById(int id) throws BusinessException {
+		BusinessException ex = new BusinessException();
+		try(Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement ps = con.prepareStatement(ID);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			String nomArticle = rs.getString("nomArticle");
+			
+			
+			
+		} catch (SQLException e) {
+			ex.addExceptionMessage(e.getMessage());
+			throw ex;
+		}
 		return null;
 	}
 
