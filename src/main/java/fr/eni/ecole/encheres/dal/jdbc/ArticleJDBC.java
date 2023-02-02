@@ -6,8 +6,6 @@ import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
 import fr.eni.ecole.encheres.dal.DAO;
 import fr.eni.ecole.encheres.dal.UserFetchable;
-
-import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -72,6 +70,11 @@ public class ArticleJDBC implements DAO<ArticleVendu>, UserFetchable<ArticleVend
 	}
 	@Override
 	public ArrayList<ArticleVendu> getAllByUser(Utilisateur user) throws BusinessException {
+		return null;
+	}
+
+	@Override
+	public ArrayList<ArticleVendu> getAllByUserId(int id) throws BusinessException {
 		return null;
 	}
 }
