@@ -14,14 +14,15 @@ import java.util.ArrayList;
 
 public class ArticleJDBC implements DAO<ArticleVendu> {
 	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
-
+	private final String ALL = "select * from ARTICLES_VENDUS";
+	private final String ID = "select * from ARTICLES_VENDUS where no_utilisateur =?";
 	@Override
 	public ArticleVendu getOneById(int id) {
 		return null;
 	}
 
 	@Override
-	public ArrayList<ArticleVendu> getAll() {
+	public ArrayList<ArticleVendu> getAll() {//boucle while
 		return null;
 	}
 
