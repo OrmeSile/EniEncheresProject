@@ -2,6 +2,7 @@ package fr.eni.ecole.encheres.dal.jdbc;
 
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
+import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
 import fr.eni.ecole.encheres.dal.DAO;
 import fr.eni.ecole.encheres.dal.UserFetchable;
@@ -55,10 +56,8 @@ public class ArticleJDBC implements DAO<ArticleVendu>, UserFetchable<ArticleVend
 			throw ex;
 		}
 	}
-
 	@Override
-	public ArrayList<ArticleVendu> getAllByUserId(int id) {
-		// TODO Auto-generated method stub
+	public ArrayList<ArticleVendu> getAllByUser(Utilisateur user) throws BusinessException {
 		return null;
 	}
 }
