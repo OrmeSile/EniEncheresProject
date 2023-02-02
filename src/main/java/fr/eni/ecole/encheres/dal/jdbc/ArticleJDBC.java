@@ -4,6 +4,7 @@ import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
 import fr.eni.ecole.encheres.dal.DAO;
+import fr.eni.ecole.encheres.dal.UserFetchable;
 
 import java.beans.Statement;
 import java.sql.Connection;
@@ -12,10 +13,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ArticleJDBC implements DAO<ArticleVendu> {
+public class ArticleJDBC implements DAO<ArticleVendu>, UserFetchable<ArticleVendu> {
 	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
 	private final String ALL = "select * from ARTICLES_VENDUS";
-	private final String ID = "select * from ARTICLES_VENDUS where no_utilisateur =?";
+	private final String USERID = "select * from ARTICLES_VENDUS where no_utilisateur =?";
+	private final String 
 	@Override
 	public ArticleVendu getOneById(int id) {
 		return null;
@@ -53,5 +55,11 @@ public class ArticleJDBC implements DAO<ArticleVendu> {
 			ex.addExceptionMessage(e.getMessage());
 			throw ex;
 		}
+	}
+
+	@Override
+	public ArrayList<ArticleVendu> getAllByUserId(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
