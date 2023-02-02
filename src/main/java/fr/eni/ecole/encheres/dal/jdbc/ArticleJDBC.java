@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ArticleJDBC implements DAO<ArticleVendu>, UserFetchable<ArticleVendu> {
@@ -24,8 +25,20 @@ public class ArticleJDBC implements DAO<ArticleVendu>, UserFetchable<ArticleVend
 			PreparedStatement ps = con.prepareStatement(ID);
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
-			String nomArticle = rs.getString("nomArticle");
-			
+			if(rs.next());
+			String nomArticle = rs.getString(2);
+			String description = rs.getString(3);
+			LocalDateTime dateDebutEnchere = LocalDateTime
+					.of(rs.getDate(1).toLocalDate(),
+						rs.getTime(1).toLocalTime());
+			LocalDateTime dateFinEnchere = LocalDateTime
+					.of(rs.getDate(1).toLocalDate(),
+						rs.getTime(1).toLocalTime());
+			int prixInitial = rs.getInt(6);
+			int prixVente = rs.getInt(7);
+			String etatVente = rs.getString(8);
+			String image = rs.getString(9);
+			ArrayList<Enchere> = rs.getArray(10, "Enchere");
 			
 			
 		} catch (SQLException e) {
@@ -51,8 +64,8 @@ public class ArticleJDBC implements DAO<ArticleVendu>, UserFetchable<ArticleVend
 			ps.setTimestamp(4, java.sql.Timestamp.valueOf(object.getDateFinEnchere()));
 			ps.setInt(5, object.getPrixInitial());
 			ps.setInt(6, object.getPrixVente());
-		//	ps.setInt(7, object.getUtilisateur().getNoUtilisateur());
-		//	ps.setInt(8, object.getcategorieArticle().getId());
+			ps.setInt(7, object.getUtilisateur().getNoUtilisateur());
+			ps.setInt(8, object.getcategorieArticle().getId());
 			ps.setString(9, object.getEtatVente());
 			ps.setString(10, object.getImage());
 			ResultSet rs = ps.executeQuery();
