@@ -7,10 +7,18 @@ import java.util.ArrayList;
 public class Categorie {
 	private ArrayList<ArticleVendu> articles;
 	private String libelle;
+	private int id;
 
 	public Categorie() {
 		articles = new ArrayList<>();
 		libelle = null;
+	}
+	
+	public Categorie(ArrayList<ArticleVendu> articles, String libelle, int id) {
+		super();
+		this.articles = articles;
+		this.libelle = libelle;
+		this.id = id;
 	}
 
 	public Categorie(String libelle) {
@@ -36,6 +44,15 @@ public class Categorie {
 
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
+	}
+	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void ajouterArticle(ArticleVendu article){
