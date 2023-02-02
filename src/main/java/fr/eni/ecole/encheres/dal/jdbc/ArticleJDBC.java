@@ -17,9 +17,8 @@ public class ArticleJDBC implements DAO<ArticleVendu>, UserFetchable<ArticleVend
 	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
 	private final String ALL = "select * from ARTICLES_VENDUS";
 	private final String USERID = "select * from ARTICLES_VENDUS where no_utilisateur =?";
-	private final String 
 	@Override
-	public ArticleVendu getOneById(int id) {
+	public ArticleVendu getOneById(int id) throws BusinessException {
 		return null;
 	}
 
