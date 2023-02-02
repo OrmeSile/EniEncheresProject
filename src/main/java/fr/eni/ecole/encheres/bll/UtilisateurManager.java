@@ -66,7 +66,7 @@ public class UtilisateurManager {
 
 	private void validerConnexionMotDePasse(String motDePasse, BusinessException businessException) {
 
-		if (motDePasse.length() < 6 || motDePasse == null || motDePasse.isBlank()) {
+		if (Objects.isNull(motDePasse) ||motDePasse.length() < 6 || motDePasse.isBlank()) {
 			businessException
 					.addExceptionMessage("Le mot de passe doit être renseigné et contenir plus de 6 caractères");
 		}
