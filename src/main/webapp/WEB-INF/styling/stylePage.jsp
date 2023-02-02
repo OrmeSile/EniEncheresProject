@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: vlhelguen2022
-  Date: 02/02/2023
-  Time: 13:25
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -23,7 +16,7 @@
           <jsp:param name="vendeur" value="vendeur"/>
         </jsp:include>
       </div>
-      <div class="col-6">
+      <div class="col-sm-6">
         <jsp:include page="/WEB-INF/fragments/_object-Card.jsp">
           <jsp:param name="nom" value="nomParDefaut"/>
           <jsp:param name="prix" value="1234"/>
