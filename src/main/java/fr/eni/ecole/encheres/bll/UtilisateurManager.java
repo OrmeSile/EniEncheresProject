@@ -146,4 +146,10 @@ public class UtilisateurManager {
 		}
 	}
 
+	public Utilisateur ajouter() {
+		// TODO : tester la validité de la description et de la note
+		// Utilisateur utilisateur = new Utilisateur();
+		// return utilisateur;
+		return null;
+	}
 }
