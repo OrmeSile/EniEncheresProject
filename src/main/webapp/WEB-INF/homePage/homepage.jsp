@@ -6,13 +6,26 @@
   <jsp:include page="/WEB-INF/fragments/_bootstrap-import.jsp"/>
 </head>
 <body>
-  <div class="container">
+  <div class="container-fluid">
     <header class="row navbar navbar-expand-md bg-dark-subtle d-flex align-content-between">
       <div class="col-2">
         <jsp:include page="/WEB-INF/fragments/_header.jsp"/>
       </div>
-      <div class="col-3">
-        <a class="col-2" href="${pageContext.request.contextPath}/login">S'inscrire/Se connecter</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+          <c:choose>
+            <c:when test="${sessionScope.utilisateur eq null}">
+              <li class="nav-item active">
+                <a class="col" href=<c:url value="${pageContext.request.contextPath}/login"/>>S'inscrire/Se connecter</a>
+              </li>
+            </c:when>
+            <c:otherwise>
+              <li class="nav-item">
+                <a class="col" href=<c:url value="${pageContext.request.contextPath}/logout"/>>Déconnexion</a>
+              </li>
+            </c:otherwise>
+          </c:choose>
+        </ul>
       </div>
     </header>
     <div class="row">
