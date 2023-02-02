@@ -18,7 +18,7 @@
 
 				<!-- TODO: remplir le path de l'action vers la liste des enchères -->
 				<form method="post" action="${pageContext.request.contextPath}">
-					<label>Pseudo :</label><input type="text" id="pseudo "name="pseudo"/>
+					<label>Pseudo :</label><input type="text" id="pseudo" name="pseudo"/>
 					<label> Nom :</label><input type="text" id="nom" name="nom"/>
 					<br>
 					<label> Prénom :</label><input type="text" id="prenom" name="prenom"/>
