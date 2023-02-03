@@ -1,74 +1,55 @@
 package fr.eni.ecole.encheres.dal.jdbc;
 
 import fr.eni.ecole.encheres.BusinessException;
-import fr.eni.ecole.encheres.bo.ArticleVendu;
-import fr.eni.ecole.encheres.bo.Categorie;
-import fr.eni.ecole.encheres.bo.EtatVente;
-import fr.eni.ecole.encheres.bo.Utilisateur;
+import fr.eni.ecole.encheres.bo.*;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
+import fr.eni.ecole.encheres.dal.DAOFactory;
 import fr.eni.ecole.encheres.dal.ItemFetchable;
 import fr.eni.ecole.encheres.tools.ArticleStateConverter;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
-	private final String ALL = "select * from ARTICLES_VENDUS";
-	private final String USERID = "select * from ARTICLES_VENDUS where no_utilisateur =?";
-	private final String GET_ALL_BY_PARENT = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie where no_utilisateur = ?";
-	private final String GET_ONE_BY_ID = "select * from ARTICLES_VENDUS where no_article = ?";
+	private final String GET_ALL = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie join RETRAITS r on a.no_article = r.no_article";
+	private final String GET_ALL_BY_PARENT = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article where no_utilisateur = ?";
+	private final String GET_ONE_BY_ID = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie join RETRAITS r on a.no_article = r.no_article where a.no_article = ?";
 	@Override
 	public ArticleVendu getOneById(int id) throws BusinessException {
-		BusinessException ex = new BusinessException();
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement ps = con.prepareStatement(GET_ONE_BY_ID);
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
+			ArticleVendu article = null;
 			if(rs.next()) {
-				String nomArticle = rs.getString(2);
-				String description = rs.getString(3);
-				LocalDateTime dateDebutEnchere = LocalDateTime.of(rs.getDate(1).toLocalDate(), rs.getTime(1).toLocalTime());
-				LocalDateTime dateFinEnchere = LocalDateTime.of(rs.getDate(1).toLocalDate(), rs.getTime(1).toLocalTime());
-				int miseAPrix = rs.getInt(6);
-				int prixVente = rs.getInt(7);
-				EtatVente etatVente = convertEtatVente(rs.getString(8));
-				String image = rs.getString(9);
+				article = buildArticleFromResultSetWithoutId(rs);
+				article.setNoArticle(id);
 			}
-			
+			return article;
 		} catch (SQLException e) {
-			ex.addExceptionMessage(e.getMessage());
-			throw ex;
+			throw new BusinessException(e.getMessage());
 		}
-		return null;
-	}
-
-	private EtatVente convertEtatVente(String etatVente) throws BusinessException {
-		switch (etatVente){
-			case "CR":
-				return EtatVente.CREE;
-			case "EC":
-				return EtatVente.EN_COURS;
-			case "VD":
-				return EtatVente.VENDU;
-			case "RT":
-				return EtatVente.RETIRE;
-			default:
-				var be = new BusinessException();
-				be.addExceptionMessage("bad EtatVente DB status");
-				throw be;
-		}
-		//'CR','EC','VD','RT'
 	}
 	@Override
-	public ArrayList<ArticleVendu> getAll() {//boucle while
-		return null;
+	public ArrayList<ArticleVendu> getAll() throws BusinessException{
+		try(Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement ps = con.prepareStatement(GET_ALL);
+			ResultSet rs = ps.executeQuery();
+			ArrayList<ArticleVendu> articles = new ArrayList<>();
+			while(rs.next()) {
+				ArticleVendu article = buildArticleFromResultSetWithoutId(rs);
+				article.setNoArticle(rs.getInt(1));
+				articles.add(article);
+			}
+			return articles;
+		} catch (SQLException e) {
+			throw new BusinessException(e.getMessage());
+		}
 	}
-
 	@Override
 	public ArticleVendu insert(ArticleVendu object) throws BusinessException{
 		BusinessException ex = new BusinessException();
@@ -111,17 +92,39 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 				var description = rs.getString(3);
 				var dateDebut = LocalDateTime.of(rs.getDate(4).toLocalDate(), rs.getTime(4).toLocalTime());
 				var dateFin = LocalDateTime.of(rs.getDate(5).toLocalDate(), rs.getTime(5).toLocalTime());
-				var prixInitial = rs.getInt(6);
+				var miseAPrix = rs.getInt(6);
 				var prixVente = rs.getInt(7);
 				var etatVente = ArticleStateConverter.getEnumFromString(rs.getString(10));
 				var image = rs.getString(11);
 				var categorie = new Categorie(rs.getInt(12), rs.getString(13));
-				new ArticleVendu(noArticle, nom, description, dateDebut, dateFin, prixInitial, prixVente, )
-
+				var retrait = new Retrait(rs.getString(15), rs.getString(16), rs.getString(17));
+				var article = new ArticleVendu(noArticle, nom, description, dateDebut, dateFin, miseAPrix, prixVente, etatVente, parent, retrait, categorie, image);
+				returnList.add(article);
 			}
+			parent.setArticles(returnList);
+			return returnList;
 		}catch(SQLException e){
 			throw new BusinessException(e.getMessage());
 		}
-		return null;
+	}
+
+	private ArticleVendu buildArticleFromResultSetWithoutId(ResultSet rs) throws BusinessException{
+		try {
+			var nom = rs.getString(2);
+			var description = rs.getString(3);
+			var dateDebut = LocalDateTime.of(rs.getDate(4).toLocalDate(), rs.getTime(4).toLocalTime());
+			var dateFin = LocalDateTime.of(rs.getDate(5).toLocalDate(), rs.getTime(5).toLocalTime());
+			var miseAPrix = rs.getInt(6);
+			var prixVente = rs.getInt(7);
+			var etatVente = ArticleStateConverter.getEnumFromString(rs.getString(10));
+			var image = rs.getString(11);
+			var categorie = new Categorie(rs.getInt(12), rs.getString(13));
+			boolean retraitIsNull = Stream.of(rs.getString(15), rs.getString(16), rs.getString(17)).anyMatch(Objects::isNull);
+			var parent = DAOFactory.getUtilisateurDAO().getOneById(rs.getInt(8));
+			var retrait = retraitIsNull ? new Retrait(parent.getRue(), parent.getCodePostal(), parent.getVille()) : new Retrait(rs.getString(15), rs.getString(16), rs.getString(17));
+			return new ArticleVendu(nom, description, dateDebut, dateFin, miseAPrix, prixVente, etatVente, parent, retrait, categorie, image);
+		}catch(SQLException e){
+			throw new BusinessException(e.getMessage());
+		}
 	}
 }

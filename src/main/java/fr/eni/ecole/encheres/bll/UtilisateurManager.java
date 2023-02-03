@@ -41,7 +41,7 @@ public class UtilisateurManager {
 		validerAjouterRue(user.getRue(), be);
 		validerAjouterCodePostal(user.getCodePostal(), be);
 		validerAjouterVille(user.getVille(), be);
-		validerAjouterMotDePasse(user.getMotDePasse(), user.getConfirmationMotDePasse(), be);
+		//validerAjouterMotDePasse(user.getMotDePasse(), user.getConfirmationMotDePasse(), be);
 
 		if (be.getExceptionMessages().size() > 0) {
 
@@ -54,6 +54,10 @@ public class UtilisateurManager {
 			return null;
 		}
 
+	}
+
+	public Utilisateur getOneUtilisateurById(int id) throws BusinessException{
+		return dao.getOneById(id);
 	}
 
 	private void validerConnexionPseudo(String pseudo, BusinessException businessException) {
@@ -144,12 +148,5 @@ public class UtilisateurManager {
 			businessException
 					.addExceptionMessage("Le mot de passe n'est pas correct ou doit contenir 6 caractères mini");
 		}
-	}
-
-	public Utilisateur ajouter() {
-		// TODO : tester la validité de la description et de la note
-		// Utilisateur utilisateur = new Utilisateur();
-		// return utilisateur;
-		return null;
 	}
 }
