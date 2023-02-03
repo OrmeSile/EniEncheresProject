@@ -1,9 +1,8 @@
 package fr.eni.ecole.encheres.bo;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
-public class ArticleVendu{
+public class ArticleVendu {
 	private int noArticle;
 	private String nomArticle;
 	private String description;

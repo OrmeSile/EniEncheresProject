@@ -60,6 +60,11 @@ public class RetraitJDBC implements ItemFetchable<Retrait, ArticleVendu> {
     }
 
     @Override
+    public void update(Retrait object) throws BusinessException {
+
+    }
+
+    @Override
     public ArrayList<Retrait> getAllByParent(ArticleVendu parent) throws BusinessException {
         try(var con = ConnectionProvider.getConnection()){
             var ps = con.prepareStatement(GET_ALL_BY_PARENT);

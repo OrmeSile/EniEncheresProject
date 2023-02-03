@@ -1,5 +1,6 @@
 package fr.eni.ecole.encheres.dal.jdbc;
 
+import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.Categorie;
 import fr.eni.ecole.encheres.dal.DAO;
 
@@ -19,5 +20,10 @@ public class CategorieJDBC implements DAO<Categorie> {
     @Override
     public Categorie insert(Categorie object) {
         return null;
+    }
+
+    @Override
+    public void update(Categorie object) throws BusinessException {
+
     }
 }

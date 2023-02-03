@@ -54,6 +54,11 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 		return null;
 	}
 
+	@Override
+	public void update(Utilisateur object) throws BusinessException {
+
+	}
+
 	public Utilisateur seConnecter(String pseudo, String motDePasse) throws BusinessException {
 		BusinessException ex = new BusinessException();
 		try (Connection con = ConnectionProvider.getConnection()) {

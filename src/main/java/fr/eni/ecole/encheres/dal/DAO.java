@@ -9,4 +9,5 @@ public interface DAO<T> {
 	public T getOneById(int id) throws BusinessException;
 	public ArrayList<T> getAll() throws BusinessException;
 	public T insert(T object) throws BusinessException;
+	public void update(T object) throws BusinessException;
 }
