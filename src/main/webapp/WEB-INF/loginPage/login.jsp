@@ -13,11 +13,11 @@
 		<header class="row navbar navbar-expand-md bg-body-tertiary">
 			<jsp:include page="/WEB-INF/fragments/_header.jsp" />
 		</header>
-		<c:if test="${!empty listeCodesErreur}">
+		<c:if test="${!empty errors}">
 			<div class="alert alert-danger" role="alert">
 				<strong>Erreur!</strong>
 				<ul>
-					<c:forEach var="message" items="${listeCodesErreur}">
+					<c:forEach var="message" items="${errors}">
 						<li>${message}</li>
 					</c:forEach>
 				</ul>
@@ -35,8 +35,6 @@
 			<label>Se souvenir de moi<input type="checkbox"
 				name="seSouvenir"></label>
 		</div>
-
-		<!-- TODO : lien Ã  mettre pour le mdp oubliÃ© -->
 		<div>
 			<a href="#">Mot de passe oublié</a>
 		</div>

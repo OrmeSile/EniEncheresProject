@@ -37,18 +37,14 @@ public class ServletLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String identifiant = request.getParameter("identifiant");
-		System.out.println("identifiant  " + identifiant);
 		String motDePasse = request.getParameter("mdp");
-		System.out.println("mot de passe " + motDePasse);
 
 		try {
 			Utilisateur utilisateur = UtilisateurManager.getUtilisateurManager().seConnecter(identifiant, motDePasse);
-			request.getSession().setAttribute("utilisateur", utilisateur);
-			System.out.println();
+			request.getSession().setAttribute("user", utilisateur);
 			response.sendRedirect(request.getContextPath());
 		} catch (BusinessException e) {
-			System.out.println("in catch");
-			request.setAttribute("listeCodesErreur", e.getExceptionMessages());
+			request.setAttribute("errors", e.getExceptionMessages());
 			doGet(request, response);
 		}
 		
