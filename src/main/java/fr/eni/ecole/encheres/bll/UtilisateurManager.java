@@ -27,9 +27,7 @@ public class UtilisateurManager {
 		return dao.seConnecter(pseudo, motDePasse);
 	}
 
-	public Utilisateur ajouter(Utilisateur user)
-			throws BusinessException {
-
+	public Utilisateur ajouter(Utilisateur user) throws BusinessException {
 		BusinessException be = new BusinessException();
 		validerAjouterPseudo(user.getPseudo(), be);
 		validerAjouterNom(user.getNom(), be);
@@ -39,25 +37,18 @@ public class UtilisateurManager {
 		validerAjouterRue(user.getRue(), be);
 		validerAjouterCodePostal(user.getCodePostal(), be);
 		validerAjouterVille(user.getVille(), be);
-		//validerAjouterMotDePasse(user.getMotDePasse(), user.getConfirmationMotDePasse(), be);
-
 		if (be.getExceptionMessages().size() > 0) {
-
 			throw be;
-
 		} else {
-//			Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
-//					motDePasse);
-//			return dao.insert(utilisateur);
-			return null;
+			return dao.insert(user);
 		}
-
 	}
-
 	public Utilisateur getOneUtilisateurById(int id) throws BusinessException{
 		return dao.getOneById(id);
 	}
-
+	public void updateUser(Utilisateur user) throws BusinessException{
+		dao.update(user);
+	}
 	private void validerConnexionPseudo(String pseudo, BusinessException businessException) {
 		if (pseudo == null || pseudo.isBlank()) {
 			businessException.addExceptionMessage("Le pseudo doit être renseigné et faire plus de 6 caractères");
@@ -115,14 +106,6 @@ public class UtilisateurManager {
 	private void validerAjouterVille(String ville, BusinessException businessException) {
 		if (ville == null || ville.isBlank()) {
 			businessException.addExceptionMessage("La ville doit être renseigné");
-		}
-	}
-
-	private void validerAjouterMotDePasse(String motDePasse, String confirmationMotDePasse,
-			BusinessException businessException) {
-		if (motDePasse.length() < 6 || confirmationMotDePasse.length() < 6 || motDePasse != confirmationMotDePasse) {
-			businessException
-					.addExceptionMessage("Le mot de passe n'est pas correct ou doit contenir 6 caractères mini");
 		}
 	}
 }

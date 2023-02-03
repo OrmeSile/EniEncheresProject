@@ -26,4 +26,8 @@ public class CategorieJDBC implements DAO<Categorie> {
     public void update(Categorie object) throws BusinessException {
 
     }
+    @Override
+    public void delete(int id) throws BusinessException {
+
+    }
 }

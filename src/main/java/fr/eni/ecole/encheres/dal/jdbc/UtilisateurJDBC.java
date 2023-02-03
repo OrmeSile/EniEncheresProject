@@ -1,22 +1,17 @@
 package fr.eni.ecole.encheres.dal.jdbc;
 
 import fr.eni.ecole.encheres.BusinessException;
-import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
-import fr.eni.ecole.encheres.dal.DAOFactory;
 import fr.eni.ecole.encheres.dal.DAOUtilisateur;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class UtilisateurJDBC implements DAOUtilisateur {
+	private final String UPDATE = "update utilisateurs set no_utilisateur=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=?, credit=?, administrateur=? where no_utilisateur = ?)";
 	private final String GET_ONE_BY_ID = "select * from utilisateurs  where no_utilisateur = ?";
 	private final String LOGIN = "select no_utilisateur, nom, prenom, email, telephone, rue, code_postal, ville, credit, administrateur from UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?";
-	private final String UTILISATEUR = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+	private final String INSERT = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 	@Override
 	public Utilisateur getOneById(int id) throws BusinessException {
@@ -50,12 +45,54 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 	}
 
 	@Override
-	public Utilisateur insert(Utilisateur object) {
-		return null;
+	public Utilisateur insert(Utilisateur object) throws BusinessException {
+		try(var con = ConnectionProvider.getConnection()){
+			var ps = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, object.getPseudo());
+			ps.setString(2, object.getNom());
+			ps.setString(3, object.getPrenom());
+			ps.setString(4, object.getEmail());
+			ps.setString(5, object.getTelephone());
+			ps.setString(6, object.getRue());
+			ps.setString(7, object.getCodePostal());
+			ps.setString(8, object.getVille());
+			ps.setString(9, object.getMotDePasse());
+			ps.setInt(10, object.getCredit());
+			ps.setBoolean(11, object.isAdministrateur());
+			var rs = ps.executeQuery();
+			if(rs.next()){
+				object.setNoUtilisateur(rs.getInt(1));
+				return object;
+			}
+			throw new BusinessException("erreur d'insertion");
+		} catch (SQLException e) {
+			throw new BusinessException(e.getMessage());
+		}
 	}
 
 	@Override
 	public void update(Utilisateur object) throws BusinessException {
+		try(var con = ConnectionProvider.getConnection()){
+			var ps = con.prepareStatement(UPDATE);
+			ps.setString(1, object.getPseudo());
+			ps.setString(2, object.getNom());
+			ps.setString(3, object.getPrenom());
+			ps.setString(4, object.getEmail());
+			ps.setString(5, object.getTelephone());
+			ps.setString(6, object.getRue());
+			ps.setString(7, object.getCodePostal());
+			ps.setString(8, object.getVille());
+			ps.setString(9, object.getMotDePasse());
+			ps.setInt(10, object.getCredit());
+			ps.setBoolean(11, object.isAdministrateur());
+			ps.setInt(12, object.getNoUtilisateur());
+		}catch (SQLException e){
+			throw new BusinessException(e.getMessage());
+		}
+	}
+
+	@Override
+	public void delete(int id) throws BusinessException {
 
 	}
 

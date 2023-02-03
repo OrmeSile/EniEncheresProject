@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
-	private final String UPDATE = "update articles set nom_article ";
+	private final String UPDATE = "update articles_vendus set nom_article=?, 'description'=?,date_debut_enchere = ?,date_fin_enchere = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ?, etat_vente = ?, image = ? where no_article = ?";
 	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
 	private final String GET_ALL = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie join RETRAITS r on a.no_article = r.no_article";
 	private final String GET_ALL_BY_PARENT = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article where no_utilisateur = ?";
@@ -53,7 +53,6 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 	}
 	@Override
 	public ArticleVendu insert(ArticleVendu object) throws BusinessException{
-		BusinessException ex = new BusinessException();
 		try(Connection con = ConnectionProvider.getConnection()){
 			PreparedStatement ps = con.prepareStatement(INSERT,java.sql.Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, object.getNomArticle());
@@ -70,18 +69,36 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 			if(rs.next()) {
 				object.setNoArticle(rs.getInt(1));
 				return object;
-			}else{
-				ex.addExceptionMessage("Erreur d'insertion");
-				throw ex;
 			}
+			throw new BusinessException("can't insert user");
 		}catch(SQLException e) {
-			ex.addExceptionMessage(e.getMessage());
-			throw ex;
+			throw new BusinessException(e.getMessage());
 		}
 	}
 
 	@Override
 	public void update(ArticleVendu object) throws BusinessException {
+		try(Connection con = ConnectionProvider.getConnection()){
+			PreparedStatement ps = con.prepareStatement(UPDATE);
+			ps.setString(1, object.getNomArticle());
+			ps.setString(2, object.getDescription());
+			ps.setTimestamp(3, java.sql.Timestamp.valueOf(object.getDateDebutEncheres()));
+			ps.setTimestamp(4, java.sql.Timestamp.valueOf(object.getDateFinEncheres()));
+			ps.setInt(5, object.getMiseAPrix());
+			ps.setInt(6, object.getPrixVente());
+			ps.setInt(7, object.getVendeur().getNoUtilisateur());
+			ps.setInt(8, object.getCategorieArticle().getNoCategorie());
+			ps.setString(9, object.getEtatVente().getState());
+			ps.setString(10, object.getImage());
+			ps.setInt(11, object.getNoArticle());
+			ps.executeUpdate();
+		}catch(SQLException e) {
+			throw new BusinessException(e.getMessage());
+		}
+	}
+
+	@Override
+	public void delete(int id) throws BusinessException {
 
 	}
 
