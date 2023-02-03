@@ -60,16 +60,13 @@ public class ServletMonProfil extends HttpServlet {
 			doGet(request, response);
 		} else {
 			
-//			UtilisateurManager.getUtilisateurManager().ajouter(new Utilisateur (pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse));
-			
-			response.sendRedirect(request.getContextPath());
-			
-			//rediriger l'utilisateur en page d'accueil
-			
-    //TODO use user constructor
-			//Utilisateur user = new Utilisateur();
-			//Utilisateur utilisateur = mngr.ajouter();
-			//request.setAttribute("utilisateurCree", utilisateur);
+			try {
+				UtilisateurManager.getUtilisateurManager().ajouter(new Utilisateur (pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse));
+        response.sendRedirect(request.getContextPath());
+			} catch (BusinessException e) {
+				request.setAttribute("errors", e.getExceptionMessages());
+        doGet(request, response);
+			}
 		}
 		
 	}
