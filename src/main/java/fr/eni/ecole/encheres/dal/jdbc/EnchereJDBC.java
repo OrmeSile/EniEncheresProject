@@ -5,10 +5,6 @@ import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Enchere;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.BiItemFetchable;
-import fr.eni.ecole.encheres.dal.ConnectionProvider;
-
-import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class EnchereJDBC implements BiItemFetchable<Enchere, Utilisateur, ArticleVendu> {
@@ -39,9 +35,6 @@ public class EnchereJDBC implements BiItemFetchable<Enchere, Utilisateur, Articl
     @Override
     public void update(Enchere object) throws BusinessException {
 
-    }
-
-    public ArrayList<Enchere> getAllByUser(Utilisateur user) throws BusinessException {
     }
 
     @Override

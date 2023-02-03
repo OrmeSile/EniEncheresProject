@@ -77,9 +77,6 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 				String ville = rs.getString(8);
 				int credit = rs.getInt(9);
 				boolean administrateur = rs.getBoolean(10);
-//				TODO: uncomment + implement in DAOFactory + required JDBC
-//				ArrayList<ArticleVendu> articles = DAOFactory.getArticleDAO().getAllByUserId(id);
-//				ArrayList<Enchere> encheres = DAOFactory.getEnchereDAO().getAllByUserId(id);
 				return new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
 			} else {
 				ex.addExceptionMessage("Erreur de connection");

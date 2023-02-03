@@ -9,11 +9,9 @@ import java.util.Objects;
 public class UtilisateurManager {
 	private DAOUtilisateur dao;
 	private static UtilisateurManager manager;
-
 	private UtilisateurManager() {
 		dao = DAOFactory.getUtilisateurDAO();
 	}
-
 	public static UtilisateurManager getUtilisateurManager() {
 		if (Objects.isNull(manager)) {
 			manager = new UtilisateurManager();
@@ -61,89 +59,67 @@ public class UtilisateurManager {
 	}
 
 	private void validerConnexionPseudo(String pseudo, BusinessException businessException) {
-
 		if (pseudo == null || pseudo.isBlank()) {
 			businessException.addExceptionMessage("Le pseudo doit être renseigné et faire plus de 6 caractères");
 		}
-
 	}
 
 	private void validerConnexionMotDePasse(String motDePasse, BusinessException businessException) {
-
 		if (Objects.isNull(motDePasse) ||motDePasse.length() < 6 || motDePasse.isBlank()) {
-			businessException
-					.addExceptionMessage("Le mot de passe doit être renseigné et contenir plus de 6 caractères");
+			businessException.addExceptionMessage("Le mot de passe doit être renseigné et contenir plus de 6 caractères");
 		}
-
 	}
 
 	private void validerAjouterPseudo(String pseudo, BusinessException businessException) {
-
 		if (pseudo == null || pseudo.isBlank()) {
 			businessException.addExceptionMessage("Le pseudo doit être renseigné et contenir plus de 4 caractères");
 		}
-
 	}
 
 	private void validerAjouterNom(String nom, BusinessException businessException) {
-
 		if (nom == null || nom.isBlank()) {
 			businessException.addExceptionMessage("Le nom doit être renseigné");
 		}
-
 	}
 
 	private void validerAjouterPrenom(String prenom, BusinessException businessException) {
-
 		if (prenom == null || prenom.isBlank()) {
 			businessException.addExceptionMessage("Le prenom doit être renseigné");
 		}
-
 	}
 
 	private void validerAjouterEmail(String email, BusinessException businessException) {
-
 		if (email == null || email.isBlank() || !email.contains("@")) {
 			businessException.addExceptionMessage("L'email doit être renseigné et doit être au format @");
 		}
-
 	}
 
 	private void validerAjouterTelephone(String telephone, BusinessException businessException) {
-
 		if (telephone == null || telephone.isBlank()) {
 			businessException.addExceptionMessage("Le numéro de téléphone doit être renseigné");
 		}
-
 	}
 
 	private void validerAjouterRue(String rue, BusinessException businessException) {
-
 		if (rue == null || rue.isBlank()) {
 			businessException.addExceptionMessage("La rue doit être renseigné");
 		}
-
 	}
 
 	private void validerAjouterCodePostal(String codePostal, BusinessException businessException) {
-
 		if (codePostal == null || codePostal.isBlank()) {
 			businessException.addExceptionMessage("Le code postal doit être renseigné");
 		}
-
 	}
 
 	private void validerAjouterVille(String ville, BusinessException businessException) {
-
 		if (ville == null || ville.isBlank()) {
 			businessException.addExceptionMessage("La ville doit être renseigné");
 		}
-
 	}
 
 	private void validerAjouterMotDePasse(String motDePasse, String confirmationMotDePasse,
 			BusinessException businessException) {
-
 		if (motDePasse.length() < 6 || confirmationMotDePasse.length() < 6 || motDePasse != confirmationMotDePasse) {
 			businessException
 					.addExceptionMessage("Le mot de passe n'est pas correct ou doit contenir 6 caractères mini");
