@@ -14,7 +14,7 @@
         ${param.finEnchere}
       </li>
       <li class="list-group-item">
-        <a href=<c:url value="${pageContext.request.contextPath}/profil?userid=${param.vendeur.noUtilisateur}"/>>${param.vendeur.pseudo}</a>
+<%--        <a href=<c:url value="${pageContext.request.contextPath}/profil?userid=${param.vendeur}"/>>${param.vendeur}</a>--%>
       </li>
     </ul>
   </div>

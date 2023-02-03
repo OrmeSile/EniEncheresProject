@@ -8,7 +8,7 @@
         <jsp:include page="/WEB-INF/homePage/fragments/_object-card.jsp">
           <jsp:param name="nom" value="${item.nom}"/>
           <jsp:param name="prix" value="${item.prix}"/>
-          <jsp:param name="finEnchere" value="${date}"/>
+          <jsp:param name="finEnchere" value="hello"/>
           <jsp:param name="vendeur" value="${item.utilisateur}"/>
         </jsp:include>
       </div>
