@@ -62,11 +62,11 @@ public class ServletMonProfil extends HttpServlet {
 			
 			try {
 				UtilisateurManager.getUtilisateurManager().ajouter(new Utilisateur (pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse));
+        response.sendRedirect(request.getContextPath());
 			} catch (BusinessException e) {
-				e.printStackTrace();
+				request.setAttribute("errors", e.getExceptionMessages());
+        doGet(request, response);
 			}
-			
-			response.sendRedirect(request.getContextPath());
 		}
 		
 	}

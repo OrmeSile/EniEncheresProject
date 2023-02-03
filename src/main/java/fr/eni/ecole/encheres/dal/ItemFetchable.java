@@ -5,6 +5,6 @@ import fr.eni.ecole.encheres.bo.Utilisateur;
 
 import java.util.ArrayList;
 
-public interface UserFetchable<T> {
-	public ArrayList<T> getAllByUser(Utilisateur user) throws BusinessException;
+public interface ItemFetchable<T, P> extends DAO<T> {
+	public ArrayList<T> getAllByParent(P parent) throws BusinessException;
 }
