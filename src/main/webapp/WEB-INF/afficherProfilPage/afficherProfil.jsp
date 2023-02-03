@@ -18,7 +18,7 @@
 	
 	
 
-	<form action="<%=request.getContextPath() %>/profil" method="post">
+	<form  action="<%=request.getContextPath() %>/profil" method="post">
 		<label for="pseudo">Pseudo : </label><input type="text" id="Pseudo" name="Pseudo" />
 		<br/>
 		<label for="nom">Nom : </label><input type="text" id="Nom" name="Nom" />
@@ -35,8 +35,11 @@
 		<br/>
 		<label for="ville">Ville :</label><input type="text" id="Ville" name="Ville"/>
 	</form>
+	<c:if test="${sessionScope.utilisateur.noUtilisateur eq requestScope.utilisateur.noUtilisateur}">
 	<div>
-	<a href=${pageContext.request.contextPath}/monProfil><button class="button" id="modifierProfil">Modifier</button></a>
+	
+	<a href=<c:url value="/monProfil"/>><button class="button" id="modifierProfil">Modifier</button></a>
 	</div>
+	</c:if>
 </body>
 </html>
