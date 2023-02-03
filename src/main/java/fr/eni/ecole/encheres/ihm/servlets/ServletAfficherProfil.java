@@ -36,7 +36,7 @@ public class ServletAfficherProfil extends HttpServlet {
 			} catch (BusinessException e) {
 				request.setAttribute("errors", e.getExceptionMessages());
 			}
-			request.getRequestDispatcher("/WEB-INF/afficherProfilPage/afficherProfil.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/afficherProfil/afficherProfil.jsp").forward(request, response);
 		}
 
 	}
