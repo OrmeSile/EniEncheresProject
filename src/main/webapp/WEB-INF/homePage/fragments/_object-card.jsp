@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="card text-center">
   <img class="card-img" src="${pageContext.request.contextPath}/img/article_placeholder.jpg" alt="placeholder">
@@ -13,7 +14,7 @@
         ${param.finEnchere}
       </li>
       <li class="list-group-item">
-        ${param.vendeur}
+        <a href=<c:url value="${pageContext.request.contextPath}/profil?userId=${param.vendeur.noUtilisateur}"/>>${param.vendeur.pseudo}</a>
       </li>
     </ul>
   </div>

@@ -2,10 +2,13 @@ package fr.eni.ecole.encheres.dal.jdbc;
 
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
+import fr.eni.ecole.encheres.bo.Categorie;
 import fr.eni.ecole.encheres.bo.EtatVente;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
 import fr.eni.ecole.encheres.dal.ItemFetchable;
+import fr.eni.ecole.encheres.tools.ArticleStateConverter;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +20,7 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
 	private final String ALL = "select * from ARTICLES_VENDUS";
 	private final String USERID = "select * from ARTICLES_VENDUS where no_utilisateur =?";
+	private final String GET_ALL_BY_PARENT = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie where no_utilisateur = ?";
 	private final String GET_ONE_BY_ID = "select * from ARTICLES_VENDUS where no_article = ?";
 	@Override
 	public ArticleVendu getOneById(int id) throws BusinessException {
@@ -96,6 +100,28 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 
 	@Override
 	public ArrayList<ArticleVendu> getAllByParent(Utilisateur parent) throws BusinessException {
+		try(var con = ConnectionProvider.getConnection()){
+			var pr = con.prepareStatement(GET_ALL_BY_PARENT);
+			pr.setInt(1,parent.getNoUtilisateur());
+			var rs = pr.executeQuery();
+			var returnList = new ArrayList<ArticleVendu>();
+			while(rs.next()){
+				var noArticle = rs.getInt(1);
+				var nom = rs.getString(2);
+				var description = rs.getString(3);
+				var dateDebut = LocalDateTime.of(rs.getDate(4).toLocalDate(), rs.getTime(4).toLocalTime());
+				var dateFin = LocalDateTime.of(rs.getDate(5).toLocalDate(), rs.getTime(5).toLocalTime());
+				var prixInitial = rs.getInt(6);
+				var prixVente = rs.getInt(7);
+				var etatVente = ArticleStateConverter.getEnumFromString(rs.getString(10));
+				var image = rs.getString(11);
+				var categorie = new Categorie(rs.getInt(12), rs.getString(13));
+				new ArticleVendu(noArticle, nom, description, dateDebut, dateFin, prixInitial, prixVente, )
+
+			}
+		}catch(SQLException e){
+			throw new BusinessException(e.getMessage());
+		}
 		return null;
 	}
 }
