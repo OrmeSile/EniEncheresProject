@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bll.UtilisateurManager;
 import fr.eni.ecole.encheres.bo.Utilisateur;
-import fr.eni.javaee.suividesrepas.bll.RepasManager;
 
 /**
  * Servlet implementation class ServletLogin

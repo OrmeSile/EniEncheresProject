@@ -20,12 +20,16 @@
               </li>
             </c:when>
             <c:otherwise>
+				<li class="nav-item"><a class="col" href=<c:url value="/monProfil"/>>Mon profil</a></li>
               <li class="nav-item">
                 <a class="col" href=<c:url value="/logout"/>>Déconnexion</a>
               </li>
             </c:otherwise>
           </c:choose>
         </ul>
+      </div>
+      <div>
+
       </div>
     </header>
     <div class="row">
