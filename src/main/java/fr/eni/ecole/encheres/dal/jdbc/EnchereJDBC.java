@@ -1,18 +1,16 @@
 package fr.eni.ecole.encheres.dal.jdbc;
 
 import fr.eni.ecole.encheres.BusinessException;
-import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Enchere;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
-import fr.eni.ecole.encheres.dal.DAO;
-import fr.eni.ecole.encheres.dal.UserFetchable;
+import fr.eni.ecole.encheres.dal.ItemFetchable;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class EnchereJDBC implements DAO<Enchere>, UserFetchable<Enchere> {
+public class EnchereJDBC implements ItemFetchable<Enchere, Utilisateur> {
     private final String GET_ALL_BY_USER =
             "select * from encheres e " +
                     "join ARTICLES_VENDUS a " +
@@ -34,7 +32,6 @@ public class EnchereJDBC implements DAO<Enchere>, UserFetchable<Enchere> {
         return null;
     }
 
-    @Override
     public ArrayList<Enchere> getAllByUser(Utilisateur user) throws BusinessException {
         try(var con = ConnectionProvider.getConnection()){
             var ps = con.prepareStatement(GET_ALL_BY_USER);
@@ -59,5 +56,10 @@ public class EnchereJDBC implements DAO<Enchere>, UserFetchable<Enchere> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public ArrayList<Enchere> getAllByParent(Utilisateur parent) throws BusinessException {
+        return null;
     }
 }

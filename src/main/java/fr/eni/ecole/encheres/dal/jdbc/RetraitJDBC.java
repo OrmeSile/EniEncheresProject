@@ -3,17 +3,10 @@ package fr.eni.ecole.encheres.dal.jdbc;
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Retrait;
-import fr.eni.ecole.encheres.bo.Utilisateur;
-import fr.eni.ecole.encheres.dal.ArticleFetchable;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
-import fr.eni.ecole.encheres.dal.DAO;
 import fr.eni.ecole.encheres.dal.ItemFetchable;
-import fr.eni.ecole.encheres.dal.UserFetchable;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class RetraitJDBC implements ItemFetchable<Retrait, ArticleVendu> {
@@ -38,9 +31,10 @@ public class RetraitJDBC implements ItemFetchable<Retrait, ArticleVendu> {
         }
     }
 
-//    @Override
+
+        @Override
 //    TODO see if needed
-//    public ArrayList<Retrait> getAll() throws BusinessException{
+    public ArrayList<Retrait> getAll() throws BusinessException{
 //        try (var con = ConnectionProvider.getConnection()) {
 //            var rs = con.prepareStatement(GET_ALL).executeQuery();
 //            var list = new ArrayList<Retrait>();
@@ -49,8 +43,8 @@ public class RetraitJDBC implements ItemFetchable<Retrait, ArticleVendu> {
 //        } catch (SQLException e) {
 //            throw new RuntimeException(e);
 //        }
-//        return null;
-//    }
+        return null;
+    }
     @Override
     public  Retrait insert(Retrait object) throws BusinessException {
         try(var con = ConnectionProvider.getConnection()){
@@ -71,7 +65,7 @@ public class RetraitJDBC implements ItemFetchable<Retrait, ArticleVendu> {
             var ps = con.prepareStatement(GET_ALL_BY_PARENT);
             ps.setInt(1 ,parent.getNoArticle());
             var rs = ps.executeQuery();
-            while(rs.next()){
+            if(rs.next()){
                 var rue = rs.getString(1);
                 var codePostal = rs.getString(2);
                 var ville = rs.getString(3);
@@ -83,5 +77,6 @@ public class RetraitJDBC implements ItemFetchable<Retrait, ArticleVendu> {
     catch (SQLException e){
             throw new BusinessException(e.getMessage());
         }
+        return null;
     }
 }
