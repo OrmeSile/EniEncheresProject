@@ -10,4 +10,5 @@ public interface DAO<T> {
 	public ArrayList<T> getAll() throws BusinessException;
 	public T insert(T object) throws BusinessException;
 	public void update(T object) throws BusinessException;
+	public void delete(int id) throws BusinessException;
 }
