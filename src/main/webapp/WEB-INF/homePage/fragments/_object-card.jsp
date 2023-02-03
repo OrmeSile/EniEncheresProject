@@ -12,7 +12,7 @@
       <li class="list-group-item">
         ${param.finEnchere}
       </li>
-      <li class="list-group-item">
+      <a <li class="list-group-item">
         ${param.vendeur}
       </li>
     </ul>

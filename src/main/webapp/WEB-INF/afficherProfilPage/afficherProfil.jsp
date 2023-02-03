@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<title>Page d'accueil</title>
+<title>Profil</title>
 <jsp:include page="/WEB-INF/fragments/_bootstrap-import.jsp" />
 </head>
 <body>
@@ -18,24 +18,25 @@
 	
 	
 
-	<form action="<%=request.getContextPath() %>/ServletAfficherProfil" method="post">
-		<label for="Pseudo">Pseudo : </label><input type="text" id="Pseudo" name="Pseudo" />
+	<form action="<%=request.getContextPath() %>/profil" method="post">
+		<label for="pseudo">Pseudo : </label><input type="text" id="Pseudo" name="Pseudo" />
 		<br/>
-		<label for="Nom">Nom : </label><input type="text" id="Nom" name="Nom" />
+		<label for="nom">Nom : </label><input type="text" id="Nom" name="Nom" />
 		<br/>
-		<label for="Prenom">Prénom :</label><input type="text" id="Prenom" name="Prenom"/>
+		<label for="prenom">Prénom :</label><input type="text" id="Prenom" name="Prenom"/>
 		<br/>
-		<label for="Email">Email :</label><input type="text" id="Email" name="Email"/>
+		<label for="email">Email :</label><input type="text" id="Email" name="Email"/>
 		<br/>
-		<label for="Telephone">Téléphone :</label><input type="text" id="Telephone" name="Telephone"/>
+		<label for="telephone">Téléphone :</label><input type="text" id="Telephone" name="Telephone"/>
 		<br/>
-		<label for="Rue">Rue :</label><input type="text" id="Rue" name="Rue"/>
+		<label for="rue">Rue :</label><input type="text" id="Rue" name="Rue"/>
 		<br/>
 		<label for="cp">Code Postal :</label><input type="text" id="cp" name="cp" />
 		<br/>
-		<label for="Ville">Ville :</label><input type="text" id="Ville" name="Ville"/>
-	
+		<label for="ville">Ville :</label><input type="text" id="Ville" name="Ville"/>
 	</form>
-	
+	<div>
+	<a href=${pageContext.request.contextPath}/monProfil><button class="button" id="modifierProfil">Modifier</button></a>
+	</div>
 </body>
 </html>
