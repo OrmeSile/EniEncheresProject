@@ -60,7 +60,7 @@ public class ServletMonProfil extends HttpServlet {
 			doGet(request, response);
 		} else {
 			
-			UtilisateurManager.getUtilisateurManager().ajouter(new Utilisateur (pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse));
+//			UtilisateurManager.getUtilisateurManager().ajouter(new Utilisateur (pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse));
 			
 			response.sendRedirect(request.getContextPath());
 			

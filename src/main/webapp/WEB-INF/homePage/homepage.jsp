@@ -14,7 +14,7 @@
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav">
           <c:choose>
-            <c:when test="${sessionScope.utilisateur eq null}">
+            <c:when test="${empty sessionScope.utilisateur}">
               <li class="nav-item active">
                 <a class="col" href=<c:url value="/login"/>>S'inscrire/Se connecter</a>
               </li>
@@ -23,6 +23,7 @@
               <li class="nav-item">
                 <a class="col" href=<c:url value="/logout"/>>Déconnexion</a>
               </li>
+
             </c:otherwise>
           </c:choose>
         </ul>
@@ -45,14 +46,10 @@
       </form>
     </div>
     <div class=row>
-      <c:forEach var="article" items="${requestScope.items}">
-        <jsp:include page="/WEB-INF/fragments/_object-Card.jsp">
-          <jsp:param name="nom" value="${article.nomArticle}"/>
-          <jsp:param name="prix" value="${article.prixVente}"/>
-          <jsp:param name="finEnchere" value="${article.dateFinEnchere}"/>
-          <jsp:param name="pseudo" value="${article.utilisateur.pseudo}"/>
+
+        <jsp:include page="/WEB-INF/homePage/fragments/_card-container.jsp">
+          <jsp:param name="items" value="${requestScope.articles}"/>
         </jsp:include>
-      </c:forEach>
     </div>
   </div>
 </body>

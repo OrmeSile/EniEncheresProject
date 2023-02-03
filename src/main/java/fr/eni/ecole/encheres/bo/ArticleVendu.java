@@ -17,7 +17,20 @@ public class ArticleVendu{
 	private Categorie categorieArticle;
 	private String image;
 
-	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, EtatVente etatVente, Utilisateur vendeur, Retrait lieuRetrait, Categorie categorieArticle, String image) {
+	public ArticleVendu(
+			int noArticle,
+			String nomArticle,
+			String description,
+			LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres,
+			int miseAPrix,
+			int prixVente,
+			EtatVente etatVente,
+			Utilisateur vendeur,
+			Retrait lieuRetrait,
+			Categorie categorieArticle,
+			String image)
+	{
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;

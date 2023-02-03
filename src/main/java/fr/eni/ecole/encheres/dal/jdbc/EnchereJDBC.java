@@ -1,16 +1,17 @@
 package fr.eni.ecole.encheres.dal.jdbc;
 
 import fr.eni.ecole.encheres.BusinessException;
+import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Enchere;
 import fr.eni.ecole.encheres.bo.Utilisateur;
+import fr.eni.ecole.encheres.dal.BiItemFetchable;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
-import fr.eni.ecole.encheres.dal.ItemFetchable;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class EnchereJDBC implements ItemFetchable<Enchere, Utilisateur> {
+public class EnchereJDBC implements BiItemFetchable<Enchere, Utilisateur, ArticleVendu> {
     private final String GET_ALL_BY_USER =
             "select * from encheres e " +
                     "join ARTICLES_VENDUS a " +
@@ -60,6 +61,11 @@ public class EnchereJDBC implements ItemFetchable<Enchere, Utilisateur> {
 
     @Override
     public ArrayList<Enchere> getAllByParent(Utilisateur parent) throws BusinessException {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Enchere> getAllBySecondParent(ArticleVendu parent) throws BusinessException {
         return null;
     }
 }

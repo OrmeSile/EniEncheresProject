@@ -1,9 +1,6 @@
 package fr.eni.ecole.encheres.ihm.servlets;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bll.UtilisateurManager;
 import fr.eni.ecole.encheres.bo.Utilisateur;
-import fr.eni.javaee.suividesrepas.bll.RepasManager;
 
 /**
  * Servlet implementation class ServletLogin
