@@ -42,6 +42,12 @@ public class EnchereJDBC implements BiItemFetchable<Enchere, Utilisateur, Articl
     public void update(Enchere object) throws BusinessException {
 
     }
+
+    @Override
+    public void delete(int id) throws BusinessException {
+
+    }
+
     @Override
     public ArrayList<Enchere> getAllByParent(Utilisateur parent) throws BusinessException {
         try(var con = ConnectionProvider.getConnection()){
