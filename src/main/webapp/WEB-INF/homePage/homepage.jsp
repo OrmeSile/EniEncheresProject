@@ -34,7 +34,6 @@
       </div>
     </header>
     <div class="row">
-  <%--TODO js filter for names ?--%>
       <label>Catégorie :
         <select name="selectedCategory">
           <option>Tous</option>
