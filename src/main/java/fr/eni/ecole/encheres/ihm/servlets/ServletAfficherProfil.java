@@ -25,7 +25,7 @@ public class ServletAfficherProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("userId");
+		String id = request.getParameter("userid");
 		if(Objects.isNull(id)||id.isBlank()){
 			request.setAttribute("user", request.getSession().getAttribute("user"));
 			request.getRequestDispatcher("/WEB-INF/afficherProfil/afficherProfil.jsp").forward(request, response);
