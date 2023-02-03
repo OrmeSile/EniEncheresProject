@@ -56,13 +56,22 @@ public class ServletMonProfil extends HttpServlet {
 		
 		if(!confirmationMotDePasse.equals(motDePasse)) {
 			be.addExceptionMessage("Les mots de passe ne sont pas identiques");
+			request.setAttribute("errors", be.getExceptionMessages());
+			doGet(request, response);
 		} else {
+			
+			UtilisateurManager.getUtilisateurManager().ajouter(new Utilisateur (pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse));
+			
+			response.sendRedirect(request.getContextPath());
+			
+			//rediriger l'utilisateur en page d'accueil
+			
     //TODO use user constructor
 			//Utilisateur user = new Utilisateur();
 			//Utilisateur utilisateur = mngr.ajouter();
 			//request.setAttribute("utilisateurCree", utilisateur);
 		}
-		doGet(request, response);
+		
 	}
 
 }

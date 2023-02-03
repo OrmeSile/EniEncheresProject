@@ -29,20 +29,19 @@ public class UtilisateurManager {
 		return dao.seConnecter(pseudo, motDePasse);
 	}
 
-	public Utilisateur ajouter(String pseudo, String nom, String prenom, String email, String telephone, String rue,
-			String codePostal, String ville, String motDePasse, String confirmationMotDePasse)
+	public Utilisateur ajouter(Utilisateur user)
 			throws BusinessException {
 
 		BusinessException be = new BusinessException();
-		validerAjouterPseudo(pseudo, be);
-		validerAjouterNom(nom, be);
-		validerAjouterPrenom(prenom, be);
-		validerAjouterEmail(email, be);
-		validerAjouterTelephone(telephone, be);
-		validerAjouterRue(rue, be);
-		validerAjouterCodePostal(codePostal, be);
-		validerAjouterVille(ville, be);
-		validerAjouterMotDePasse(motDePasse, confirmationMotDePasse, be);
+		validerAjouterPseudo(user.getPseudo(), be);
+		validerAjouterNom(user.getNom(), be);
+		validerAjouterPrenom(user.getPrenom(), be);
+		validerAjouterEmail(user.getEmail(), be);
+		validerAjouterTelephone(user.getTelephone(), be);
+		validerAjouterRue(user.getRue(), be);
+		validerAjouterCodePostal(user.getCodePostal(), be);
+		validerAjouterVille(user.getVille(), be);
+		validerAjouterMotDePasse(user.getMotDePasse(), user.getConfirmationMotDePasse(), be);
 
 		if (be.getExceptionMessages().size() > 0) {
 
