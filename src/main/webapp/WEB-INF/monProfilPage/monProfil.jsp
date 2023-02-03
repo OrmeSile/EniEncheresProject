@@ -19,26 +19,26 @@
 			<label for="pseudo">Pseudo :</label>
 			<input type="text" id="pseudo" name="pseudo" value="${sessionScope.user.pseudo}"/>
 			<label for="nom"> Nom :</label>
-			<input type="text" id="nom" name="nom"/>
+			<input type="text" id="nom" name="nom" value="${sessionScope.user.nom}"/>
 			<br>
 			<label for="prenom"> Prénom :</label>
-			<input type="text" id="prenom" name="prenom"/>
+			<input type="text" id="prenom" name="prenom" value="${sessionScope.user.prenom}"/>
 			<label for="email"> Email :</label>
-			<input type="email" id="email" name="email"/>
+			<input type="email" id="email" name="email" vamue="${sessionScope.user.email}"/>
 			<br>
 			<label for="telephone"> Téléphone :</label>
-			<input type="tel" id="telephone" name="telephone" />
+			<input type="tel" id="telephone" name="telephone" value="${sessionScope.user.telephone}" />
 			<label for="rue"> Rue :</label>
-			<input type="text" id="rue" name="rue"/>
+			<input type="text" id="rue" name="rue" value="${sessionScope.user.rue}"/>
 			<br>
 			<label for="codePostal"> Code Postal :</label>
-			<input type="text" id="codePostal" name="codePostal"/>
+			<input type="text" id="codePostal" name="codePostal" value="${sessionScope.user.codePostal}"/>
 			<label for="ville"> Ville :</label>
-			<input type="text" id="ville" name="ville"/>
+			<input type="text" id="ville" name="ville" value="${sessionScope.user.ville}"/>
 			<br>
 			<c:if test="${!empty sessionScope.utilisateur}">
 				<label for="motDePasseActuel"> Mot de passe actuel :</label>
-				<input type="password" id="motDePasseActuel" name="motDePasseActuel"/>
+				<input type="password" id="motDePasseActuel" name="motDePasseActuel" value="${sessionScope.user.motDePasse}"/>
 			</c:if>
 			<br>
 			<label for="motDePasse"> Mot de passe :</label>
