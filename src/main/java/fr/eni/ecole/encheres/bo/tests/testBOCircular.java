@@ -12,7 +12,7 @@ public class testBOCircular {
         var user2 = new Utilisateur(2, "pseudo", "nom", "prenom","email", "telephone", "rue","codePostal", "ville", "motDePasse", 10, false);
         var article = new ArticleVendu(1,"article", "description", LocalDateTime.now().minusDays(10), LocalDateTime.now(), 10, 20, EtatVente.VENDU, user1, retrait, categorie, "image" );
         var enchere = new Enchere(LocalDateTime.now().minusDays(1), 10, article, user2);
-        user1.getArticles().add(article);
+
         System.out.println(enchere);
     }
 }

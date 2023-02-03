@@ -7,6 +7,7 @@ import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.ArticleFetchable;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
 import fr.eni.ecole.encheres.dal.DAO;
+import fr.eni.ecole.encheres.dal.ItemFetchable;
 import fr.eni.ecole.encheres.dal.UserFetchable;
 
 import java.sql.*;
@@ -15,41 +16,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-public class RetraitJDBC implements DAO<Retrait> {
+public class RetraitJDBC implements ItemFetchable<Retrait, ArticleVendu> {
     private final String GET_ONE_BY_ID = "select rue, code_postal, ville from retraits where no_article = ?";
     private final String INSERT = "insert into retraits values ?,?,?,?";
-    private final String GET_ALL = "select " +
-            "r.no_article," +
-            "r.rue," +
-            "r.code_postal," +
-            "r.ville," +
-            "nom_article," +
-            "a.description," +
-            "date_debut_enchere," +
-            "date_fin_enchere," +
-            "prix_initial," +
-            "prix_vente," +
-            "a.image," +
-            "a.no_utilisateur," +
-            "no_categorie," +
-            "etat_vente," +
-            "pseudo," +
-            "nom," +
-            "prenom," +
-            "email," +
-            "telephone," +
-            "u.rue," +
-            "u.code_postal," +
-            "u.ville," +
-            "mot_de_passe," +
-            "credit," +
-            "administrateur "+
-            "from retraits r " +
-            "join articles_vendus a " +
-            "on r.no_article = a.no_article " +
-            "join utilisateurs u " +
-            "on a.no_utilisateur = u.no_utilisateur";
-
+    private final String GET_ALL_BY_PARENT = "select rue, code_postal, ville from retraits where no_article = ?";
     @Override
     public Retrait getOneById(int id) throws BusinessException {
         try(var con = ConnectionProvider.getConnection()){
@@ -68,42 +38,49 @@ public class RetraitJDBC implements DAO<Retrait> {
         }
     }
 
-    @Override
-    //TODO see if needed
-    public ArrayList<Retrait> getAll() throws BusinessException{
-        try (var con = ConnectionProvider.getConnection()) {
-            var rs = con.prepareStatement(GET_ALL).executeQuery();
-            var list = new ArrayList<Retrait>();
-            while(rs.next()){
-                var itemId = rs.getInt(1);
-                var rue = rs.getString(2);
-                var cp = rs.getString(3);
-                var ville = rs.getString(4);
-                var nomArticle = rs.getString(5);
-                var description = rs.getString(6);
-                var debut = LocalDateTime.of(rs.getDate(7).toLocalDate(),rs.getTime(7).toLocalTime());
-                var fin = LocalDateTime.of(rs.getDate(8).toLocalDate(),rs.getTime(8).toLocalTime());
-                var prixInitial = rs.getInt(9);
-                var prixVente = rs.getInt(10);
-                var image = rs.getString(11);
-                var idUtilisateur = rs.getInt(12);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
+//    @Override
+//    TODO see if needed
+//    public ArrayList<Retrait> getAll() throws BusinessException{
+//        try (var con = ConnectionProvider.getConnection()) {
+//            var rs = con.prepareStatement(GET_ALL).executeQuery();
+//            var list = new ArrayList<Retrait>();
+//            while(rs.next()){
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return null;
+//    }
     @Override
     public  Retrait insert(Retrait object) throws BusinessException {
         try(var con = ConnectionProvider.getConnection()){
             var ps = con.prepareStatement(INSERT);
-            //ps.setInt(1,object.getArticle().getNoArticle());
             ps.setString(2, object.getRue());
             ps.setString(3,object.getCodePostal());
             ps.setString(4, object.getVille());
             ps.executeUpdate();
             return object;
         } catch (SQLException e) {
+            throw new BusinessException(e.getMessage());
+        }
+    }
+
+    @Override
+    public ArrayList<Retrait> getAllByParent(ArticleVendu parent) throws BusinessException {
+        try(var con = ConnectionProvider.getConnection()){
+            var ps = con.prepareStatement(GET_ALL_BY_PARENT);
+            ps.setInt(1 ,parent.getNoArticle());
+            var rs = ps.executeQuery();
+            while(rs.next()){
+                var rue = rs.getString(1);
+                var codePostal = rs.getString(2);
+                var ville = rs.getString(3);
+                var list = new ArrayList<Retrait>();
+                list.add(new Retrait(rue, codePostal, ville));
+                return list;
+            }
+        }
+    catch (SQLException e){
             throw new BusinessException(e.getMessage());
         }
     }

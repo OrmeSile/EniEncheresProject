@@ -5,8 +5,7 @@ import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.EtatVente;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
-import fr.eni.ecole.encheres.dal.DAO;
-import fr.eni.ecole.encheres.dal.UserFetchable;
+import fr.eni.ecole.encheres.dal.ItemFetchable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class ArticleJDBC implements DAO<ArticleVendu>, UserFetchable<ArticleVendu> {
+public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
 	private final String ALL = "select * from ARTICLES_VENDUS";
 	private final String USERID = "select * from ARTICLES_VENDUS where no_utilisateur =?";
@@ -94,13 +93,9 @@ public class ArticleJDBC implements DAO<ArticleVendu>, UserFetchable<ArticleVend
 			throw ex;
 		}
 	}
+
 	@Override
-	public ArrayList<ArticleVendu> getAllByUser(Utilisateur user) throws BusinessException {
-		return null;
-	}
-
-
-	public ArrayList<ArticleVendu> getAllByUserId(int id) throws BusinessException {
+	public ArrayList<ArticleVendu> getAllByParent(Utilisateur parent) throws BusinessException {
 		return null;
 	}
 }
