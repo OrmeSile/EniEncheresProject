@@ -55,7 +55,7 @@ public class EnchereJDBC implements BiItemFetchable<Enchere, Utilisateur, Articl
                 var montant = rs.getInt(4);
                 returnList.add(new Enchere(date, montant, article, parent));
             }
-
+            return returnList;
         }catch(SQLException e){
             throw new BusinessException(e.getMessage());
         }
