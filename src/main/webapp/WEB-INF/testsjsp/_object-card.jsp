@@ -14,7 +14,7 @@
         ${param.finEnchere}
       </li>
       <li>
-        <a href=<c:url value="/profil?userid=${param.vendeur.noUtilisateur}"/>>${param.vendeur.nom}</a>
+        <a href=<c:url value="/profil?userid=${param.id}"/>>${param.vnom}</a>
       </li>
     </ul>
   </div>

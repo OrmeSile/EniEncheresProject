@@ -2,6 +2,7 @@ package fr.eni.ecole.encheres.ihm.servlets.tests;
 
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bll.ArticleManager;
+import fr.eni.ecole.encheres.bo.Utilisateur;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -16,6 +17,7 @@ public class ServletTestCssCard extends HttpServlet {
             var articles = ArticleManager.getManager().getAll();
             request.setAttribute("articles", articles);
             System.out.println(articles.size());
+            articles.stream().forEach(x -> System.out.println(x.getVendeur().getNom()));
         } catch (BusinessException e) {
             throw new RuntimeException(e);
         }

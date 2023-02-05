@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: orme
@@ -13,12 +14,14 @@
     <title>Title</title>
 </head>
 <body>
-<div>
+<div class="card-container">
   <c:forEach items="${requestScope.articles}" var="item">
   <jsp:include page="../testsjsp/_object-card.jsp">
     <jsp:param name="nom" value="${item.nomArticle}"/>
     <jsp:param name="prix" value="${item.prixVente}"/>
-    <jsp:param name="finEnchere" value="${item.dateFinEncheres}"/>
+    <jsp:param name="finEnchere" value="${item.dateFinEncheres.toLocalDate()}"/>
+    <jsp:param name="id" value="${item.vendeur.noUtilisateur}"/>
+    <jsp:param name="vnom" value="${item.vendeur.nom}"/>
   </jsp:include>
   </c:forEach>
 </div>
