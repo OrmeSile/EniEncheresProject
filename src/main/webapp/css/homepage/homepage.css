@@ -1,0 +1,20 @@
+.container-main{
+  display: flex;
+  flex-basis : 100vw;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.container-article-card{
+  display: flex;
+  width: 60vw;
+  flex-flow: wrap;
+}
+.container-form-filter{
+  
+}
+@media (width < 600px){
+  .container-article-card{
+    flex-direction: column;
+  }
+}
