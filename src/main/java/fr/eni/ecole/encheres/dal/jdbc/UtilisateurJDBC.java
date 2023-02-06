@@ -32,11 +32,7 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 				String mdp = rs.getString(10);
 				int credit = rs.getInt(11);
 				boolean administrateur = rs.getBoolean(12);
-				var user = new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp, credit, administrateur);
-				var articles = DAOFactory.getArticleDAO().getAllByParent(user);
-				var encheres = DAOFactory.getEnchereDAO().getAllByParent(user);
-				user.setArticles(articles);
-				user.setEncheres(encheres);
+				return new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp, credit, administrateur);
 			}
 		}catch (SQLException e){
 			throw new BusinessException(e.getMessage());

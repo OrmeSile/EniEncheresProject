@@ -26,6 +26,7 @@ public class ServletHome extends HttpServlet {
 				request.setAttribute("articles", articles);
 			}
 		}catch (BusinessException e){
+			System.out.println(e.getExceptionMessages());
 			request.setAttribute("errors", e.getExceptionMessages());
 		}
 		request.getRequestDispatcher("/WEB-INF/homePage/homepage.jsp").forward(request, response);

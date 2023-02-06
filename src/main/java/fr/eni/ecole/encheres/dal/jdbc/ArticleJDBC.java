@@ -18,8 +18,8 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
 	private final String GET_ALL = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article";
 	private final String GET_ALL_BY_PARENT = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article where no_utilisateur = ?";
-	private final String GET_ONE_BY_ID = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie join RETRAITS r on a.no_article = r.no_article where a.no_article = ?";
-	private final String GET_ALL_BY_CATEGORIE = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie join RETRAITS r on a.no_article = r.no_article where a.no_categorie = ?";
+	private final String GET_ONE_BY_ID = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article where a.no_article = ?";
+	private final String GET_ALL_BY_CATEGORIE = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article where a.no_categorie = ?";
 
 	@Override
 	public ArticleVendu getOneById(int id) throws BusinessException {
@@ -30,8 +30,9 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 			if (rs.next()) {
 				return buildArticleFromResultSet(rs);
 			}
-			throw new BusinessException("no article found");
+			throw new BusinessException("no article found for id " + id);
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new BusinessException(e.getMessage());
 		}
 	}
@@ -48,6 +49,8 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 			}
 			return articles;
 		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("exception");
 			throw new BusinessException(e.getMessage());
 		}
 	}

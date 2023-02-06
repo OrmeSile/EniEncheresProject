@@ -82,6 +82,7 @@ public class EnchereJDBC implements BiItemFetchable<Enchere, Utilisateur, Articl
             }
             return returnList;
         }catch(SQLException e){
+            e.printStackTrace();
             throw new BusinessException(e.getMessage());
         }
     }
