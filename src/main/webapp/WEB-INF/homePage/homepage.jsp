@@ -1,9 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Page d'accueil</title>
-<%--  <jsp:include page="/WEB-INF/fragments/_bootstrap-import.jsp"/>--%>
+  <jsp:include page="/WEB-INF/fragments/_bootstrap-import.jsp"/>
+  <link rel="stylesheet" href="<c:url value="/css/homepage/homepage.css"/>">
   <link rel="stylesheet" href="<c:url value="/css/fragments/_article-card/_article-card.css"/>">
 </head>
 <body>
@@ -34,17 +36,17 @@
     </header>
     <div class="container-main">
       <div class="container-form-filter">
-        <label>Catégorie :
-          <select name="selectedCategory" form="filter">
+        <form id="filter" name="filter" method="post" action=<c:url value="/home"/>>
+          <label for="select-dropdown-categories">Catégorie :</label>
+          <select id="select-dropdown-categories" name="selectedCategory" form="filter">
             <option>Tous</option>
             <c:forEach var="categorie" items="${requestScope.categories}">
               <option>
-                ${categorie.libelle}
+                  ${categorie.libelle}
               </option>
             </c:forEach>
           </select>
-        </label>
-        <form id="filter" name="filter" method="post" action="${requestScope.request.contextPath}/home">
+          <input type="text" name="searchfield" placeholder="">
           <input type="submit" value="Rechercher">
         </form>
       </div>
