@@ -30,7 +30,7 @@
 			</div>
 			<div class="label-field">
 				<label for="email"> Email :</label>
-				<input type="email" id="email" name="email" vamue="${sessionScope.user.email}"/>
+				<input type="email" id="email" name="email" value="${sessionScope.user.email}"/>
 			</div>
 			<div class="label-field">
 				<label for="telephone"> Téléphone :</label>
