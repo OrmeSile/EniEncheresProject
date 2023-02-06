@@ -16,6 +16,7 @@ public class Utilisateur{
 	private int credit;
 	private boolean administrateur;
 	private ArrayList<ArticleVendu> articles;
+	private ArrayList<Enchere> encheres;
 
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse) {
 		this.pseudo = pseudo;
@@ -30,6 +31,7 @@ public class Utilisateur{
 		this.credit = 100;
 		this.administrateur = false;
 		this.articles = new ArrayList<>();
+		this.encheres = new ArrayList<>();
 	}
 
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
@@ -46,6 +48,15 @@ public class Utilisateur{
 		this.credit = credit;
 		this.administrateur = administrateur;
 		this.articles = new ArrayList<>();
+		this.encheres= new ArrayList<>();
+	}
+
+	public ArrayList<Enchere> getEncheres() {
+		return encheres;
+	}
+
+	public void setEncheres(ArrayList<Enchere> encheres) {
+		this.encheres = encheres;
 	}
 
 	public ArrayList<ArticleVendu> getArticles() {

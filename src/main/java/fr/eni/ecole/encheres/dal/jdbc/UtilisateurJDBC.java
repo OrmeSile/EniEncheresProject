@@ -3,12 +3,13 @@ package fr.eni.ecole.encheres.dal.jdbc;
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
+import fr.eni.ecole.encheres.dal.DAOFactory;
 import fr.eni.ecole.encheres.dal.DAOUtilisateur;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class UtilisateurJDBC implements DAOUtilisateur {
-	private final String UPDATE = "update utilisateurs set no_utilisateur=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=?, credit=?, administrateur=? where no_utilisateur = ?)";
+	private final String UPDATE = "update utilisateurs set no_utilisateur=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=?, credit=?, administrateur=? where no_utilisateur = ?";
 	private final String GET_ONE_BY_ID = "select * from utilisateurs  where no_utilisateur = ?";
 	private final String LOGIN = "select no_utilisateur, nom, prenom, email, telephone, rue, code_postal, ville, credit, administrateur from UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?";
 	private final String INSERT = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -19,7 +20,6 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 			var pr = con.prepareStatement(GET_ONE_BY_ID);
 			pr.setInt(1,id);
 			var rs = pr.executeQuery();
-			Utilisateur user = null;
 			if(rs.next()){
 				String pseudo = rs.getString(2);
 				String nom = rs.getString(3);
@@ -32,7 +32,11 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 				String mdp = rs.getString(10);
 				int credit = rs.getInt(11);
 				boolean administrateur = rs.getBoolean(12);
-				return new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp, credit, administrateur);
+				var user = new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp, credit, administrateur);
+				var articles = DAOFactory.getArticleDAO().getAllByParent(user);
+				var encheres = DAOFactory.getEnchereDAO().getAllByParent(user);
+				user.setArticles(articles);
+				user.setEncheres(encheres);
 			}
 		}catch (SQLException e){
 			throw new BusinessException(e.getMessage());
@@ -114,9 +118,12 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 				String ville = rs.getString(8);
 				int credit = rs.getInt(9);
 				boolean administrateur = rs.getBoolean(10);
-				return new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
+				var user = new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
+				user.setEncheres(DAOFactory.getEnchereDAO().getAllByParent(user));
+				user.setArticles(DAOFactory.getArticleDAO().getAllByParent(user));
+				return user;
 			} else {
-				ex.addExceptionMessage("Erreur de connection");
+				ex.addExceptionMessage("Erreur de connexion");
 				throw ex;
 			}
 		} catch (SQLException e) {
