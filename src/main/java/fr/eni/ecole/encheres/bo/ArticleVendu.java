@@ -1,6 +1,7 @@
 package fr.eni.ecole.encheres.bo;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class ArticleVendu {
 	private int noArticle;
@@ -15,6 +16,7 @@ public class ArticleVendu {
 	private Retrait lieuRetrait;
 	private Categorie categorieArticle;
 	private String image;
+	private ArrayList<Enchere> encheres;
 
 	public ArticleVendu(
 			int noArticle,
@@ -28,7 +30,8 @@ public class ArticleVendu {
 			Utilisateur vendeur,
 			Retrait lieuRetrait,
 			Categorie categorieArticle,
-			String image)
+			String image,
+			ArrayList<Enchere> encheres)
 	{
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -42,6 +45,7 @@ public class ArticleVendu {
 		this.lieuRetrait = lieuRetrait;
 		this.categorieArticle = categorieArticle;
 		this.image = image;
+		this.encheres = encheres;
 	}
 
 	public ArticleVendu(String nomArticle, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, EtatVente etatVente, Utilisateur vendeur, Retrait lieuRetrait, Categorie categorieArticle, String image) {
@@ -57,6 +61,7 @@ public class ArticleVendu {
 		this.lieuRetrait = lieuRetrait;
 		this.categorieArticle = categorieArticle;
 		this.image = image;
+		this.encheres = new ArrayList<>();
 	}
 
 	public int getNoArticle() {
@@ -154,6 +159,14 @@ public class ArticleVendu {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public ArrayList<Enchere> getEncheres() {
+		return encheres;
+	}
+
+	public void setEncheres(ArrayList<Enchere> encheres) {
+		this.encheres = encheres;
 	}
 
 	@Override
