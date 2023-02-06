@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 	private final String UPDATE = "update articles_vendus set nom_article=?, 'description'=?,date_debut_enchere = ?,date_fin_enchere = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ?, etat_vente = ?, image = ? where no_article = ?";
 	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
-	private final String GET_ALL = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie join RETRAITS r on a.no_article = r.no_article";
+	private final String GET_ALL = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article";
 	private final String GET_ALL_BY_PARENT = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article where no_utilisateur = ?";
 	private final String GET_ONE_BY_ID = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie join RETRAITS r on a.no_article = r.no_article where a.no_article = ?";
 	@Override
@@ -25,12 +25,10 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 			PreparedStatement ps = con.prepareStatement(GET_ONE_BY_ID);
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
-			ArticleVendu article = null;
 			if(rs.next()) {
-				article = buildArticleFromResultSetWithoutId(rs);
-				article.setNoArticle(id);
+				return buildArticleFromResultSet(rs);
 			}
-			return article;
+			throw new BusinessException("no article found");
 		} catch (SQLException e) {
 			throw new BusinessException(e.getMessage());
 		}
@@ -42,8 +40,7 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 			ResultSet rs = ps.executeQuery();
 			ArrayList<ArticleVendu> articles = new ArrayList<>();
 			while(rs.next()) {
-				ArticleVendu article = buildArticleFromResultSetWithoutId(rs);
-				article.setNoArticle(rs.getInt(1));
+				ArticleVendu article = buildArticleFromResultSet(rs);
 				articles.add(article);
 			}
 			return articles;
@@ -131,8 +128,9 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 		}
 	}
 
-	private ArticleVendu buildArticleFromResultSetWithoutId(ResultSet rs) throws BusinessException{
+	private ArticleVendu buildArticleFromResultSet(ResultSet rs) throws BusinessException{
 		try {
+			var id = rs.getInt(1);
 			var nom = rs.getString(2);
 			var description = rs.getString(3);
 			var dateDebut = LocalDateTime.of(rs.getDate(4).toLocalDate(), rs.getTime(4).toLocalTime());
@@ -145,7 +143,9 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 			boolean retraitIsNull = Stream.of(rs.getString(15), rs.getString(16), rs.getString(17)).anyMatch(Objects::isNull);
 			var parent = DAOFactory.getUtilisateurDAO().getOneById(rs.getInt(8));
 			var retrait = retraitIsNull ? new Retrait(parent.getRue(), parent.getCodePostal(), parent.getVille()) : new Retrait(rs.getString(15), rs.getString(16), rs.getString(17));
-			return new ArticleVendu(nom, description, dateDebut, dateFin, miseAPrix, prixVente, etatVente, parent, retrait, categorie, image);
+			var article = new ArticleVendu(id, nom, description, dateDebut, dateFin, miseAPrix, prixVente, etatVente, parent, retrait, categorie, image);
+			parent.getArticles().add(article);
+			return article;
 		}catch(SQLException e){
 			throw new BusinessException(e.getMessage());
 		}
