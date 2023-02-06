@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<jsp:include page="/WEB-INF/fragments/_bootstrap-import.jsp" />
+<jsp:include page="/WEB-INF/fragments/_normalize-import.jsp" />
 <title>Mon profil</title>
 </head>
 <body>
@@ -14,46 +14,63 @@
 			<jsp:include page="/WEB-INF/fragments/_header.jsp" />
 		</header>
 		<h1>Mon profil</h1>
-		<form method="post" action="${pageContext.request.contextPath}">
+		<form method="post" action=<c:url value="/"/>>
 			<input type="hidden" value="${sessionScope.user.noUtilisateur}">
-			<label for="pseudo">Pseudo :</label>
-			<input type="text" id="pseudo" name="pseudo" value="${sessionScope.user.pseudo}"/>
-			<label for="nom"> Nom :</label>
-			<input type="text" id="nom" name="nom" value="${sessionScope.user.nom}"/>
-			<br>
-			<label for="prenom"> Prénom :</label>
-			<input type="text" id="prenom" name="prenom" value="${sessionScope.user.prenom}"/>
-			<label for="email"> Email :</label>
-			<input type="email" id="email" name="email" vamue="${sessionScope.user.email}"/>
-			<br>
-			<label for="telephone"> Téléphone :</label>
-			<input type="tel" id="telephone" name="telephone" value="${sessionScope.user.telephone}" />
+			<div class="label-field">
+				<label for="pseudo">Pseudo :</label>
+				<input type="text" id="pseudo" name="pseudo" value="${sessionScope.user.pseudo}"/>
+			</div>
+			<div class="label-field">
+				<label for="nom"> Nom :</label>
+				<input type="text" id="nom" name="nom" value="${sessionScope.user.nom}"/>
+			</div>
+			<div class="label-field">
+				<label for="prenom"> Prénom :</label>
+				<input type="text" id="prenom" name="prenom" value="${sessionScope.user.prenom}"/>
+			</div>
+			<div class="label-field">
+				<label for="email"> Email :</label>
+				<input type="email" id="email" name="email" vamue="${sessionScope.user.email}"/>
+			</div>
+			<div class="label-field">
+				<label for="telephone"> Téléphone :</label>
+				<input type="tel" id="telephone" name="telephone" value="${sessionScope.user.telephone}" />
+			</div>
+			<div class="label-field">
 			<label for="rue"> Rue :</label>
-			<input type="text" id="rue" name="rue" value="${sessionScope.user.rue}"/>
-			<br>
-			<label for="codePostal"> Code Postal :</label>
-			<input type="text" id="codePostal" name="codePostal" value="${sessionScope.user.codePostal}"/>
-			<label for="ville"> Ville :</label>
-			<input type="text" id="ville" name="ville" value="${sessionScope.user.ville}"/>
-			<br>
+				<input type="text" id="rue" name="rue" value="${sessionScope.user.rue}"/>
+			</div>
+			<div class="label-field">
+				<label for="codePostal"> Code Postal :</label>
+				<input type="text" id="codePostal" name="codePostal" value="${sessionScope.user.codePostal}"/>
+			</div>
+			<div class="label-field">
+				<label for="ville"> Ville :</label>
+				<input type="text" id="ville" name="ville" value="${sessionScope.user.ville}"/>
+			</div>
 			<c:if test="${!empty sessionScope.utilisateur}">
+			<div class="label-field">
 				<label for="motDePasseActuel"> Mot de passe actuel :</label>
 				<input type="password" id="motDePasseActuel" name="motDePasseActuel" value="${sessionScope.user.motDePasse}"/>
+			</div>
 			</c:if>
-			<br>
-			<label for="motDePasse"> Mot de passe :</label>
-			<input type="password" id="motDePasse" name="motDePasse"/>
-			<label for="confirmationMotDePasse"> Confirmation :</label>
-			<input type="password" id="confirmationMotDePasse" name="confirmationMotDePasse"/>
+			<div class="label-field">
+				<label for="motDePasse"> Mot de passe :</label>
+				<input type="password" id="motDePasse" name="motDePasse"/>
+			</div>
+			<div class="label-field">
+				<label for="confirmationMotDePasse"> Confirmation :</label>
+				<input type="password" id="confirmationMotDePasse" name="confirmationMotDePasse"/>
+			</div>
 		</form>
 		<c:choose>
 			<c:when test="${!empty sessionScope.utilisateur}">
 				<input type="submit" value="Enregistrer"/>
-				<a href=${pageContext.request.contextPath}><button class="shadow__btn">Supprimer mon compte</button></a>
+				<a href=${pageContext.request.contextPath}><button>Supprimer mon compte</button></a>
 			</c:when>
 			<c:otherwise>
 				<input type="submit" value="Créer"/>
-				<a href=${pageContext.request.contextPath}><button class="shadow__btn">Annuler</button></a>
+				<a href=${pageContext.request.contextPath}><button>Annuler</button></a>
 			</c:otherwise>
 		</c:choose>
 	</div>
