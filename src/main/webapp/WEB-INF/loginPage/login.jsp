@@ -5,7 +5,8 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<jsp:include page="/WEB-INF/fragments/_bootstrap-import.jsp"/>
+		<jsp:include page="/WEB-INF/fragments/_normalize-import.jsp"/>
+		<jsp:include page=""
 		<title>Connexion</title>
 	</head>
 	<body>

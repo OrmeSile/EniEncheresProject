@@ -19,17 +19,17 @@
         <ul class="navbar-clickable-list">
           <c:choose>
             <c:when test="${empty sessionScope.utilisateur}">
-              <li class="navbar-clickable active">
-                <a class="col" href=<c:url value="/login"/>>S'inscrire/Se connecter</a>
-              </li>
+              <a class="navbar-clickable active" href=<c:url value="/login"/>>
+                <li>S'inscrire/Se connecter</li>
+              </a>
             </c:when>
             <c:otherwise>
-              <li class="navbar-clickable">
-                <a class="col" href=<c:url value="/monProfil"/>>Mon profil</a>
-              </li>
-              <li class="navbar-clickable">
-                <a class="col" href=<c:url value="/logout"/>>Déconnexion</a>
-              </li>
+              <a class="navbar-clickable" href=<c:url value="/monProfil"/>>
+                <li>Mon Profil</li>
+              </a>
+              <a class="col" href=<c:url value="/logout"/>>
+                <li class="navbar-clickable">Déconnexion</li>
+              </a>
             </c:otherwise>
           </c:choose>
         </ul>
