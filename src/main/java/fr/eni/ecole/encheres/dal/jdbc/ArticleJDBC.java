@@ -119,6 +119,8 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 				var categorie = new Categorie(rs.getInt(12), rs.getString(13));
 				var retrait = new Retrait(rs.getString(15), rs.getString(16), rs.getString(17));
 				var article = new ArticleVendu(noArticle, nom, description, dateDebut, dateFin, miseAPrix, prixVente, etatVente, parent, retrait, categorie, image);
+				var encheres = DAOFactory.getEnchereDAO().getAllBySecondParent(article);
+				article.setEncheres(encheres);
 				returnList.add(article);
 			}
 			parent.setArticles(returnList);

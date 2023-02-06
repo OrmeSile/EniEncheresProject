@@ -68,6 +68,21 @@ public class EnchereJDBC implements BiItemFetchable<Enchere, Utilisateur, Articl
     }
     @Override
     public ArrayList<Enchere> getAllBySecondParent(ArticleVendu parent) throws BusinessException {
-        return null;
+
+        try(var con = ConnectionProvider.getConnection()){
+            var pr = con.prepareStatement(GET_ALL_BY_ARTICLE);
+            pr.setInt(1, parent.getNoArticle());
+            var rs = pr.executeQuery();
+            var returnList = new ArrayList<Enchere>();
+            while(rs.next()){
+                var user = DAOFactory.getUtilisateurDAO().getOneById(rs.getInt(1));
+                var date = LocalDateTime.of(rs.getDate(3).toLocalDate(), rs.getTime(3).toLocalTime());
+                var montant = rs.getInt(4);
+                returnList.add(new Enchere(date, montant, parent, user));
+            }
+            return returnList;
+        }catch(SQLException e){
+            throw new BusinessException(e.getMessage());
+        }
     }
 }

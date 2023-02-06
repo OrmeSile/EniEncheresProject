@@ -3,7 +3,8 @@
 <html>
 <head>
   <title>Page d'accueil</title>
-  <jsp:include page="/WEB-INF/fragments/_bootstrap-import.jsp"/>
+<%--  <jsp:include page="/WEB-INF/fragments/_bootstrap-import.jsp"/>--%>
+  <link rel="stylesheet" href="<c:url value="/css/fragments/_article-card/_article-card.css"/>">
 </head>
 <body>
   <div class="container-fluid">
@@ -49,11 +50,18 @@
       </form>
     </div>
     <div class=row>
-
-        <jsp:include page="/WEB-INF/homePage/fragments/_card-container.jsp">
-          <jsp:param name="items" value="${requestScope.articles}"/>
+      <c:forEach items="${requestScope.articles}" var="item">
+        <div class="col-lg-6 col-xl-4">
+        <jsp:include page="/WEB-INF/homePage/fragments/_object-card.jsp">
+          <jsp:param name="nom" value="${item.nomArticle}"/>
+          <jsp:param name="prix" value="${item.prixVente}"/>
+          <jsp:param name="finEnchere" value="${item.dateFinEncheres.toLocalDate()}"/>
+          <jsp:param name="id" value="${item.vendeur.noUtilisateur}"/>
+          <jsp:param name="vnom" value="${item.vendeur.nom}"/>
         </jsp:include>
+        </div>
+      </c:forEach>
+      </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>
