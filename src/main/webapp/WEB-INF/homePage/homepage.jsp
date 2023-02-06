@@ -24,7 +24,7 @@
               </a>
             </c:when>
             <c:otherwise>
-              <a class="navbar-clickable" href=<c:url value="/monProfil"/>>
+              <a class="navbar-clickable" href=<c:url value="/profil"/>>
                 <li>Mon Profil</li>
               </a>
               <a class="navbar-clickable" href=<c:url value="/logout"/>>

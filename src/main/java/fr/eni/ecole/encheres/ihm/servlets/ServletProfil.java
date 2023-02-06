@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bll.UtilisateurManager;
 import fr.eni.ecole.encheres.bo.Utilisateur;
-@WebServlet("/profil")
+@WebServlet(name="ServletProfil", value="/profil/modifier")
 public class ServletProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
