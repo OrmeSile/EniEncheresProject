@@ -25,10 +25,6 @@
   height: 5vh;
 }
 .navbar-clickable{
-
-}
-.navbar-clickable{
-  padding: 0 10px;
   display: flex;
   min-height: inherit;
   height: inherit;
@@ -38,6 +34,7 @@
   color: #444;
   text-decoration: none;
   font-size: 1.2em;
+  padding: 0 10px;
 }
 .navbar-clickable:hover{
   background: #EFEFEF;
