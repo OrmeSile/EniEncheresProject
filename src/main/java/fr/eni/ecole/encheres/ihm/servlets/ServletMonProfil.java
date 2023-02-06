@@ -37,10 +37,7 @@ public class ServletMonProfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		UtilisateurManager mngr = UtilisateurManager.getUtilisateurManager();
-		
-		
 		String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");
@@ -51,18 +48,19 @@ public class ServletMonProfil extends HttpServlet {
 		String ville = request.getParameter("ville");
 		String motDePasse = request.getParameter("motDePasse");
 		String confirmationMotDePasse = request.getParameter("confirmationMotDePasse");
-		
 		BusinessException be = new BusinessException();
-		
 		if(!confirmationMotDePasse.equals(motDePasse)) {
 			be.addExceptionMessage("Les mots de passe ne sont pas identiques");
+			request.setAttribute("errors", be.getExceptionMessages());
+			doGet(request, response);
 		} else {
-    //TODO use user constructor
-			//Utilisateur user = new Utilisateur();
-			//Utilisateur utilisateur = mngr.ajouter();
-			//request.setAttribute("utilisateurCree", utilisateur);
+			try {
+				UtilisateurManager.getUtilisateurManager().ajouter(new Utilisateur (pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse));
+        	response.sendRedirect(request.getContextPath());
+			} catch (BusinessException e) {
+				request.setAttribute("errors", e.getExceptionMessages());
+        		doGet(request, response);
+			}
 		}
-		doGet(request, response);
 	}
-
 }

@@ -1,6 +1,7 @@
 package fr.eni.ecole.encheres.bo;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Retrait {
 	String rue;
@@ -54,9 +55,25 @@ public class Retrait {
 
 	@Override
 	public String toString() {
-		return "Retrait [rue=" + rue + ", codePostal=" + codePostal + ", ville=" + ville + "]";
+		return "Retrait{" +
+				"rue='" + rue + '\'' +
+				", codePostal='" + codePostal + '\'' +
+				", ville='" + ville + '\'' +
+				'}';
 	}
-		
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Retrait retrait = (Retrait) o;
+		return rue.equals(retrait.rue) && codePostal.equals(retrait.codePostal) && ville.equals(retrait.ville) && article.equals(retrait.article);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(rue, codePostal, ville, article);
+	}
 }
 /*CREATE TABLE RETRAITS (
 		no_article       INTEGER NOT NULL,

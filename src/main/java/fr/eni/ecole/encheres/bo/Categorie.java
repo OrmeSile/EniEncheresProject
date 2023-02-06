@@ -3,39 +3,27 @@ package fr.eni.ecole.encheres.bo;
 import fr.eni.ecole.encheres.BusinessException;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Categorie {
-	private ArrayList<ArticleVendu> articles;
+	private int noCategorie;
 	private String libelle;
-	private int id;
 
-	public Categorie() {
-		articles = new ArrayList<>();
-		libelle = null;
-	}
-	
-	public Categorie(ArrayList<ArticleVendu> articles, String libelle, int id) {
-		super();
-		this.articles = articles;
+	public Categorie(int noCategorie, String libelle) {
+		this.noCategorie = noCategorie;
 		this.libelle = libelle;
-		this.id = id;
 	}
 
 	public Categorie(String libelle) {
 		this.libelle = libelle;
-		articles = new ArrayList<>();
-	}
-	public Categorie (ArrayList<ArticleVendu> articles, String libelle){
-		this.articles = articles;
-		this.libelle = libelle;
 	}
 
-	public ArrayList<ArticleVendu> getArticles() {
-		return articles;
+	public int getNoCategorie() {
+		return noCategorie;
 	}
 
-	public void setArticles(ArrayList<ArticleVendu> articles) {
-		this.articles = articles;
+	public void setNoCategorie(int noCategorie) {
+		this.noCategorie = noCategorie;
 	}
 
 	public String getLibelle() {
@@ -45,30 +33,24 @@ public class Categorie {
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
-	
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public void ajouterArticle(ArticleVendu article){
-		articles.add(article);
-	}
-	public ArticleVendu getArticleById(int id) throws BusinessException {
-		for( ArticleVendu a : articles){
-			if(a.getNoArticle() == id){
-				return a;
-			}
-		}
-		throw new BusinessException("Article id -> "+id + "introuvable dans la catégorie "+this.libelle);
-	}
 
 	@Override
 	public String toString() {
-		return "Categorie{" + "articles=" + articles + ", libelle='" + libelle + '\'' + '}';
+		return "Categorie{" + "noCategorie=" + noCategorie + ", libelle='" + libelle + '\'' + '}';
+
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Categorie categorie = (Categorie) o;
+		return noCategorie == categorie.noCategorie && libelle.equals(categorie.libelle);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(noCategorie, libelle);
 	}
 }

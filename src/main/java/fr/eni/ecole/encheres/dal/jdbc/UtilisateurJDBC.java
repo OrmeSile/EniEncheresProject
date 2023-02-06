@@ -1,35 +1,103 @@
 package fr.eni.ecole.encheres.dal.jdbc;
 
 import fr.eni.ecole.encheres.BusinessException;
-import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
 import fr.eni.ecole.encheres.dal.DAOFactory;
 import fr.eni.ecole.encheres.dal.DAOUtilisateur;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class UtilisateurJDBC implements DAOUtilisateur {
+	private final String UPDATE = "update utilisateurs set no_utilisateur=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=?, credit=?, administrateur=? where no_utilisateur = ?";
+	private final String GET_ONE_BY_ID = "select * from utilisateurs  where no_utilisateur = ?";
 	private final String LOGIN = "select no_utilisateur, nom, prenom, email, telephone, rue, code_postal, ville, credit, administrateur from UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?";
-	private final String UTILISATEUR = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+	private final String INSERT = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 	@Override
-	public Utilisateur getOneById(int id) {
+	public Utilisateur getOneById(int id) throws BusinessException {
+		try(var con = ConnectionProvider.getConnection()){
+			var pr = con.prepareStatement(GET_ONE_BY_ID);
+			pr.setInt(1,id);
+			var rs = pr.executeQuery();
+			if(rs.next()){
+				String pseudo = rs.getString(2);
+				String nom = rs.getString(3);
+				String prenom = rs.getString(4);
+				String email = rs.getString(5);
+				String telephone = rs.getString(6);
+				String rue = rs.getString(7);
+				String codePostal = rs.getString(8);
+				String ville = rs.getString(9);
+				String mdp = rs.getString(10);
+				int credit = rs.getInt(11);
+				boolean administrateur = rs.getBoolean(12);
+				var user = new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp, credit, administrateur);
+				var articles = DAOFactory.getArticleDAO().getAllByParent(user);
+				var encheres = DAOFactory.getEnchereDAO().getAllByParent(user);
+				user.setArticles(articles);
+				user.setEncheres(encheres);
+			}
+		}catch (SQLException e){
+			throw new BusinessException(e.getMessage());
+		}
 		return null;
 	}
-
 	@Override
 	public ArrayList<Utilisateur> getAll() {
 		return null;
 	}
 
 	@Override
-	public Utilisateur insert(Utilisateur object) {
-		return null;
+	public Utilisateur insert(Utilisateur object) throws BusinessException {
+		try(var con = ConnectionProvider.getConnection()){
+			var ps = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, object.getPseudo());
+			ps.setString(2, object.getNom());
+			ps.setString(3, object.getPrenom());
+			ps.setString(4, object.getEmail());
+			ps.setString(5, object.getTelephone());
+			ps.setString(6, object.getRue());
+			ps.setString(7, object.getCodePostal());
+			ps.setString(8, object.getVille());
+			ps.setString(9, object.getMotDePasse());
+			ps.setInt(10, object.getCredit());
+			ps.setBoolean(11, object.isAdministrateur());
+			var rs = ps.executeQuery();
+			if(rs.next()){
+				object.setNoUtilisateur(rs.getInt(1));
+				return object;
+			}
+			throw new BusinessException("erreur d'insertion");
+		} catch (SQLException e) {
+			throw new BusinessException(e.getMessage());
+		}
+	}
+
+	@Override
+	public void update(Utilisateur object) throws BusinessException {
+		try(var con = ConnectionProvider.getConnection()){
+			var ps = con.prepareStatement(UPDATE);
+			ps.setString(1, object.getPseudo());
+			ps.setString(2, object.getNom());
+			ps.setString(3, object.getPrenom());
+			ps.setString(4, object.getEmail());
+			ps.setString(5, object.getTelephone());
+			ps.setString(6, object.getRue());
+			ps.setString(7, object.getCodePostal());
+			ps.setString(8, object.getVille());
+			ps.setString(9, object.getMotDePasse());
+			ps.setInt(10, object.getCredit());
+			ps.setBoolean(11, object.isAdministrateur());
+			ps.setInt(12, object.getNoUtilisateur());
+		}catch (SQLException e){
+			throw new BusinessException(e.getMessage());
+		}
+	}
+
+	@Override
+	public void delete(int id) throws BusinessException {
+
 	}
 
 	public Utilisateur seConnecter(String pseudo, String motDePasse) throws BusinessException {
@@ -50,12 +118,12 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 				String ville = rs.getString(8);
 				int credit = rs.getInt(9);
 				boolean administrateur = rs.getBoolean(10);
-//				TODO: uncomment + implement in DAOFactory + required JDBC
-//				ArrayList<ArticleVendu> articles = DAOFactory.getArticleDAO().getAllByUserId(id);
-//				ArrayList<Enchere> encheres = DAOFactory.getEnchereDAO().getAllByUserId(id);
-				return new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
+				var user = new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
+				user.setEncheres(DAOFactory.getEnchereDAO().getAllByParent(user));
+				user.setArticles(DAOFactory.getArticleDAO().getAllByParent(user));
+				return user;
 			} else {
-				ex.addExceptionMessage("Erreur de connection");
+				ex.addExceptionMessage("Erreur de connexion");
 				throw ex;
 			}
 		} catch (SQLException e) {

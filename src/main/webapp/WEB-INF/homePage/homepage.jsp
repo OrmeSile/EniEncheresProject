@@ -3,7 +3,8 @@
 <html>
 <head>
   <title>Page d'accueil</title>
-  <jsp:include page="/WEB-INF/fragments/_bootstrap-import.jsp"/>
+<%--  <jsp:include page="/WEB-INF/fragments/_bootstrap-import.jsp"/>--%>
+  <link rel="stylesheet" href="<c:url value="/css/fragments/_article-card/_article-card.css"/>">
 </head>
 <body>
   <div class="container-fluid">
@@ -14,22 +15,26 @@
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav">
           <c:choose>
-            <c:when test="${sessionScope.utilisateur eq null}">
+            <c:when test="${empty sessionScope.utilisateur}">
               <li class="nav-item active">
                 <a class="col" href=<c:url value="/login"/>>S'inscrire/Se connecter</a>
               </li>
             </c:when>
             <c:otherwise>
+				<li class="nav-item"><a class="col" href=<c:url value="/monProfil"/>>Mon profil</a></li>
               <li class="nav-item">
                 <a class="col" href=<c:url value="/logout"/>>Déconnexion</a>
               </li>
+
             </c:otherwise>
           </c:choose>
         </ul>
       </div>
+      <div>
+
+      </div>
     </header>
     <div class="row">
-  <%--TODO js filter for names ?--%>
       <label>Catégorie :
         <select name="selectedCategory">
           <option>Tous</option>
@@ -45,15 +50,18 @@
       </form>
     </div>
     <div class=row>
-      <c:forEach var="article" items="${requestScope.items}">
-        <jsp:include page="/WEB-INF/fragments/_object-Card.jsp">
-          <jsp:param name="nom" value="${article.nomArticle}"/>
-          <jsp:param name="prix" value="${article.prixVente}"/>
-          <jsp:param name="finEnchere" value="${article.dateFinEnchere}"/>
-          <jsp:param name="pseudo" value="${article.utilisateur.pseudo}"/>
+      <c:forEach items="${requestScope.articles}" var="item">
+        <div class="col-lg-6 col-xl-4">
+        <jsp:include page="/WEB-INF/homePage/fragments/_object-card.jsp">
+          <jsp:param name="nom" value="${item.nomArticle}"/>
+          <jsp:param name="prix" value="${item.prixVente}"/>
+          <jsp:param name="finEnchere" value="${item.dateFinEncheres.toLocalDate()}"/>
+          <jsp:param name="id" value="${item.vendeur.noUtilisateur}"/>
+          <jsp:param name="vnom" value="${item.vendeur.nom}"/>
         </jsp:include>
+        </div>
       </c:forEach>
+      </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>
