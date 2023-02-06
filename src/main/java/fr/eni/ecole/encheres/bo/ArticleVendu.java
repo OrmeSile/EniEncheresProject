@@ -2,6 +2,7 @@ package fr.eni.ecole.encheres.bo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ArticleVendu {
 	private int noArticle;
@@ -184,6 +185,19 @@ public class ArticleVendu {
 
 	public void setEncheres(ArrayList<Enchere> encheres) {
 		this.encheres = encheres;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		ArticleVendu that = (ArticleVendu) o;
+		return noArticle == that.noArticle && miseAPrix == that.miseAPrix && prixVente == that.prixVente && nomArticle.equals(that.nomArticle) && description.equals(that.description) && dateDebutEncheres.equals(that.dateDebutEncheres) && dateFinEncheres.equals(that.dateFinEncheres) && etatVente == that.etatVente && vendeur.equals(that.vendeur) && lieuRetrait.equals(that.lieuRetrait) && categorieArticle.equals(that.categorieArticle) && Objects.equals(image, that.image);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix, prixVente, etatVente, vendeur, lieuRetrait, categorieArticle, image);
 	}
 
 	@Override

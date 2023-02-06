@@ -46,7 +46,7 @@ public class ServletUpdateUtilisateur extends HttpServlet {
 		BusinessException be = new BusinessException();
 		try {
 			UtilisateurManager.getUtilisateurManager().seConnecter(pseudo, confirmationMotDePasse);
-			Utilisateur user = new Utilisateur (//voir classe utilisateur tout prendre id y compris);
+			//Utilisateur user = new Utilisateur (//voir classe utilisateur tout prendre id y compris);
 					//mettre les champs ici.
 		} catch (BusinessException e) {
 			request.setAttribute("errors", e.getExceptionMessages());
