@@ -4,7 +4,7 @@
 <html>
 <head>
   <title>Page d'accueil</title>
-  <jsp:include page="/WEB-INF/fragments/_bootstrap-import.jsp"/>
+  <jsp:include page="/WEB-INF/fragments/_normalize-import.jsp"/>
   <link rel="stylesheet" href="<c:url value="/css/shared/header.css"/>">
   <link rel="stylesheet" href="<c:url value="/css/homepage/homepage.css"/>">
   <link rel="stylesheet" href="<c:url value="/css/fragments/_article-card/_article-card.css"/>">

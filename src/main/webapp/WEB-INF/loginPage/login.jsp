@@ -6,19 +6,18 @@
 	<head>
 		<meta charset="UTF-8">
 		<jsp:include page="/WEB-INF/fragments/_normalize-import.jsp"/>
-		<jsp:include page=""
+		<link rel="stylesheet" href="<c:url value="/css/shared/header.css"/>">
 		<title>Connexion</title>
 	</head>
 	<body>
 	<div class="container">
-		<header class="row navbar navbar-expand-md bg-body-tertiary">
+		<header class="navbar">
 			<jsp:include page="/WEB-INF/fragments/_header.jsp" />
 		</header>
 		<c:if test="${!empty sessionScope.errors}">
-			<div class="alert alert-danger" role="alert">
+			<div class="error" role="alert">
 				<strong>Erreur!</strong>
 				<ul>
-
 					<c:forEach var="message" items="${sessionScope.errors}">
 						<li>${message}</li>
 					</c:forEach>
