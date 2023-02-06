@@ -38,7 +38,6 @@ public class ServletLogin extends HttpServlet {
 			throws ServletException, IOException {
 		String identifiant = request.getParameter("identifiant");
 		String motDePasse = request.getParameter("mdp");
-
 		try {
 			Utilisateur utilisateur = UtilisateurManager.getUtilisateurManager().seConnecter(identifiant, motDePasse);
 			request.getSession().setAttribute("user", utilisateur);

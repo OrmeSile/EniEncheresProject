@@ -28,6 +28,7 @@
 
 }
 .navbar-clickable{
+  padding: 0 10px;
   display: flex;
   min-height: inherit;
   height: inherit;
