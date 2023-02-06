@@ -34,40 +34,30 @@ public class ArticleVendu {
 			String image,
 			ArrayList<Enchere> encheres)
 	{
+		this(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix, prixVente, etatVente, vendeur, lieuRetrait, categorieArticle, image);
 		this.noArticle = noArticle;
-		this.nomArticle = nomArticle;
-		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
-		this.dateFinEncheres = dateFinEncheres;
-		this.miseAPrix = miseAPrix;
-		this.prixVente = prixVente;
-		this.etatVente = etatVente;
-		this.vendeur = vendeur;
-		this.lieuRetrait = lieuRetrait;
-		this.categorieArticle = categorieArticle;
-		this.image = image;
 		this.encheres = encheres;
 	}
 
-	public ArticleVendu(String nomArticle, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, EtatVente etatVente, Utilisateur vendeur, Retrait lieuRetrait, Categorie categorieArticle, String image) {
-		this.noArticle = 0;
-		this.nomArticle = nomArticle;
-		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
-		this.dateFinEncheres = dateFinEncheres;
-		this.miseAPrix = miseAPrix;
-		this.prixVente = prixVente;
-		this.etatVente = etatVente;
-		this.vendeur = vendeur;
-		this.lieuRetrait = lieuRetrait;
-		this.categorieArticle = categorieArticle;
-		this.image = image;
+	public ArticleVendu(
+			int noArticle,
+			String nomArticle,
+			String description,
+			LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres,
+			int miseAPrix,
+			int prixVente,
+			EtatVente etatVente,
+			Utilisateur vendeur,
+			Retrait lieuRetrait,
+			Categorie categorieArticle,
+			String image) {
+		this(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix, prixVente, etatVente, vendeur, lieuRetrait, categorieArticle, image);
+		this.noArticle = noArticle;
 		this.encheres = new ArrayList<>();
 	}
 
-	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, EtatVente etatVente,
-						Utilisateur vendeur, Retrait lieuRetrait, Categorie categorieArticle, String image) {
-		this.noArticle = noArticle;
+	private ArticleVendu(String nomArticle, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, EtatVente etatVente, Utilisateur vendeur, Retrait lieuRetrait, Categorie categorieArticle, String image) {
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
