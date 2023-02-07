@@ -2,6 +2,7 @@ package fr.eni.ecole.encheres.bll;
 
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
+import fr.eni.ecole.encheres.bo.Categorie;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.DAOFactory;
 import fr.eni.ecole.encheres.dal.ItemFetchable;
@@ -22,6 +23,10 @@ public class ArticleManager {
 			manager = new ArticleManager();
 		}
 		return manager;
+	}
+	public ArrayList<ArticleVendu> getFilteredResults(String query, Categorie cat, Utilisateur user, boolean isSell, boolean isBuySelf, boolean isOpen, boolean isBuyWon, boolean isSellPre, boolean isSellFin){
+		//TODO manager filtered
+		return null;
 	}
 
 	public ArticleVendu getOneArticleById(int id) throws BusinessException {
