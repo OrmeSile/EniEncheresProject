@@ -65,29 +65,29 @@
                   <div class="checkbox-group-container">
                     <div class="checkbox-group">
                       <div>
-                        <input type="checkbox" value="open" id="bopen">
+                        <input type="checkbox" id="bopen">
                         <label for="bopen">enchères ouvertes</label>
                       </div>
                       <div>
-                        <input type="checkbox" value="self" id="bself">
+                        <input type="checkbox" id="bself">
                         <label for="bself">mes enchères</label>
                       </div>
                       <div>
-                        <input type="checkbox" value="won" id="bwon">
+                        <input type="checkbox" id="bwon">
                         <label for="bwon">mes enchères remportées</label>
                       </div>
                     </div>
                     <div class="checkbox-group">
                       <div>
-                        <input type="checkbox" value="open" id="sopen">
+                        <input type="checkbox" id="sopen">
                         <label for="sopen">mes ventes en cours</label>
                       </div>
                       <div>
-                        <input type="checkbox" value="self" id="sself">
+                        <input type="checkbox" id="sself">
                         <label for="sself">ventes non débutées</label>
                       </div>
                       <div>
-                        <input type="checkbox" value="won" id="swon">
+                        <input type="checkbox" id="swon">
                         <label for="swon">ventes terminées</label>
                       </div>
                     </div>

@@ -2,14 +2,18 @@ package fr.eni.ecole.encheres.dal.jdbc;
 
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.*;
+import fr.eni.ecole.encheres.bo.utils.FilterTags;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
 import fr.eni.ecole.encheres.dal.DAOFactory;
 import fr.eni.ecole.encheres.dal.ItemFetchable;
+import fr.eni.ecole.encheres.dal.utils.QueryParams;
 import fr.eni.ecole.encheres.tools.ArticleStateConverter;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -17,6 +21,7 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 	private final String UPDATE = "update articles_vendus set nom_article=?, 'description'=?,date_debut_enchere = ?,date_fin_enchere = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ?, etat_vente = ?, image = ? where no_article = ?";
 	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
 	private final String GET_ALL = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article";
+	private final String _AND = " AND ";
 
 	@Override
 	public ArticleVendu getOneById(int id) throws BusinessException {
@@ -92,6 +97,76 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 		}
 	}
 
+	public Map<String, ArrayList<QueryParams>> buildFilteredQuery(FilterTags tags) {
+		var sb = new StringBuilder();
+		ArrayList<String> stateParams = new ArrayList<>();
+		var itemState = new StringBuilder("a.etat_vente IN (");
+		var list = new ArrayList<QueryParams>();
+		sb.append(GET_ALL).append("left join ENCHERES n on n.no_article = a.no_article WHERE ");
+		if(tags.getCount() == 0){
+			sb.append("e.no_utilisateur = ?").append(_AND).append("a.etat_vente = 'EC'");
+			list.add(QueryParams.USER);
+			var map = new HashMap<String, ArrayList<QueryParams>>();
+			map.put(sb.toString(), list);
+			return map;
+		}
+		if(tags.isOpen()) stateParams.add("EC");
+		if(tags.isSellPre()) stateParams.add("CR");
+		if(tags.isBuyWon() || tags.isSellFin()){
+			stateParams.add("VD");
+			stateParams.add("RT");
+		}
+		if(tags.isQuery()){
+			sb.append("a.nom_article LIKE %?%");
+			list.add(QueryParams.QUERY);
+			if (decrCount(tags)){
+				sb.append(_AND);
+			}
+		}
+		if(tags.isCat()) {
+			sb.append("a.no_categorie = ?");
+			list.add(QueryParams.CATEGORY);
+			if (decrCount(tags)) {
+				sb.append(_AND);
+			}
+		}
+		if(tags.isSell()) {
+			sb.append("a.no_utilisateur = ?");
+			list.add(QueryParams.USER);
+			if (decrCount(tags)) {
+				sb.append(_AND);
+			}
+		}else {
+			if (tags.isBuySelf()) {
+				sb.append("e.no_utilisateur = ?");
+				list.add(QueryParams.USER);
+				if (decrCount(tags)) {
+					sb.append(_AND);
+				}
+			}
+			if (tags.isBuyWon()) {
+				sb.append("n.no_utilisateur = ?");
+				list.add(QueryParams.USER);
+				if (decrCount(tags)) {
+					sb.append(_AND);
+				}
+			}
+		}
+		if (stateParams.size() > 0) {
+			if(tags.isSell()){
+				stateParams.forEach(x -> itemState.append("'").append(x).append("'").append(","));
+				itemState.append(")");
+			}
+			sb.append(itemState);
+		}
+		var map = new HashMap<String, ArrayList<QueryParams>>();
+		map.put(sb.toString(), list);
+		return map;
+	}
+	private boolean decrCount(FilterTags tags){
+		tags.setCount(tags.getCount()-1);
+		return tags.getCount() > 0;
+	}
 	@Override
 	public void update(ArticleVendu object) throws BusinessException {
 		try (Connection con = ConnectionProvider.getConnection()) {
