@@ -16,39 +16,30 @@
 	<form method="post" action=<c:url value="/AjoutArticle"/>>
 		<label for="Article">Article</label>
 		<input type="text" id="nomArticle" name="nomArticle" />
-		<br>
 		<label for="Description">Description</label>
 		<input type="text" id="description" name="description" /> 
-	    <br> 
 	    <label for="categories">Catégorie : </label>
 		<select name="selectedCategory">
 			<c:forEach var="categorie" items="${requestScope.categories}">
 				<option>${categorie.libelle}</option>
 			</c:forEach>
 	  	</select> 
-		<br> 
 		<label for="photoArticle">Photo de l'article</label>
 		<input type="file" value="UPLOADER" name="photoArticle">
-	    <br> 
 	    <label for="miseAPrix">Mise à prix :</label>
 		<input type="number" value="prix" id="miseAPrix" name="miseAPrix" />
-		<br> 
 		<label for="debutEnchere">Début de l'Enchère</label>
 		<input type="datetime-local" id="dateDebutEncheres" name="dateDebutEncheres" />
-	    <br>
 	    <label for="finEnchere">Fin de l'Enchère</label>
 	    <input type="datetime-local" id="dateFinEncheres" name="dateFinEncheres" />
-	    <br>
 	    <fieldset>
 			<legend>Retrait</legend>
 			<label for="rue">Rue : </label>
-			<input type="text" id="rue" name="rue" />
-	    	<br>
+			<input type="text" id="rue" name="rue" value=" ${sessionScope.user.rue}"/>
 	     	<label for="codePostal">CodePostal : </label>
-	       	<input type="text" id="codePostal" name="codePostal" />
-	    	<br> 
+	       	<input type="text" id="codePostal" name="codePostal" value=" ${sessionScope.user.codePostal}"/>
 	      	<label for="ville">Ville : </label>
-	      	<input type="text" id="ville" name="ville" />
+	      	<input type="text" id="ville" name="ville" value=" ${sessionScope.user.ville}" />
 		</fieldset>
 	    <input type="submit" name="Enregistrer"> 
         <input type="button" name="Annuler" />
