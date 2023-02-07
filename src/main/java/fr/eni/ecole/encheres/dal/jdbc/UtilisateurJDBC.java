@@ -8,6 +8,8 @@ import fr.eni.ecole.encheres.dal.DAOUtilisateur;
 import java.sql.*;
 import java.util.ArrayList;
 
+import com.microsoft.sqlserver.jdbc.SQLServerConnection;
+
 public class UtilisateurJDBC implements DAOUtilisateur {
 	private final String UPDATE = "update utilisateurs set no_utilisateur=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=?, credit=?, administrateur=? where no_utilisateur = ?";
 	private final String GET_ONE_BY_ID = "select * from utilisateurs  where no_utilisateur = ?";
@@ -93,7 +95,15 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 
 	@Override
 	public void delete(int id) throws BusinessException {
-
+		try(Connection con = ConnectionProvider.getConnection()){
+			
+			PreparedStatement ps = con.prepareStatement("{call dbo.cleanup_user (?)}");
+				ps.setInt(1, id);
+				ps.executeUpdate();	
+		} catch (SQLException e) {
+			throw new BusinessException(e.getMessage());
+		}
+		
 	}
 
 	public Utilisateur seConnecter(String pseudo, String motDePasse) throws BusinessException {
