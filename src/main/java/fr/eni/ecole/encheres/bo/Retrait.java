@@ -1,11 +1,20 @@
 package fr.eni.ecole.encheres.bo;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Retrait {
 	String rue;
 	String codePostal;
 	String ville;
+	ArticleVendu article;
+	public Retrait(String rue, String codePostal, String ville, ArticleVendu article) {
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.article = article;
+	}
+
 	public Retrait(String rue, String codePostal, String ville) {
 		this.rue = rue;
 		this.codePostal = codePostal;
@@ -36,6 +45,14 @@ public class Retrait {
 		this.ville = ville;
 	}
 
+	public ArticleVendu getArticle() {
+		return article;
+	}
+
+	public void setArticle(ArticleVendu article) {
+		this.article = article;
+	}
+
 	@Override
 	public String toString() {
 		return "Retrait{" +
@@ -43,6 +60,19 @@ public class Retrait {
 				", codePostal='" + codePostal + '\'' +
 				", ville='" + ville + '\'' +
 				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Retrait retrait = (Retrait) o;
+		return rue.equals(retrait.rue) && codePostal.equals(retrait.codePostal) && ville.equals(retrait.ville) && article.equals(retrait.article);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(rue, codePostal, ville, article);
 	}
 }
 /*CREATE TABLE RETRAITS (

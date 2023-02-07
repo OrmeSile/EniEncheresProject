@@ -1,7 +1,6 @@
 package fr.eni.ecole.encheres.ihm.servlets;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,13 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bll.UtilisateurManager;
 import fr.eni.ecole.encheres.bo.Utilisateur;
-
-
-/**
- * Servlet implementation class ServletMonProfil
- */
-@WebServlet("/monProfil")
-public class ServletMonProfil extends HttpServlet {
+@WebServlet(name="ServletProfil", value="/profil/modifier")
+public class ServletProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -27,7 +21,7 @@ public class ServletMonProfil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/monProfilPage/monProfil.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/monProfilPage/profil.jsp");
 
 		rd.forward(request, response);
 		

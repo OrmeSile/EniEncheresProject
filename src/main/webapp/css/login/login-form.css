@@ -1,0 +1,52 @@
+.container{
+  min-height: 90vh;
+  display: flex;
+  flex-flow : column nowrap;
+  background: #EEE;
+}
+.container-main{
+  background: white;
+  padding: 5vh 10vh;
+  display: flex;
+  margin-top: 5vh;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  border: solid #AAA 1px;
+}
+form{
+  display: flex;
+  flex-direction: column;
+}
+.label-field{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.form-submit-block{
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row nowrap;
+  margin-bottom: 10px;
+}
+.form-misc{
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+}
+.register{
+  padding-top: 50px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.register>a{
+  display: flex;
+  flex-basis: 100%;
+  height: 50px;
+}
+.register>a>button{
+  flex-grow: 1;
+}

@@ -1,6 +1,7 @@
 package fr.eni.ecole.encheres.bo;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Utilisateur{
 	private int noUtilisateur;
@@ -35,16 +36,8 @@ public class Utilisateur{
 	}
 
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal, String ville, String motDePasse, int credit, boolean administrateur) {
+		this(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
 		this.noUtilisateur = noUtilisateur;
-		this.pseudo = pseudo;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.email = email;
-		this.telephone = telephone;
-		this.rue = rue;
-		this.codePostal = codePostal;
-		this.ville = ville;
-		this.motDePasse = motDePasse;
 		this.credit = credit;
 		this.administrateur = administrateur;
 		this.articles = new ArrayList<>();
@@ -163,6 +156,18 @@ public class Utilisateur{
 		this.administrateur = administrateur;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Utilisateur that = (Utilisateur) o;
+		return noUtilisateur == that.noUtilisateur && credit == that.credit && administrateur == that.administrateur && pseudo.equals(that.pseudo) && nom.equals(that.nom) && prenom.equals(that.prenom) && email.equals(that.email) && telephone.equals(that.telephone) && rue.equals(that.rue) && codePostal.equals(that.codePostal) && ville.equals(that.ville) && motDePasse.equals(that.motDePasse);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(noUtilisateur, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
+	}
 
 	@Override
 	public String toString() {

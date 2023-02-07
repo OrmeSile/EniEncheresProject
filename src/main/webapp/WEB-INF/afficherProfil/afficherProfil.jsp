@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>Profil</title>
-<jsp:include page="/WEB-INF/fragments/_bootstrap-import.jsp" />
+<jsp:include page="/WEB-INF/fragments/_normalize-import.jsp" />
 </head>
 <body>
 	<div class="container-fluid">
@@ -22,7 +22,7 @@
 		<p>${requestScope.user.ville}</p>
 		<p>${requestScope.user.credit}</p>
 		<c:if test="${!empty sessionScope.user.noUtilisateur && sessionScope.user.noUtilisateur eq requestScope.user.noUtilisateur}">
-			<a href=<c:url value="/monProfil"/>><button class="button" id="modifierProfil">Modifier</button></a>
+			<a href=<c:url value="/profil/modifier"/>><button class="button" id="modifierProfil">Modifier</button></a>
 		</c:if>
 	</div>
 </body>

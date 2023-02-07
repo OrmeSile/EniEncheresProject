@@ -4,15 +4,17 @@ import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Retrait;
 import fr.eni.ecole.encheres.dal.ConnectionProvider;
+import fr.eni.ecole.encheres.dal.DAO;
+import fr.eni.ecole.encheres.dal.DAOFactory;
 import fr.eni.ecole.encheres.dal.ItemFetchable;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class RetraitJDBC implements ItemFetchable<Retrait, ArticleVendu> {
-    private final String GET_ONE_BY_ID = "select rue, code_postal, ville from retraits where no_article = ?";
+    private final String GET_ONE_BY_ID = "select * from retraits where no_article = ?";
     private final String INSERT = "insert into retraits values ?,?,?,?";
-    private final String GET_ALL_BY_PARENT = "select rue, code_postal, ville from retraits where no_article = ?";
+    private final String GET_ALL_BY_PARENT = "select * from retraits where no_article = ?";
     @Override
     public Retrait getOneById(int id) throws BusinessException {
         try(var con = ConnectionProvider.getConnection()){
@@ -20,10 +22,11 @@ public class RetraitJDBC implements ItemFetchable<Retrait, ArticleVendu> {
             ps.setInt(1, id);
             var rs = ps.executeQuery();
             if(rs.next()){
-                var rue = rs.getString(1);
-                var cp = rs.getString(2);
-                var ville = rs.getString(3);
-                return new Retrait(rue, cp, ville);
+                var rue = rs.getString(2);
+                var cp = rs.getString(3);
+                var ville = rs.getString(4);
+                var article = DAOFactory.getArticleDAO().getOneById(rs.getInt(1));
+                return new Retrait(rue, cp, ville, article);
             }
             throw new BusinessException("Retrait not found");
         } catch (SQLException e) {
@@ -80,7 +83,7 @@ public class RetraitJDBC implements ItemFetchable<Retrait, ArticleVendu> {
                 var codePostal = rs.getString(2);
                 var ville = rs.getString(3);
                 var list = new ArrayList<Retrait>();
-                list.add(new Retrait(rue, codePostal, ville));
+                list.add(new Retrait(rue, codePostal, ville, parent));
                 return list;
             }
         }

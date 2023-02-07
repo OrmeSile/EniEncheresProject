@@ -1,6 +1,8 @@
 package fr.eni.ecole.encheres.bo;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+
 public class Enchere {
 	private LocalDateTime dateEnchere;
 	private int montantEnchere;
@@ -54,5 +56,18 @@ public class Enchere {
 				", article=" + article +
 				", encherisseur="+ encherisseur +
 				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Enchere enchere = (Enchere) o;
+		return montantEnchere == enchere.montantEnchere && dateEnchere.equals(enchere.dateEnchere) && article.equals(enchere.article) && encherisseur.equals(enchere.encherisseur);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(dateEnchere, montantEnchere, article, encherisseur);
 	}
 }

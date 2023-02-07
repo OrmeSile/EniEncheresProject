@@ -15,18 +15,13 @@ import fr.eni.ecole.encheres.bo.Utilisateur;
 public class ServletHome extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		var user = request.getSession().getAttribute("user");
 		try {
 			var categories = CategorieManager.getManager().getCategories();
 			request.setAttribute("categories", categories);
-			if (Objects.isNull(request.getSession().getAttribute("user"))) {
-				var articles = ArticleManager.getManager().getAll();
-				request.setAttribute("articles", articles);
-			} else {
-				var articles = ArticleManager.getManager().getAllArticlesByUtilisateur((Utilisateur) user);
-				request.setAttribute("articles", articles);
-			}
+			var articles = ArticleManager.getManager().getAll();
+			request.setAttribute("articles", articles);
 		}catch (BusinessException e){
+			System.out.println(e.getExceptionMessages());
 			request.setAttribute("errors", e.getExceptionMessages());
 		}
 		request.getRequestDispatcher("/WEB-INF/homePage/homepage.jsp").forward(request, response);
@@ -35,8 +30,9 @@ public class ServletHome extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		}
-		
-	}
+		var categorie = request.getParameter("selectedCategory");
+		var searchName = request.getParameter("searchfield");
+		var radioValue = request.getParameter("filter");
+//		if(radioValue.equals(""))
+}
 
