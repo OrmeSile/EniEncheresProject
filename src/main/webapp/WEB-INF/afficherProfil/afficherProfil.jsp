@@ -3,7 +3,7 @@
 <html>
 <head>
 <title>Profil</title>
-<jsp:include page="/WEB-INF/fragments/_bootstrap-import.jsp" />
+<jsp:include page="/WEB-INF/fragments/_normalize-import.jsp" />
 </head>
 <body>
 	<div class="container-fluid">

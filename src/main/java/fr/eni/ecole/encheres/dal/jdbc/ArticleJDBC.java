@@ -17,14 +17,11 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 	private final String UPDATE = "update articles_vendus set nom_article=?, 'description'=?,date_debut_enchere = ?,date_fin_enchere = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ?, etat_vente = ?, image = ? where no_article = ?";
 	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
 	private final String GET_ALL = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article";
-	private final String GET_ALL_BY_PARENT = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article where no_utilisateur = ?";
-	private final String GET_ONE_BY_ID = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article where a.no_article = ?";
-	private final String GET_ALL_BY_CATEGORIE = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article where a.no_categorie = ?";
 
 	@Override
 	public ArticleVendu getOneById(int id) throws BusinessException {
 		try (Connection con = ConnectionProvider.getConnection()) {
-			PreparedStatement ps = con.prepareStatement(GET_ONE_BY_ID);
+			PreparedStatement ps = con.prepareStatement(GET_ALL + " where a.no_article = ?");
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -57,7 +54,7 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 
 	public ArrayList<ArticleVendu> getAllByCategorie(Categorie categorie) throws BusinessException{
 		try(var con = ConnectionProvider.getConnection()){
-			var ps = con.prepareStatement(GET_ALL_BY_CATEGORIE);
+			var ps = con.prepareStatement(GET_ALL + " where a.no_categorie = ?");
 			ps.setInt(1, categorie.getNoCategorie());
 			var rs = ps.executeQuery();
 			ArrayList<ArticleVendu> articles = new ArrayList<>();
@@ -124,7 +121,7 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 	@Override
 	public ArrayList<ArticleVendu> getAllByParent(Utilisateur parent) throws BusinessException {
 		try (var con = ConnectionProvider.getConnection()) {
-			var pr = con.prepareStatement(GET_ALL_BY_PARENT);
+			var pr = con.prepareStatement((GET_ALL + " where no_utilisateur = ?"));
 			pr.setInt(1, parent.getNoUtilisateur());
 			var rs = pr.executeQuery();
 			var returnList = new ArrayList<ArticleVendu>();

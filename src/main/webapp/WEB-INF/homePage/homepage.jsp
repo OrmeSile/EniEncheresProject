@@ -18,7 +18,7 @@
       <div class="navbar-clickable-list-container">
         <ul class="navbar-clickable-list">
           <c:choose>
-            <c:when test="${sessionScope.utilisateur = null}">
+            <c:when test="${empty sessionScope.user}">
               <a class="navbar-clickable active" href=<c:url value="/login"/>>
                 <li>S'inscrire/Se connecter</li>
               </a>
@@ -37,18 +37,68 @@
     </header>
     <div class="container-main">
       <div class="container-form-filter">
-        <form id="filter" name="filter" method="post" action=<c:url value="/home"/>>
-          <label for="select-dropdown-categories">Catégorie :</label>
-          <select id="select-dropdown-categories" name="selectedCategory" form="filter">
-            <option>Tous</option>
-            <c:forEach var="categorie" items="${requestScope.categories}">
-              <option>
-                  ${categorie.libelle}
-              </option>
-            </c:forEach>
-          </select>
-          <input type="text" name="searchfield" placeholder="">
-          <input type="submit" value="Rechercher">
+        <form id="filter" name="filter-form" method="post" action=<c:url value="/home"/>>
+          <div>
+            <div class="form-text-cat-input">
+              <input type="text" name="searchfield" placeholder="chercher article">
+              <div>
+                <label for="select-dropdown-categories">Catégorie :</label>
+                <select id="select-dropdown-categories" name="selectedCategory" form="filter">
+                  <option>Tous</option>
+                  <c:forEach var="categorie" items="${requestScope.categories}">
+                    <option>
+                        ${categorie.libelle}
+                    </option>
+                  </c:forEach>
+                </select>
+              </div>
+            </div>
+            <div>
+              <c:if test="${not empty sessionScope.user}">
+                <div class="toggle-filters">
+                  <div class="radio-group">
+                    <input type="radio" name="filter" value="buy" id="buy">
+                    <label for="buy">Achats</label>
+                    <input type="radio" name="filter" value="sell" id="sell">
+                    <label for="sell">Mes ventes</label>
+                  </div>
+                  <div class="checkbox-group-container">
+                    <div class="checkbox-group">
+                      <div>
+                        <input type="checkbox" value="open" id="bopen">
+                        <label for="bopen">enchères ouvertes</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" value="self" id="bself">
+                        <label for="bself">mes enchères</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" value="won" id="bwon">
+                        <label for="bwon">mes enchères remportées</label>
+                      </div>
+                    </div>
+                    <div class="checkbox-group">
+                      <div>
+                        <input type="checkbox" value="open" id="sopen">
+                        <label for="sopen">mes ventes en cours</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" value="self" id="sself">
+                        <label for="sself">ventes non débutées</label>
+                      </div>
+                      <div>
+                        <input type="checkbox" value="won" id="swon">
+                        <label for="swon">ventes terminées</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </c:if>
+            </div>
+          </div>
+          <div class="submit">
+            <input type="submit" value="Rechercher">
+          </div>
         </form>
       </div>
 

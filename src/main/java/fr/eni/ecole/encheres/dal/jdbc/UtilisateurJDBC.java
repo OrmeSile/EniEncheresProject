@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class UtilisateurJDBC implements DAOUtilisateur {
 	private final String UPDATE = "update utilisateurs set no_utilisateur=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=?, credit=?, administrateur=? where no_utilisateur = ?";
 	private final String GET_ONE_BY_ID = "select * from utilisateurs  where no_utilisateur = ?";
-	private final String LOGIN = "select no_utilisateur, nom, prenom, email, telephone, rue, code_postal, ville, credit, administrateur from UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?";
+	private final String LOGIN = "select no_utilisateur, nom, prenom, email, telephone, rue, code_postal, ville, credit, administrateur from UTILISATEURS WHERE (pseudo = ? OR email = ?) AND mot_de_passe = ?";
 	private final String INSERT = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 	@Override
@@ -101,7 +101,8 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 		try (Connection con = ConnectionProvider.getConnection()) {
 			PreparedStatement ps = con.prepareStatement(LOGIN);
 			ps.setString(1, pseudo);
-			ps.setString(2, motDePasse);
+			ps.setString(2, pseudo);
+			ps.setString(3, motDePasse);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
 				int id = rs.getInt(1);

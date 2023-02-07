@@ -47,7 +47,7 @@
 				</div>
 			</form>
 			<div class="register">
-				<a href=<c:url value="/monProfil"/>>
+				<a href=<c:url value="/profil"/>>
 					<button>Créer un compte</button>
 				</a>
 			</div>
