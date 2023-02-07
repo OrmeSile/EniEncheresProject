@@ -41,6 +41,6 @@ public class ServletHome extends HttpServlet {
 		var sellOpen = request.getParameter("sopen");
 		var sellSelf = request.getParameter("sself");
 		var sellWon = request.getParameter("swon");
-
-	}
+  }
 }
+
