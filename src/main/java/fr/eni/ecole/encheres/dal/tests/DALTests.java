@@ -7,11 +7,6 @@ public class DALTests {
 	public static void main(String[] args) {
 		var params = new FilterTags(true, true, true, true, false, false, true, false);
 		var dao = new ArticleJDBC();
-		var x = dao.buildFilteredQuery(params);
-		x.forEach((y,z) -> {
-			System.out.println(y);
-			System.out.println(z);
-		});
 	}
 	public void printQuery(){
 
