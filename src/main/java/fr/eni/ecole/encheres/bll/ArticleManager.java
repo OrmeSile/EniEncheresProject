@@ -4,15 +4,18 @@ import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Categorie;
 import fr.eni.ecole.encheres.bo.Utilisateur;
+import fr.eni.ecole.encheres.bo.utils.FilterPayload;
+import fr.eni.ecole.encheres.bo.utils.FilterTags;
 import fr.eni.ecole.encheres.dal.DAOFactory;
-import fr.eni.ecole.encheres.dal.ItemFetchable;
+import fr.eni.ecole.encheres.dal.FilterFetchable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class ArticleManager {
-	private final ItemFetchable<ArticleVendu, Utilisateur> dao;
+	private final FilterFetchable<ArticleVendu, Utilisateur> dao;
 	private static ArticleManager manager;
 
 	private ArticleManager(){
@@ -24,9 +27,35 @@ public class ArticleManager {
 		}
 		return manager;
 	}
-	public ArrayList<ArticleVendu> getFilteredResults(String query, Categorie cat, Utilisateur user, boolean isSell, boolean isBuySelf, boolean isOpen, boolean isBuyWon, boolean isSellPre, boolean isSellFin){
-		//TODO manager filtered
-		return null;
+	public ArrayList<ArticleVendu> getLoggedOutObjects() throws BusinessException {
+ 		return dao.getLoggedOutObjects();
+	}
+	public ArrayList<ArticleVendu> getFilteredResults(String query, Categorie cat, Utilisateur user, boolean isSell, boolean isOpen, boolean isBuySelf, boolean isBuyWon, boolean isSellPre, boolean isSellFin) throws BusinessException{
+
+		var q = Objects.isNull(query) || query.isBlank() ? null : query;
+		var qBool = !Objects.isNull(query);
+		var catBool = !Objects.isNull(query);
+		if(isSell){
+			if(Stream.of(isOpen, isSellPre, isSellFin).noneMatch(x -> x)){
+				var tags = new FilterTags(qBool, catBool, true, true, false, false, false, false);
+				var payload = new FilterPayload(tags, q, cat, user);
+				return dao.getFilteredObjects(payload);
+			}else{
+				var tags = new FilterTags(qBool, catBool, true, isOpen, isBuySelf, isBuyWon, isSellPre, isSellFin);
+				var payload = new FilterPayload(tags, q, cat, user);
+				return dao.getFilteredObjects(payload);
+			}
+		}else{
+			if(Stream.of(isOpen, isBuyWon, isBuySelf).noneMatch(x -> x)){
+				var tags = new FilterTags(qBool, catBool, false, true, false, false, false, false);
+				var payload = new FilterPayload(tags, q ,cat, user);
+				return dao.getFilteredObjects(payload);
+			}else{
+				var tags = new FilterTags(qBool, catBool, false, isOpen, isBuySelf, isBuyWon, isSellPre, isSellFin);
+				var payload = new FilterPayload(tags, q, cat, user);
+				return dao.getFilteredObjects(payload);
+			}
+		}
 	}
 
 	public ArticleVendu getOneArticleById(int id) throws BusinessException {

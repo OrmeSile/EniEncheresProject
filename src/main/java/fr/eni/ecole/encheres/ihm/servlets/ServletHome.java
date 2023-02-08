@@ -16,18 +16,22 @@ import fr.eni.ecole.encheres.bo.Utilisateur;
 public class ServletHome extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(!(boolean)request.getAttribute("isFiltered")) {
-			try {
+		try {
+			if(Objects.isNull(request.getAttribute("categories"))) {
 				var categories = CategorieManager.getManager().getCategories();
 				request.setAttribute("categories", categories);
-				var articles = ArticleManager.getManager().getAll();
-				request.setAttribute("articles", articles);
-			} catch (BusinessException e) {
-				System.out.println(e.getExceptionMessages());
-				request.setAttribute("errors", e.getExceptionMessages());
 			}
-			request.getRequestDispatcher("/WEB-INF/homePage/homepage.jsp").forward(request, response);
+			if(!Objects.isNull(request.getSession().getAttribute("user"))) {
+				var articles = ArticleManager.getManager().getLoggedOutObjects();
+				request.setAttribute("articles", articles);
+			}else{
+
+			}
+		} catch (BusinessException e) {
+			System.out.println(e.getExceptionMessages());
+			request.setAttribute("errors", e.getExceptionMessages());
 		}
+		request.getRequestDispatcher("/WEB-INF/homePage/homepage.jsp").forward(request, response);
 	}
 
 	@Override
@@ -41,6 +45,7 @@ public class ServletHome extends HttpServlet {
 		var sellOpen = request.getParameter("sopen");
 		var sellSelf = request.getParameter("sself");
 		var sellWon = request.getParameter("swon");
+
   }
 }
 

@@ -6,4 +6,5 @@ import java.util.ArrayList;
 
 public interface FilterQuery<T> {
 	public ArrayList<T> getFilteredObjects(FilterPayload payload) throws BusinessException;
+	public ArrayList<T> getLoggedOutObjects() throws BusinessException;
 }

@@ -4,23 +4,16 @@ import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.*;
 import fr.eni.ecole.encheres.bo.utils.FilterPayload;
 import fr.eni.ecole.encheres.bo.utils.FilterTags;
-import fr.eni.ecole.encheres.dal.ConnectionProvider;
-import fr.eni.ecole.encheres.dal.DAOFactory;
-import fr.eni.ecole.encheres.dal.FilterQuery;
-import fr.eni.ecole.encheres.dal.ItemFetchable;
+import fr.eni.ecole.encheres.dal.*;
 import fr.eni.ecole.encheres.dal.utils.QueryParams;
 import fr.eni.ecole.encheres.tools.ArticleStateConverter;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.*;
 import java.util.stream.Stream;
 
-public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur>, FilterQuery<ArticleVendu> {
+public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 	private final String UPDATE = "update articles_vendus set nom_article=?, 'description'=?,date_debut_enchere = ?,date_fin_enchere = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ?, etat_vente = ?, image = ? where no_article = ?";
 	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
 	private final String GET_ALL = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article";
@@ -147,8 +140,8 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur>, Fi
 				var retrait = new Retrait(rs.getString(15), rs.getString(16), rs.getString(17));
 				var article = new ArticleVendu(noArticle, nom, description, dateDebut, dateFin, miseAPrix, prixVente, etatVente, parent, retrait, categorie, image);
 				retrait.setArticle(article);
-				var encheres = DAOFactory.getEnchereDAO().getAllBySecondParent(article);
-				article.setEncheres(encheres);
+				var encheres = DAOFactory.getEnchereDAO().getOneById(article.getNoArticle());
+				article.setEnchere(encheres);
 				returnList.add(article);
 			}
 			parent.setArticles(returnList);
@@ -175,12 +168,15 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur>, Fi
 			var retrait = retraitIsNull ? new Retrait(user.getRue(), user.getCodePostal(), user.getVille()) : new Retrait(rs.getString(15), rs.getString(16), rs.getString(17));
 			var article = new ArticleVendu(id, nom, description, dateDebut, dateFin, miseAPrix, prixVente, etatVente, user, retrait, categorie, image);
 			retrait.setArticle(article);
-			article.setEncheres(DAOFactory.getEnchereDAO().getAllBySecondParent(article));
+			article.setEnchere(DAOFactory.getEnchereDAO().getOneById(article.getNoArticle()));
 			user.getArticles().add(article);
 			return article;
 		} catch (SQLException e) {
 			throw new BusinessException(e.getMessage());
 		}
+	}
+	public ArrayList<ArticleVendu> getLoggedOutObjects() throws BusinessException {
+		return getFilteredObjects(FilterPayload.getEmpty());
 	}
 
 	@Override
@@ -228,8 +224,7 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur>, Fi
 		var list = new ArrayList<QueryParams>();
 		sb.append(GET_ALL).append("left join ENCHERES n on n.no_article = a.no_article WHERE ");
 		if(tags.getCount() == 0){
-			sb.append("e.no_utilisateur = ?").append(_AND).append("a.etat_vente = 'EC'");
-			list.add(QueryParams.USER);
+			sb.append("a.etat_vente = 'EC'");
 			var map = new HashMap<String, ArrayList<QueryParams>>();
 			map.put(sb.toString(), list);
 			return map;

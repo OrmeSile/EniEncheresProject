@@ -1,9 +1,6 @@
 package fr.eni.ecole.encheres.ihm.servlets;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -21,10 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bll.ArticleManager;
 import fr.eni.ecole.encheres.bll.CategorieManager;
-import fr.eni.ecole.encheres.bll.UtilisateurManager;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Categorie;
-import fr.eni.ecole.encheres.bo.EtatVente;
+import fr.eni.ecole.encheres.bo.utils.EtatVente;
 import fr.eni.ecole.encheres.bo.Retrait;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 

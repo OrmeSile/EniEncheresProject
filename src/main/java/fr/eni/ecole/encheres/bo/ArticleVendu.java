@@ -1,7 +1,8 @@
 package fr.eni.ecole.encheres.bo;
 
+import fr.eni.ecole.encheres.bo.utils.EtatVente;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class ArticleVendu {
@@ -17,7 +18,7 @@ public class ArticleVendu {
 	private Retrait lieuRetrait;
 	private Categorie categorieArticle;
 	private String image;
-	private ArrayList<Enchere> encheres;
+	private Enchere enchere;
 
 	public ArticleVendu(
 			int noArticle,
@@ -32,11 +33,11 @@ public class ArticleVendu {
 			Retrait lieuRetrait,
 			Categorie categorieArticle,
 			String image,
-			ArrayList<Enchere> encheres)
+			Enchere enchere)
 	{
 		this(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix, prixVente, etatVente, vendeur, lieuRetrait, categorieArticle, image);
 		this.noArticle = noArticle;
-		this.encheres = encheres;
+		this.enchere = enchere;
 	}
 
 	public ArticleVendu(
@@ -51,13 +52,25 @@ public class ArticleVendu {
 			Utilisateur vendeur,
 			Retrait lieuRetrait,
 			Categorie categorieArticle,
-			String image) {
+			String image)
+	{
 		this(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix, prixVente, etatVente, vendeur, lieuRetrait, categorieArticle, image);
 		this.noArticle = noArticle;
-		this.encheres = new ArrayList<>();
+		this.enchere = null;
 	}
 
-	private ArticleVendu(String nomArticle, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, EtatVente etatVente, Utilisateur vendeur, Retrait lieuRetrait, Categorie categorieArticle, String image) {
+	public ArticleVendu(
+			String nomArticle,
+			String description,
+			LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres,
+			int miseAPrix, int prixVente,
+			EtatVente etatVente,
+			Utilisateur vendeur,
+			Retrait lieuRetrait,
+			Categorie categorieArticle,
+			String image)
+	{
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
@@ -69,7 +82,7 @@ public class ArticleVendu {
 		this.lieuRetrait = lieuRetrait;
 		this.categorieArticle = categorieArticle;
 		this.image = image;
-		this.encheres = new ArrayList<>();
+		this.enchere = null;
 	}
 
 	public int getNoArticle() {
@@ -169,12 +182,12 @@ public class ArticleVendu {
 		this.image = image;
 	}
 
-	public ArrayList<Enchere> getEncheres() {
-		return encheres;
+	public Enchere getEnchere() {
+		return enchere;
 	}
 
-	public void setEncheres(ArrayList<Enchere> encheres) {
-		this.encheres = encheres;
+	public void setEnchere(Enchere enchere) {
+		this.enchere = enchere;
 	}
 
 	@Override

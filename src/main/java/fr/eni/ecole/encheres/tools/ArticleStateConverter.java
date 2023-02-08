@@ -1,7 +1,7 @@
 package fr.eni.ecole.encheres.tools;
 
 import fr.eni.ecole.encheres.BusinessException;
-import fr.eni.ecole.encheres.bo.EtatVente;
+import fr.eni.ecole.encheres.bo.utils.EtatVente;
 
 public class ArticleStateConverter {
 	public static String getStringFromEnum(EtatVente e){

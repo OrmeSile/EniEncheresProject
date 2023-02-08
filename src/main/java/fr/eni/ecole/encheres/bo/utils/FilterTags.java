@@ -13,15 +13,37 @@ public class FilterTags {
 	private final boolean isSellFin;
 	private int count;
 
+	private FilterTags() {
+		query = false;
+		cat = false;
+		isSell = false;
+		isBuySelf = false;
+		isOpen = true;
+		isBuyWon = false;
+		isSellPre = false;
+		isSellFin = false;
+		count = 0;
+	}
+	public static FilterTags getEmpty(){
+		return new FilterTags();
+	}
+
 	public FilterTags(boolean query, boolean cat, boolean isSell, boolean isOpen, boolean isBuySelf, boolean isBuyWon, boolean isSellPre, boolean isSellFin) {
 		this.query = query;
-		this.isSell = isSell;
-		this.isOpen = isOpen;
-		this.isBuySelf = isBuySelf;
-		this.isBuyWon = isBuyWon;
 		this.cat = cat;
-		this.isSellPre = isSellPre;
-		this.isSellFin = isSellFin;
+		this.isOpen = isOpen;
+		this.isSell = isSell;
+		if(isSell){
+			this.isSellPre = isSellPre;
+			this.isSellFin = isSellFin;
+			this.isBuySelf = false;
+			this.isBuyWon = false;
+		}else {
+			this.isSellPre = false;
+			this.isSellFin = false;
+			this.isBuySelf = isBuySelf;
+			this.isBuyWon = isBuyWon;
+		}
 		Stream.of(cat, query, isSell, isBuySelf).forEach(b -> {if(b) count++;});
 		if(Stream.of(isOpen, isBuyWon, isSellPre, isSellFin).anyMatch(x -> x)){
 			count++;
