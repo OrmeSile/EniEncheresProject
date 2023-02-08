@@ -15,7 +15,12 @@
           <span class="article-bidding-end-date"> ${param.finEnchere}</span>
         </li>
         <li>
-         <a href=<c:url value="/profil?userid=${param.id}"/>> <span class="article-seller">${param.vnom}</span></a>
+          <c:choose>
+            <c:when test="${empty sessionScope.user}">
+              <p><span class="article-seller">${param.vnom}</span></p>
+            </c:when>
+            <c:otherwise><a href=<c:url value="/profil?userid=${param.id}"/>> <span class="article-seller">${param.vnom}</span></a></c:otherwise>
+          </c:choose>
         </li>
       </ul>
     </div>

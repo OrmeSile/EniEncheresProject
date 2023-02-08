@@ -24,7 +24,7 @@ public class FilterPayload {
 		this.user = null;
 	}
 	public static FilterPayload getVisitorPayload(String query, Categorie category){
-		var tags = new FilterTags(!(Objects.isNull(query)||query.isBlank()), !(Objects.isNull(category)), false, true, false, false, false, false);
+		var tags = FilterTags.getVisitor(!(Objects.isNull(query)||query.isBlank()), !(Objects.isNull(category)));
 		return new FilterPayload(tags, query, category);
 	}
 

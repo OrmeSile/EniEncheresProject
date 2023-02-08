@@ -5,60 +5,64 @@ import java.util.stream.Stream;
 public class FilterTags {
 	private final boolean query;
 	private final boolean cat;
-	private final boolean isSell;
-	private final boolean isBuySelf;
-	private final boolean isOpen;
-	private final boolean isBuyWon;
-	private final boolean isSellPre;
-	private final boolean isSellFin;
+	private final boolean sell;
+	private final boolean buySelf;
+	private final boolean open;
+	private final boolean buyWon;
+	private final boolean sellPre;
+	private final boolean sellFin;
 	private int count;
 
 	private FilterTags() {
 		query = false;
 		cat = false;
-		isSell = false;
-		isBuySelf = false;
-		isOpen = true;
-		isBuyWon = false;
-		isSellPre = false;
-		isSellFin = false;
+		sell = false;
+		buySelf = false;
+		open = true;
+		buyWon = false;
+		sellPre = false;
+		sellFin = false;
 		count = 0;
+	}
+
+	public static FilterTags getVisitor(boolean query, boolean cat){
+		return new FilterTags(query, cat, false, true, false, false, false, false);
 	}
 	public static FilterTags getEmpty(){
 		return new FilterTags();
 	}
 
-	public FilterTags(boolean query, boolean cat, boolean isSell, boolean isOpen, boolean isBuySelf, boolean isBuyWon, boolean isSellPre, boolean isSellFin) {
+	public FilterTags(boolean query, boolean cat, boolean sell, boolean open, boolean buySelf, boolean buyWon, boolean sellPre, boolean sellFin) {
 		this.query = query;
 		this.cat = cat;
-		this.isOpen = isOpen;
-		this.isSell = isSell;
-		if(isSell){
-			this.isSellPre = isSellPre;
-			this.isSellFin = isSellFin;
-			this.isBuySelf = false;
-			this.isBuyWon = false;
+		this.open = open;
+		this.sell = sell;
+		if(sell){
+			this.sellPre = sellPre;
+			this.sellFin = sellFin;
+			this.buySelf = false;
+			this.buyWon = false;
 		}else {
-			this.isSellPre = false;
-			this.isSellFin = false;
-			this.isBuySelf = isBuySelf;
-			this.isBuyWon = isBuyWon;
+			this.sellPre = false;
+			this.sellFin = false;
+			this.buySelf = buySelf;
+			this.buyWon = buyWon;
 		}
-		Stream.of(cat, query, isSell, isBuySelf).forEach(b -> {if(b) count++;});
-		if(Stream.of(isBuyWon, isSellPre, isSellFin).anyMatch(x -> x)){
+		Stream.of(cat, query, sell, buySelf).forEach(b -> {if(b) count++;});
+		if(Stream.of(buyWon, sellPre, sellFin).anyMatch(x -> x)){
 			count++;
 		}
-		if(Stream.of(query, cat, isSellPre, isSellFin, isBuySelf, isBuyWon).allMatch( x -> x)){
+		if(Stream.of(query, cat, sellPre, sellFin, buyWon, buySelf).noneMatch(x -> x)){
 			count = 0;
 		}
 	}
 
 	public boolean isSellPre() {
-		return isSellPre;
+		return sellPre;
 	}
 
 	public boolean isSellFin() {
-		return isSellFin;
+		return sellFin;
 	}
 
 	public boolean isQuery() {
@@ -78,18 +82,33 @@ public class FilterTags {
 	}
 
 	public boolean isSell() {
-		return isSell;
+		return sell;
 	}
 
 	public boolean isOpen() {
-		return isOpen;
+		return open;
 	}
 
 	public boolean isBuySelf() {
-		return isBuySelf;
+		return buySelf;
 	}
 
 	public boolean isBuyWon() {
-		return isBuyWon;
+		return buyWon;
+	}
+
+	@Override
+	public String toString() {
+		return "FilterTags{" +
+				"query=" + query +
+				", cat=" + cat +
+				", isSell=" + sell +
+				", isBuySelf=" + buySelf +
+				", isOpen=" + open +
+				", isBuyWon=" + buyWon +
+				", isSellPre=" + sellPre +
+				", isSellFin=" + sellFin +
+				", count=" + count +
+				'}';
 	}
 }

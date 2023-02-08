@@ -31,7 +31,6 @@ public class ArticleManager {
  		return dao.getLoggedOutObjects();
 
 	}public ArrayList<ArticleVendu> getFilteredResults(FilterPayload payload) throws BusinessException {
-		var results = dao.getFilteredObjects(payload);
 		return dao.getFilteredObjects(payload);
 	}
 	public ArrayList<ArticleVendu> getFilteredResults(Utilisateur user) throws BusinessException {

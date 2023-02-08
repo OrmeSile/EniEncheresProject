@@ -18,7 +18,9 @@ public class UtilisateurManager {
 		}
 		return manager;
 	}
-
+	public void supprimer(Utilisateur user) throws BusinessException {
+		dao.delete(user.getNoUtilisateur());
+	}
 	public Utilisateur seConnecter(String pseudo, String motDePasse) throws BusinessException {
 		BusinessException be = new BusinessException();
 		validerConnexionPseudo(pseudo, be);

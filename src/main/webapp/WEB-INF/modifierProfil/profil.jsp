@@ -4,10 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="<c:url value="/css/shared/header.css"/>">
-<link rel="stylesheet" href="<c:url value="/css/modifierProfil/modifierProfil.css"/> ">
-<jsp:include page="/WEB-INF/fragments/_normalize-import.jsp" />
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="<c:url value="/css/shared/header.css"/>">
+	<link rel="stylesheet" href="<c:url value="/css/modifierProfil/modifierProfil.css"/> ">
+	<script>const context = "${pageContext.request.contextPath}"</script>
+	<script defer src="<c:url value="/javascript/modifierProfil/deleteConfirm.js"/>" type="text/javascript"></script>
+	<jsp:include page="/WEB-INF/fragments/_normalize-import.jsp" />
 <title>Mon profil</title>
 </head>
 <body>
@@ -50,7 +52,7 @@
 				<label for="ville"> Ville :</label>
 				<input type="text" id="ville" name="ville" value="${sessionScope.user.ville}"/>
 			</div>
-			<c:if test="${!empty sessionScope.utilisateur}">
+			<c:if test="${!empty sessionScope.user}">
 			<div class="label-field">
 				<label for="motDePasseActuel"> Mot de passe actuel :</label>
 				<input type="password" id="motDePasseActuel" name="motDePasseActuel" value="${sessionScope.user.motDePasse}"/>
@@ -66,13 +68,13 @@
 			</div>
 		</form>
 		<c:choose>
-			<c:when test="${!empty sessionScope.utilisateur}">
+			<c:when test="${!empty sessionScope.user}">
 				<input type="submit" value="Enregistrer"/>
-				<a href=${pageContext.request.contextPath}><button>Supprimer mon compte</button></a>
+				<button class="delete">Supprimer mon compte</button>
 			</c:when>
 			<c:otherwise>
-				<input type="submit" value="Créer"/>
-				<a href=${pageContext.request.contextPath}><button>Annuler</button></a>
+				<input type="submit" value="Modifier"/>
+				<a href="<c:url value="/"/>"><button>Annuler</button></a>
 			</c:otherwise>
 		</c:choose>
 	</div>

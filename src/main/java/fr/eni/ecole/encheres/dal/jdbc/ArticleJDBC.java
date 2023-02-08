@@ -198,16 +198,12 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 			query = e.getKey();
 			params = e.getValue();
 		}
-		System.out.println("params in ArticleJDBC -> "+params);
-		System.out.println("query in ArticleJDBC -> "+query);
 		try(var con = ConnectionProvider.getConnection()){
 			var ps = con.prepareStatement(query);
-			for(int i = 1; i < Objects.requireNonNull(params).size(); i++){
-				System.out.println("value of i -> "+i);
+			for(int i = 1; i < Objects.requireNonNull(params).size()+1; i++){
 				switch (params.get(i-1)){
 					case QUERY:
-						System.out.println("in QUERY");
-						ps.setString(i, payload.getQuery());
+						ps.setString(i, "%"+payload.getQuery()+"%");
 						break;
 					case USER:
 						ps.setInt(i, payload.getUser().getNoUtilisateur());
@@ -218,7 +214,6 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 					default:
 						throw new BusinessException("Something went wrong in QueryParams");
 				}
-				System.out.println("out of switch");
 			}
 			var rs = ps.executeQuery();
 			var list = new ArrayList<ArticleVendu>();
@@ -238,21 +233,21 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 		ArrayList<String> stateParams = new ArrayList<>();
 		var itemState = new StringBuilder("a.etat_vente IN (");
 		var list = new ArrayList<QueryParams>();
-		sb.append(GET_ALL).append(" left join ENCHERES n on n.no_article = a.no_article WHERE ");
+		sb.append(GET_ALL).append(" left join ENCHERES e on e.no_article = a.no_article WHERE ");
 		if(tags.getCount() == 0){
 			sb.append(" a.etat_vente = 'EC'");
 			var map = new HashMap<String, ArrayList<QueryParams>>();
 			map.put(sb.toString(), list);
 			return map;
 		}
-		if(tags.isOpen()) stateParams.add("EC");
+		if(tags.isOpen() || tags.isBuySelf()) stateParams.add("EC");
 		if(tags.isSellPre()) stateParams.add("CR");
 		if(tags.isBuyWon() || tags.isSellFin()){
 			stateParams.add("VD");
 			stateParams.add("RT");
 		}
 		if(tags.isQuery()){
-			sb.append("a.nom_article LIKE '%?%'");
+			sb.append("a.nom_article LIKE ?");
 			list.add(QueryParams.QUERY);
 			if (decrCount(tags)){
 				sb.append(_AND);
@@ -280,7 +275,7 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 				}
 			}
 			if (tags.isBuyWon()) {
-				sb.append("n.no_utilisateur = ?");
+				sb.append("e.no_utilisateur = ?");
 				list.add(QueryParams.USER);
 				if (decrCount(tags)) {
 					sb.append(_AND);
@@ -288,11 +283,8 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 			}
 		}
 		if (stateParams.size() > 0) {
-			System.out.println("stateParams -> "+stateParams);
 			for(int i = 0; i < stateParams.size(); i++){
-				if(i==stateParams.size()-1){
-					itemState.append("'").append(stateParams.get(i)).append("'").append((i==stateParams.size()-1 )?"":",");
-				}
+				itemState.append("'").append(stateParams.get(i)).append("'").append((i==stateParams.size()-1 )?"":",");
 			}
 			itemState.append(")");
 			sb.append(itemState);

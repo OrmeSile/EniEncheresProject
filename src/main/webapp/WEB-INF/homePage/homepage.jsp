@@ -60,51 +60,52 @@
               <c:if test="${not empty sessionScope.user}">
                 <div class="toggle-filters">
                   <div class="radio-group">
-                    <input type="radio" name="radio-filter" value="buy" id="buy" ${sessionScope.tags.isSell ? null : "checked"}>
+                    <input type="radio" name="radio-filter" value="buy" id="buy" ${sessionScope.tags.sell ? null : "checked"}>
                     <label for="buy">Achats</label>
-                    <input type="radio" name="radio-filter" value="sell" id="sell" ${sessionScope.tags.isSell ? "checked" : null}>
+                    <input type="radio" name="radio-filter" value="sell" id="sell" ${sessionScope.tags.sell ? "checked" : null}>
                     <label for="sell">Mes ventes</label>
                   </div>
                   <div class="checkbox-group-container">
                     <div class="checkbox-group buy-group">
                       <div>
                         <input type="checkbox" id="bopen" name="bopen"
-                          ${sessionScope.tags.isSell ? "disabled" : null}
-                          ${empty sessionScope.filterPayload || sessionScope.tags.isOpen ? "checked" : null}>
+                          ${sessionScope.tags.sell ? "disabled" : null}
+                          ${empty sessionScope.filterPayload || (sessionScope.tags.open && !sessionScope.tags.sell) ? "checked" : null}>
                         <label for="bopen">enchères ouvertes</label>
                       </div>
                       <div>
                         <input type="checkbox" id="bself" name="bself"
-                          ${sessionScope.tags.isSell ? "disabled" : null}
-                          ${sessionScope.tags.isSelf ? "checked" : null}>
+                          ${sessionScope.tags.sell ? "disabled" : null}
+                          ${sessionScope.tags.buySelf && !sessionScope.tags.sell ? "checked" : null}>
                         <label for="bself">mes enchères</label>
                       </div>
                       <div>
                         <input type="checkbox" id="bwon" name="bwon"
-                          ${sessionScope.tags.isSell ? "disabled" : null}
-                          ${sessionScope.tags.isBuyWon ? "checked" : null}>
+                          ${sessionScope.tags.sell ? "disabled" : null}
+                          ${sessionScope.tags.buyWon &&  !sessionScope.tags.sell ? "checked" : null}>
                         <label for="bwon">mes enchères remportées</label>
                       </div>
                     </div>
                     <div class="checkbox-group sell-group">
                       <div>
                         <input type="checkbox" id="sopen" name="sopen"
-                          ${sessionScope.tags.isOpen ? "checked" : null}
-                          ${sessionScope.tags.isSell ? null : "disabled"}
+                          ${sessionScope.tags.sell ? null : "disabled"}
+                          ${sessionScope.tags.open && sessionScope.tags.sell ? "checked" : null}
+
                         >
                         <label for="sopen">mes ventes en cours</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="sself" name="sself"
-                          ${sessionScope.tags.isOpen ? "checked" : null}
-                          ${sessionScope.tags.isSell ? null : "disabled"}
+                        <input type="checkbox" id="sself" name="spre"
+                          ${sessionScope.tags.sell ? null : "disabled"}
+                          ${(sessionScope.tags.sellPre && sessionScope.tags.sell) ? "checked" : null}
                         >
                         <label for="sself">ventes non débutées</label>
                       </div>
                       <div>
                         <input type="checkbox" id="swon" name="swon"
-                          ${sessionScope.tags.isOpen ? "checked" : null}
-                          ${sessionScope.tags.isSell ? null : "disabled"}>
+                          ${sessionScope.tags.sell ? null : "disabled"}
+                          ${(sessionScope.tags.sellFin && sessionScope.tags.sell) ? "checked" : null}
                         <label for="swon">ventes terminées</label>
                       </div>
                     </div>
