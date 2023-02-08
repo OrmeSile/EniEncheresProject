@@ -1,0 +1,34 @@
+body{
+    background: #DDD;
+    display: flex;
+    justify-content: center;
+}
+.container{
+    flex-basis: 60vw;
+    display: flex;
+    flex-flow: column nowrap;
+    background: #FFF;
+    justify-content: center;
+    align-items: center;
+}
+.main-container{
+    display: flex;
+    flex-direction: row;
+}
+.main-fields{
+    display: flex;
+    flex-direction: column;
+}
+.main-fields>*{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid #DDD 1px;
+}
+.main-fields>*:nth-child(2n){
+    background: #FBFBFF;
+}
+.main-fields>*:nth-last-child(1){
+    border: none;
+}
