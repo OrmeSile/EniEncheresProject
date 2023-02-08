@@ -40,16 +40,16 @@
     </header>
     <div class="container-main">
       <div class="container-form-filter">
-        <form id="filter" name="filter-form" method="post" action=<c:url value="/home"/>>
+        <form id="filter" name="filter-form" method="post" action=<c:url value="/"/>>
           <div>
             <div class="form-text-cat-input">
-              <input type="text" name="searchfield" placeholder="chercher article">
+              <input type="text" name="search-field" placeholder="chercher article">
               <div>
                 <label for="select-dropdown-categories">Catégorie :</label>
                 <select id="select-dropdown-categories" name="selectedCategory" form="filter">
-                  <option>Tous</option>
+                  <option value="0">Tous</option>
                   <c:forEach var="categorie" items="${requestScope.categories}">
-                    <option>
+                    <option value="${categorie.noCategorie}">
                         ${categorie.libelle}
                     </option>
                   </c:forEach>
@@ -60,51 +60,51 @@
               <c:if test="${not empty sessionScope.user}">
                 <div class="toggle-filters">
                   <div class="radio-group">
-                    <input type="radio" name="filter" value="buy" id="buy" ${sessionScope.filterPayload.tags.isSell ? null : "checked"}>
+                    <input type="radio" name="radio-filter" value="buy" id="buy" ${sessionScope.tags.isSell ? null : "checked"}>
                     <label for="buy">Achats</label>
-                    <input type="radio" name="filter" value="sell" id="sell" ${sessionScope.filterPayload.tags.isSell ? "checked" : null}>
+                    <input type="radio" name="radio-filter" value="sell" id="sell" ${sessionScope.tags.isSell ? "checked" : null}>
                     <label for="sell">Mes ventes</label>
                   </div>
                   <div class="checkbox-group-container">
                     <div class="checkbox-group buy-group">
                       <div>
-                        <input type="checkbox" id="bopen"
-                          ${sessionScope.filterPayload.tags.isSell ? "disabled" : null}
-                          ${empty sessionScope.filterPayload || sessionScope.filterPayload.tags.isOpen ? "checked" : null}>
+                        <input type="checkbox" id="bopen" name="bopen"
+                          ${sessionScope.tags.isSell ? "disabled" : null}
+                          ${empty sessionScope.filterPayload || sessionScope.tags.isOpen ? "checked" : null}>
                         <label for="bopen">enchères ouvertes</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="bself"
-                          ${sessionScope.filterPayload.tags.isSell ? "disabled" : null}
-                          ${sessionScope.filterPayload.tags.isSelf ? "checked" : null}>
+                        <input type="checkbox" id="bself" name="bself"
+                          ${sessionScope.tags.isSell ? "disabled" : null}
+                          ${sessionScope.tags.isSelf ? "checked" : null}>
                         <label for="bself">mes enchères</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="bwon"
-                          ${sessionScope.filterPayload.tags.isSell ? "disabled" : null}
-                          ${sessionScope.filterPayload.tags.isBuyWon ? "checked" : null}>
+                        <input type="checkbox" id="bwon" name="bwon"
+                          ${sessionScope.tags.isSell ? "disabled" : null}
+                          ${sessionScope.tags.isBuyWon ? "checked" : null}>
                         <label for="bwon">mes enchères remportées</label>
                       </div>
                     </div>
                     <div class="checkbox-group sell-group">
                       <div>
-                        <input type="checkbox" id="sopen"
-                          ${sessionScope.filterPayload.tags.isOpen ? "checked" : null}
-                          ${sessionScope.filterPayload.tags.isSell ? null : "disabled"}
+                        <input type="checkbox" id="sopen" name="sopen"
+                          ${sessionScope.tags.isOpen ? "checked" : null}
+                          ${sessionScope.tags.isSell ? null : "disabled"}
                         >
                         <label for="sopen">mes ventes en cours</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="sself"
-                          ${sessionScope.filterPayload.tags.isOpen ? "checked" : null}
-                          ${sessionScope.filterPayload.tags.isSell ? null : "disabled"}
+                        <input type="checkbox" id="sself" name="sself"
+                          ${sessionScope.tags.isOpen ? "checked" : null}
+                          ${sessionScope.tags.isSell ? null : "disabled"}
                         >
                         <label for="sself">ventes non débutées</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="swon"
-                          ${sessionScope.filterPayload.tags.isOpen ? "checked" : null}
-                          ${sessionScope.filterPayload.tags.isSell ? null : "disabled"}>
+                        <input type="checkbox" id="swon" name="swon"
+                          ${sessionScope.tags.isOpen ? "checked" : null}
+                          ${sessionScope.tags.isSell ? null : "disabled"}>
                         <label for="swon">ventes terminées</label>
                       </div>
                     </div>

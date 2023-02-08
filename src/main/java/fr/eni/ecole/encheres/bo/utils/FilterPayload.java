@@ -9,7 +9,7 @@ public class FilterPayload {
 	private final FilterTags tags;
 	private final String query;
 	private final Categorie category;
-	private final Utilisateur user;
+	private Utilisateur user;
 
 	private FilterPayload(){
 		tags = FilterTags.getEmpty();
@@ -29,9 +29,7 @@ public class FilterPayload {
 	}
 
 	public FilterPayload(FilterTags tags, String query, Categorie category, Utilisateur user) {
-		this.tags = tags;
-		this.query = query;
-		this.category = category;
+		this(tags, query, category);
 		this.user = user;
 	}
 	public static FilterPayload getEmpty(){

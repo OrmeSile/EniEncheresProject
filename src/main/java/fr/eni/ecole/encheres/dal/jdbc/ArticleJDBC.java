@@ -198,12 +198,14 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 			params = e.getValue();
 		}
 		System.out.println("params in ArticleJDBC -> "+params);
+		System.out.println("query in ArticleJDBC -> "+query);
 		try(var con = ConnectionProvider.getConnection()){
 			var ps = con.prepareStatement(query);
-			System.out.println(query);
-			for(int i = 0; i < Objects.requireNonNull(params).size(); i++){
-				switch (params.get(i)){
+			for(int i = 1; i < Objects.requireNonNull(params).size(); i++){
+				System.out.println("value of i -> "+i);
+				switch (params.get(i-1)){
 					case QUERY:
+						System.out.println("in QUERY");
 						ps.setString(i, payload.getQuery());
 						break;
 					case USER:
@@ -215,6 +217,7 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 					default:
 						throw new BusinessException("Something went wrong in QueryParams");
 				}
+				System.out.println("out of switch");
 			}
 			var rs = ps.executeQuery();
 			var list = new ArrayList<ArticleVendu>();
@@ -223,6 +226,7 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 			}
 			return list;
 		}catch (SQLException e){
+			e.printStackTrace();
 			throw new BusinessException(e.getMessage());
 		}
 
@@ -235,7 +239,7 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 		var list = new ArrayList<QueryParams>();
 		sb.append(GET_ALL).append(" left join ENCHERES n on n.no_article = a.no_article WHERE ");
 		if(tags.getCount() == 0){
-			sb.append("a.etat_vente = 'EC'");
+			sb.append(" a.etat_vente = 'EC'");
 			var map = new HashMap<String, ArrayList<QueryParams>>();
 			map.put(sb.toString(), list);
 			return map;
@@ -247,7 +251,7 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 			stateParams.add("RT");
 		}
 		if(tags.isQuery()){
-			sb.append("a.nom_article LIKE %?%");
+			sb.append("a.nom_article LIKE '%?%'");
 			list.add(QueryParams.QUERY);
 			if (decrCount(tags)){
 				sb.append(_AND);
@@ -283,10 +287,13 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 			}
 		}
 		if (stateParams.size() > 0) {
-			if(tags.isSell()){
-				stateParams.forEach(x -> itemState.append("'").append(x).append("'").append(","));
-				itemState.append(")");
+			System.out.println("stateParams -> "+stateParams);
+			for(int i = 0; i < stateParams.size(); i++){
+				if(i==stateParams.size()-1){
+					itemState.append("'").append(stateParams.get(i)).append("'").append((i==stateParams.size()-1 )?"":",");
+				}
 			}
+			itemState.append(")");
 			sb.append(itemState);
 		}
 		var map = new HashMap<String, ArrayList<QueryParams>>();
@@ -295,6 +302,6 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 	}
 	private boolean decrCount(FilterTags tags){
 		tags.setCount(tags.getCount()-1);
-		return tags.getCount() > 0;
+		return tags.getCount() >= 0;
 	}
 }

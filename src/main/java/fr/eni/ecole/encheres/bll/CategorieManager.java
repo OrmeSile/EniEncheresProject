@@ -26,4 +26,7 @@ public class CategorieManager {
 	public ArrayList<Categorie> getCategories() throws BusinessException {
 		return dao.getAll();
 	}
+	public Categorie getOneById(int id) throws BusinessException {
+		return dao.getOneById(id);
+	}
 }
