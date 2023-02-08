@@ -1,0 +1,21 @@
+.container{
+	display: flex;
+	flex-flow: column nowrap;
+    background-color: #EEE;	
+}
+*{
+	font-family: sans-serif;
+}
+.formulaire{
+display: flex;
+align-items: center;
+flex-direction: column;	
+
+}
+.btn{
+display:flex;
+flex-direction: row	
+}
+.RTR{
+ align-items: center;	
+}

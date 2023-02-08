@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="<c:url value="/css/shared/header.css"/>">
+<link rel="stylesheet" href="<c:url value="/css/modifierProfil/modifierProfil.css"/> ">
 <jsp:include page="/WEB-INF/fragments/_normalize-import.jsp" />
 <title>Mon profil</title>
 </head>

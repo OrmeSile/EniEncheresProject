@@ -14,8 +14,8 @@ import java.util.*;
 import java.util.stream.Stream;
 
 public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
-	private final String UPDATE = "update articles_vendus set nom_article=?, 'description'=?,date_debut_enchere = ?,date_fin_enchere = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ?, etat_vente = ?, image = ? where no_article = ?";
-	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
+	private final String UPDATE = "update articles_vendus set nom_article=?, description=?,date_debut_enchere = ?,date_fin_enchere = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ?, etat_vente = ?, image = ? where no_article = ?";
+	private final String INSERT = "INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, etat_vente, image ) values (?,?,?,?,?,?,?,?,?,?)";
 	private final String GET_ALL = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article";
 	private final String _AND = " AND ";
 
@@ -89,6 +89,7 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 			}
 			throw new BusinessException("can't insert user");
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new BusinessException(e.getMessage());
 		}
 	}

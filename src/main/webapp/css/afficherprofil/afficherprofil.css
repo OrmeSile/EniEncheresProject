@@ -1,0 +1,49 @@
+body{
+	background-color: grey;
+	width: 100vw;
+	height: 100vh;
+}
+
+*{
+font-family: sans serif	
+}
+.container{
+	display: flex;
+	flex-flow: column nowrap;
+}
+.body-container {
+	padding: 50px;
+	align-self: center;
+	margin-top: 40px;
+    display: flex;
+    align-items: center;
+	justify-self: center;
+    flex-direction: column;
+	background: #EEE;
+	width: 500px;
+	border: solid #333 1px;
+
+}
+*{
+	font-family: sans-serif;
+}
+.fields-container{
+	width: 100%;
+	display: flex;
+	flex-flow: column nowrap;
+}
+.fields-container>*{
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+}
+.fields-container>*>*{
+	display: flex;
+}
+
+.btn>a>button{
+background-color:#0b9c0a9c;	
+color: white;
+border:none;
+padding: 10px;	
+}	

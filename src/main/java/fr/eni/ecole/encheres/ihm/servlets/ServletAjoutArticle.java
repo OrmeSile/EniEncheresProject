@@ -67,20 +67,19 @@ public class ServletAjoutArticle extends HttpServlet {
 
 		
 			try {
-				int miseAPrixInt = Integer.parseInt("miseAPrix");
-				LocalDate datedeb = LocalDate.parse(dateDebutEncheres);
-				LocalDateTime dateDebutFormatted = LocalDateTime.of(datedeb, LocalTime.now()); 
-				LocalDate datefin = LocalDate.parse(dateFinEncheres);
-				LocalDateTime dateFinFormatted = LocalDateTime.of(datefin, LocalTime.now());
+				int miseAPrixInt = Integer.parseInt(miseAPrix);
+				LocalDateTime datedeb = LocalDateTime.parse(dateDebutEncheres);
+				LocalDateTime datefin = LocalDateTime.parse(dateFinEncheres);
 				ArrayList<Categorie> cats = CategorieManager.getManager().getCategories();
 				Categorie cat = cats.stream().filter(x -> x.getLibelle().equals(categories)).collect(Collectors.toList()).get(0);	
 				var sessionUser = (Utilisateur)request.getSession().getAttribute("user");
+				System.out.println(sessionUser);
 				if (Stream.of(rue, codePostal, ville).anyMatch(Objects::isNull) || Stream.of(rue, codePostal, ville).anyMatch(String::isBlank)) {
 					rue = sessionUser.getRue();
 					codePostal = sessionUser.getCodePostal();
 					ville = sessionUser.getVille();
 				}
-				ArticleVendu a = new ArticleVendu(nomArticle, description, dateDebutFormatted, dateFinFormatted, miseAPrixInt, miseAPrixInt, EtatVente.CREE,(Utilisateur)user,new Retrait(rue, codePostal, ville), cat, "");
+				ArticleVendu a = new ArticleVendu(nomArticle, description, datedeb, datefin, miseAPrixInt, miseAPrixInt, EtatVente.CREE,(Utilisateur)user,new Retrait(rue, codePostal, ville), cat, "");
 				ArticleManager.getManager().addArticle(a);
 			} catch (BusinessException e) {
 				// TODO Auto-generated catch block
