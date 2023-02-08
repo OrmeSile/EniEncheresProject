@@ -69,7 +69,6 @@ public class ArticleManager {
 	}
 	public ArticleVendu addArticle (ArticleVendu article) throws BusinessException{
 		BusinessException be = new BusinessException();
-//methode de validation faire les méthodes plus bas		description = request.getParameter("description");
 		addnomArticle(article.getNomArticle(), be);
 		addescription(article.getDescription(), be);
 		addmiseAprix(article.getMiseAPrix(), be);

@@ -56,24 +56,15 @@ public class ServletAjoutArticle extends HttpServlet {
 		System.out.println("user + user");
 		ArticleManager mngr = ArticleManager.getManager();
 		String nomArticle = request.getParameter("nomArticle");
-		System.out.println(nomArticle);
 		String description = request.getParameter("description");
-		System.out.println(description);
 		String miseAPrix = request.getParameter("miseAPrix");
-		System.out.println(miseAPrix);
 		String dateDebutEncheres = request.getParameter("dateDebutEncheres");
-		System.out.println(dateDebutEncheres);
 		String dateFinEncheres = request.getParameter("dateFinEncheres");
-		System.out.println(dateFinEncheres);
 		String rue = request.getParameter("rue");
-		System.out.println("rue"+ rue);
 		String codePostal = request.getParameter("codePostal");
-		System.out.println("codePostal" + codePostal);
 		String ville = request.getParameter("ville");
-		System.out.println("ville" + ville);
 		String categories = request.getParameter("selectedCategory");
-		System.out.println("selectedCategory" + categories);
-		
+
 		
 			try {
 				int miseAPrixInt = Integer.parseInt("miseAPrix");
@@ -83,11 +74,11 @@ public class ServletAjoutArticle extends HttpServlet {
 				LocalDateTime dateFinFormatted = LocalDateTime.of(datefin, LocalTime.now());
 				ArrayList<Categorie> cats = CategorieManager.getManager().getCategories();
 				Categorie cat = cats.stream().filter(x -> x.getLibelle().equals(categories)).collect(Collectors.toList()).get(0);	
-				var userAdd = (Utilisateur)request.getSession().getAttribute("user");
+				var sessionUser = (Utilisateur)request.getSession().getAttribute("user");
 				if (Stream.of(rue, codePostal, ville).anyMatch(Objects::isNull) || Stream.of(rue, codePostal, ville).anyMatch(String::isBlank)) {
-					rue = userAdd.getRue();
-					codePostal = userAdd.getCodePostal();
-					ville = userAdd.getVille();
+					rue = sessionUser.getRue();
+					codePostal = sessionUser.getCodePostal();
+					ville = sessionUser.getVille();
 				}
 				ArticleVendu a = new ArticleVendu(nomArticle, description, dateDebutFormatted, dateFinFormatted, miseAPrixInt, miseAPrixInt, EtatVente.CREE,(Utilisateur)user,new Retrait(rue, codePostal, ville), cat, "");
 				ArticleManager.getManager().addArticle(a);

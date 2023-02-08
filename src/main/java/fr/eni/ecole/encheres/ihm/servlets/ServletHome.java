@@ -12,6 +12,8 @@ import fr.eni.ecole.encheres.bll.ArticleManager;
 import fr.eni.ecole.encheres.bll.CategorieManager;
 import fr.eni.ecole.encheres.bo.Categorie;
 import fr.eni.ecole.encheres.bo.Utilisateur;
+import fr.eni.ecole.encheres.bo.utils.FilterPayload;
+
 @WebServlet(name = "ServletHome", value = "/home")
 public class ServletHome extends HttpServlet {
 	@Override
@@ -21,11 +23,11 @@ public class ServletHome extends HttpServlet {
 				var categories = CategorieManager.getManager().getCategories();
 				request.setAttribute("categories", categories);
 			}
-			if(!Objects.isNull(request.getSession().getAttribute("user"))) {
+			if(!Objects.isNull(request.getSession().getAttribute("user")) || !Objects.isNull(request.getSession().getAttribute("filterPayload"))) {
 				var articles = ArticleManager.getManager().getLoggedOutObjects();
 				request.setAttribute("articles", articles);
 			}else{
-
+				var articles = null;
 			}
 		} catch (BusinessException e) {
 			System.out.println(e.getExceptionMessages());
