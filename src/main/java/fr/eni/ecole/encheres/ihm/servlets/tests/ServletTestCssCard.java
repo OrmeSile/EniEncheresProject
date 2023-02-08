@@ -16,7 +16,6 @@ public class ServletTestCssCard extends HttpServlet {
         try {
             var articles = ArticleManager.getManager().getAll();
             request.setAttribute("articles", articles);
-            System.out.println(articles.size());
             articles.forEach(x -> System.out.println(x.getVendeur().getNom()));
         } catch (BusinessException e) {
             throw new RuntimeException(e);

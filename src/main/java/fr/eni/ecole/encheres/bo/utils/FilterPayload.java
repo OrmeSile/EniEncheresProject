@@ -3,11 +3,13 @@ package fr.eni.ecole.encheres.bo.utils;
 import fr.eni.ecole.encheres.bo.Categorie;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 
+import java.util.Objects;
+
 public class FilterPayload {
 	private final FilterTags tags;
 	private final String query;
 	private final Categorie category;
-	private final Utilisateur user;
+	private Utilisateur user;
 
 	private FilterPayload(){
 		tags = FilterTags.getEmpty();
@@ -15,14 +17,23 @@ public class FilterPayload {
 		category = null;
 		user = null;
 	}
-	public static FilterPayload getEmpty(){
-		return new FilterPayload();
-	}
-	public FilterPayload(FilterTags tags, String query, Categorie category, Utilisateur user) {
+	private FilterPayload(FilterTags tags, String query, Categorie category){
 		this.tags = tags;
 		this.query = query;
 		this.category = category;
+		this.user = null;
+	}
+	public static FilterPayload getVisitorPayload(String query, Categorie category){
+		var tags = new FilterTags(!(Objects.isNull(query)||query.isBlank()), !(Objects.isNull(category)), false, true, false, false, false, false);
+		return new FilterPayload(tags, query, category);
+	}
+
+	public FilterPayload(FilterTags tags, String query, Categorie category, Utilisateur user) {
+		this(tags, query, category);
 		this.user = user;
+	}
+	public static FilterPayload getEmpty(){
+		return new FilterPayload();
 	}
 
 	public Utilisateur getUser() {

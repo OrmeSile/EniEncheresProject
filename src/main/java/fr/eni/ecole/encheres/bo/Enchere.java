@@ -10,10 +10,14 @@ public class Enchere {
 	private Utilisateur encherisseur;
 
 	public Enchere(LocalDateTime dateEnchere, int montantEnchere, ArticleVendu article, Utilisateur encherisseur) {
+		this(dateEnchere, montantEnchere, encherisseur);
+		this.article = article;
+	}
+	public Enchere(LocalDateTime dateEnchere, int montantEnchere, Utilisateur encherisseur){
 		this.dateEnchere = dateEnchere;
 		this.montantEnchere = montantEnchere;
-		this.article = article;
 		this.encherisseur = encherisseur;
+		this.article = null;
 	}
 
 	public LocalDateTime getDateEnchere() {

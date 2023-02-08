@@ -30,12 +30,9 @@ public class EnchereJDBC implements ItemFetchable<Enchere, Utilisateur> {
             var rs = pr.executeQuery();
             if(rs.next()){
                 var user = DAOFactory.getUtilisateurDAO().getOneById(rs.getInt(1));
-                var article = DAOFactory.getArticleDAO().getOneById(id);
                 var date = LocalDateTime.of(rs.getDate(3).toLocalDate(), rs.getTime(3).toLocalTime());
                 var montant = rs.getInt(4);
-                var enchere = new Enchere(date, montant, article, user);
-                article.setEnchere(enchere);
-                return enchere;
+                return new Enchere(date, montant, user);
             }
             throw new BusinessException("can't find enchere");
         }catch(SQLException e){
