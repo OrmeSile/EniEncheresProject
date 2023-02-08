@@ -13,7 +13,7 @@ import com.microsoft.sqlserver.jdbc.SQLServerConnection;
 public class UtilisateurJDBC implements DAOUtilisateur {
 	private final String UPDATE = "update utilisateurs set no_utilisateur=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=?, credit=?, administrateur=? where no_utilisateur = ?";
 	private final String GET_ONE_BY_ID = "select * from utilisateurs  where no_utilisateur = ?";
-	private final String LOGIN = "select no_utilisateur, nom, prenom, email, telephone, rue, code_postal, ville, credit, administrateur from UTILISATEURS WHERE (pseudo = ? OR email = ?) AND mot_de_passe = ?";
+	private final String LOGIN = "select no_utilisateur, nom, prenom, email, telephone, rue, code_postal, ville, credit, administrateur, pseudo from UTILISATEURS WHERE (pseudo = ? OR email = ?) AND mot_de_passe = ?";
 	private final String INSERT = "INSERT INTO UTILISATEURS VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 	@Override
@@ -125,7 +125,8 @@ public class UtilisateurJDBC implements DAOUtilisateur {
 				String ville = rs.getString(8);
 				int credit = rs.getInt(9);
 				boolean administrateur = rs.getBoolean(10);
-				var user = new Utilisateur(id, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
+				String psd = rs.getString(11);
+				var user = new Utilisateur(id, psd, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
 				user.setEncheres(DAOFactory.getEnchereDAO().getAllByParent(user));
 				user.setArticles(DAOFactory.getArticleDAO().getAllByParent(user));
 				return user;

@@ -53,7 +53,6 @@ public class ServletAjoutArticle extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		var user = request.getSession().getAttribute("user");
-		System.out.println("user + user");
 		ArticleManager mngr = ArticleManager.getManager();
 		String nomArticle = request.getParameter("nomArticle");
 		String description = request.getParameter("description");

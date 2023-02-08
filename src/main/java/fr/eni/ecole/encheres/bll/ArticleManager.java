@@ -32,16 +32,15 @@ public class ArticleManager {
 
 	}public ArrayList<ArticleVendu> getFilteredResults(FilterPayload payload) throws BusinessException {
 		var results = dao.getFilteredObjects(payload);
-		System.out.println(results.size());
 		return dao.getFilteredObjects(payload);
 	}
 	public ArrayList<ArticleVendu> getFilteredResults(Utilisateur user) throws BusinessException {
-		return getFilteredResults("", null, user, false, true, false, false, false, false);
+		return getFilteredResults("", null, user, false, false, false, false, false, false);
 	}
 	public ArrayList<ArticleVendu> getFilteredResults(String query, Categorie cat, Utilisateur user, boolean isSell, boolean isOpen, boolean isBuySelf, boolean isBuyWon, boolean isSellPre, boolean isSellFin) throws BusinessException{
 		var q = Objects.isNull(query) || query.isBlank() ? null : query;
-		var qBool = !Objects.isNull(query);
-		var catBool = !Objects.isNull(query);
+		var qBool = !Objects.isNull(q);
+		var catBool = !Objects.isNull(cat);
 		if(isSell){
 			if(Stream.of(isOpen, isSellPre, isSellFin).noneMatch(x -> x)){
 				var tags = new FilterTags(qBool, catBool, true, true, false, false, false, false);

@@ -45,7 +45,7 @@ public class FilterTags {
 			this.isBuyWon = isBuyWon;
 		}
 		Stream.of(cat, query, isSell, isBuySelf).forEach(b -> {if(b) count++;});
-		if(Stream.of(isOpen, isBuyWon, isSellPre, isSellFin).anyMatch(x -> x)){
+		if(Stream.of(isBuyWon, isSellPre, isSellFin).anyMatch(x -> x)){
 			count++;
 		}
 	}

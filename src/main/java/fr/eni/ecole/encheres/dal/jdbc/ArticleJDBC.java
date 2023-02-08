@@ -48,7 +48,6 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 			return articles;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("exception");
 			throw new BusinessException(e.getMessage());
 		}
 	}
@@ -140,8 +139,12 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 				var retrait = new Retrait(rs.getString(15), rs.getString(16), rs.getString(17));
 				var article = new ArticleVendu(noArticle, nom, description, dateDebut, dateFin, miseAPrix, prixVente, etatVente, parent, retrait, categorie, image);
 				retrait.setArticle(article);
-				var encheres = DAOFactory.getEnchereDAO().getOneById(article.getNoArticle());
-				article.setEnchere(encheres);
+				try {
+					var encheres = DAOFactory.getEnchereDAO().getOneById(article.getNoArticle());
+					article.setEnchere(encheres);
+				}catch(BusinessException e) {
+					article.setEnchere(null);
+				}
 				returnList.add(article);
 			}
 			parent.setArticles(returnList);
@@ -168,7 +171,13 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 			var retrait = retraitIsNull ? new Retrait(user.getRue(), user.getCodePostal(), user.getVille()) : new Retrait(rs.getString(15), rs.getString(16), rs.getString(17));
 			var article = new ArticleVendu(id, nom, description, dateDebut, dateFin, miseAPrix, prixVente, etatVente, user, retrait, categorie, image);
 			retrait.setArticle(article);
-			article.setEnchere(DAOFactory.getEnchereDAO().getOneById(article.getNoArticle()));
+			try{
+				var enchere = DAOFactory.getEnchereDAO().getOneById(article.getNoArticle());
+				enchere.setArticle(article);
+				article.setEnchere(enchere);
+			}catch (BusinessException e){
+				article.setEnchere(null);
+			}
 			user.getArticles().add(article);
 			return article;
 		} catch (SQLException e) {
@@ -181,7 +190,6 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 
 	@Override
 	public ArrayList<ArticleVendu> getFilteredObjects(FilterPayload payload) throws BusinessException {
-		System.out.println("hello");
 		var mapResult = buildFilteredQuery(payload.getTags());
 		String query = null;
 		ArrayList<QueryParams> params = null;
@@ -189,8 +197,10 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 			query = e.getKey();
 			params = e.getValue();
 		}
+		System.out.println("params in ArticleJDBC -> "+params);
 		try(var con = ConnectionProvider.getConnection()){
 			var ps = con.prepareStatement(query);
+			System.out.println(query);
 			for(int i = 0; i < Objects.requireNonNull(params).size(); i++){
 				switch (params.get(i)){
 					case QUERY:
@@ -223,9 +233,8 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 		ArrayList<String> stateParams = new ArrayList<>();
 		var itemState = new StringBuilder("a.etat_vente IN (");
 		var list = new ArrayList<QueryParams>();
-		sb.append(GET_ALL).append("left join ENCHERES n on n.no_article = a.no_article WHERE ");
+		sb.append(GET_ALL).append(" left join ENCHERES n on n.no_article = a.no_article WHERE ");
 		if(tags.getCount() == 0){
-			System.out.println("count == 0");
 			sb.append("a.etat_vente = 'EC'");
 			var map = new HashMap<String, ArrayList<QueryParams>>();
 			map.put(sb.toString(), list);

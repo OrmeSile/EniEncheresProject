@@ -20,15 +20,27 @@ public class ServletHome extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			if(Objects.isNull(request.getAttribute("categories"))) {
+				System.out.println("cat missing");
 				var categories = CategorieManager.getManager().getCategories();
 				request.setAttribute("categories", categories);
 			}
-			if(Objects.isNull(request.getSession().getAttribute("user")) || Objects.isNull(request.getSession().getAttribute("filterPayload"))) {
+			if(Objects.isNull(request.getSession().getAttribute("user"))) {
+				System.out.println("user null");
 				var articles = ArticleManager.getManager().getLoggedOutObjects();
 				request.setAttribute("articles", articles);
 			}
+			if(!Objects.isNull(request.getSession().getAttribute("filterPayload"))){
+				System.out.println("payload not null");
+				var payload = (FilterPayload)request.getSession().getAttribute("filterPayload");
+				var articles = ArticleManager.getManager().getFilteredResults(payload);
+				request.setAttribute("articles", articles);
+			}else{
+				System.out.println("payload null");
+				var articles = ArticleManager.getManager().getFilteredResults((Utilisateur) request.getSession().getAttribute("user"));
+				request.setAttribute("articles", articles);
+			}
 		} catch (BusinessException e) {
-			System.out.println(e.getExceptionMessages());
+			e.printStackTrace();
 			request.setAttribute("errors", e.getExceptionMessages());
 		}
 		request.getRequestDispatcher("/WEB-INF/homePage/homepage.jsp").forward(request, response);
