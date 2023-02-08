@@ -23,11 +23,9 @@ public class ServletHome extends HttpServlet {
 				var categories = CategorieManager.getManager().getCategories();
 				request.setAttribute("categories", categories);
 			}
-			if(!Objects.isNull(request.getSession().getAttribute("user")) || !Objects.isNull(request.getSession().getAttribute("filterPayload"))) {
+			if(Objects.isNull(request.getSession().getAttribute("user")) || Objects.isNull(request.getSession().getAttribute("filterPayload"))) {
 				var articles = ArticleManager.getManager().getLoggedOutObjects();
 				request.setAttribute("articles", articles);
-			}else{
-				var articles = null;
 			}
 		} catch (BusinessException e) {
 			System.out.println(e.getExceptionMessages());

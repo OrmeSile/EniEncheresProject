@@ -29,9 +29,16 @@ public class ArticleManager {
 	}
 	public ArrayList<ArticleVendu> getLoggedOutObjects() throws BusinessException {
  		return dao.getLoggedOutObjects();
+
+	}public ArrayList<ArticleVendu> getFilteredResults(FilterPayload payload) throws BusinessException {
+		var results = dao.getFilteredObjects(payload);
+		System.out.println(results.size());
+		return dao.getFilteredObjects(payload);
+	}
+	public ArrayList<ArticleVendu> getFilteredResults(Utilisateur user) throws BusinessException {
+		return getFilteredResults("", null, user, false, true, false, false, false, false);
 	}
 	public ArrayList<ArticleVendu> getFilteredResults(String query, Categorie cat, Utilisateur user, boolean isSell, boolean isOpen, boolean isBuySelf, boolean isBuyWon, boolean isSellPre, boolean isSellFin) throws BusinessException{
-
 		var q = Objects.isNull(query) || query.isBlank() ? null : query;
 		var qBool = !Objects.isNull(query);
 		var catBool = !Objects.isNull(query);

@@ -181,6 +181,7 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 
 	@Override
 	public ArrayList<ArticleVendu> getFilteredObjects(FilterPayload payload) throws BusinessException {
+		System.out.println("hello");
 		var mapResult = buildFilteredQuery(payload.getTags());
 		String query = null;
 		ArrayList<QueryParams> params = null;
@@ -224,6 +225,7 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 		var list = new ArrayList<QueryParams>();
 		sb.append(GET_ALL).append("left join ENCHERES n on n.no_article = a.no_article WHERE ");
 		if(tags.getCount() == 0){
+			System.out.println("count == 0");
 			sb.append("a.etat_vente = 'EC'");
 			var map = new HashMap<String, ArrayList<QueryParams>>();
 			map.put(sb.toString(), list);
