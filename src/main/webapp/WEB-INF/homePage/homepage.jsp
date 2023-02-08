@@ -60,37 +60,51 @@
               <c:if test="${not empty sessionScope.user}">
                 <div class="toggle-filters">
                   <div class="radio-group">
-                    <input type="radio" name="filter" value="buy" id="buy" ${sessionScope.filterPayload.tags.isSell ? "" : "checked"}>
+                    <input type="radio" name="filter" value="buy" id="buy" ${sessionScope.filterPayload.tags.isSell ? null : "checked"}>
                     <label for="buy">Achats</label>
-                    <input type="radio" name="filter" value="sell" id="sell" ${sessionScope.filterPayload.tags.isSell ? "checked" : ""}>
+                    <input type="radio" name="filter" value="sell" id="sell" ${sessionScope.filterPayload.tags.isSell ? "checked" : null}>
                     <label for="sell">Mes ventes</label>
                   </div>
                   <div class="checkbox-group-container">
                     <div class="checkbox-group buy-group">
                       <div>
-                        <input type="checkbox" id="bopen" ${empty sessionScope.filterPayload || sessionScope.filterPayload.tags.isOpen ? "checked" : ""}>
+                        <input type="checkbox" id="bopen"
+                          ${sessionScope.filterPayload.tags.isSell ? "disabled" : null}
+                          ${empty sessionScope.filterPayload || sessionScope.filterPayload.tags.isOpen ? "checked" : null}>
                         <label for="bopen">enchères ouvertes</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="bself" ${sessionScope.filterPayload.tags.isSelf ? "checked" : ""}>
+                        <input type="checkbox" id="bself"
+                          ${sessionScope.filterPayload.tags.isSell ? "disabled" : null}
+                          ${sessionScope.filterPayload.tags.isSelf ? "checked" : null}>
                         <label for="bself">mes enchères</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="bwon" ${sessionScope.filterPayload.tags.isBuyWon ? "checked" : ""}>
+                        <input type="checkbox" id="bwon"
+                          ${sessionScope.filterPayload.tags.isSell ? "disabled" : null}
+                          ${sessionScope.filterPayload.tags.isBuyWon ? "checked" : null}>
                         <label for="bwon">mes enchères remportées</label>
                       </div>
                     </div>
                     <div class="checkbox-group sell-group">
                       <div>
-                        <input type="checkbox" id="sopen" ${sessionScope.filterPayload.tags.isOpen ? "checked" : ""}>
+                        <input type="checkbox" id="sopen"
+                          ${sessionScope.filterPayload.tags.isOpen ? "checked" : null}
+                          ${sessionScope.filterPayload.tags.isSell ? null : "disabled"}
+                        >
                         <label for="sopen">mes ventes en cours</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="sself" ${sessionScope.filterPayload.tags.isOpen ? "checked" : ""}>
+                        <input type="checkbox" id="sself"
+                          ${sessionScope.filterPayload.tags.isOpen ? "checked" : null}
+                          ${sessionScope.filterPayload.tags.isSell ? null : "disabled"}
+                        >
                         <label for="sself">ventes non débutées</label>
                       </div>
                       <div>
-                        <input type="checkbox" id="swon" ${sessionScope.filterPayload.tags.isOpen ? "checked" : ""}>
+                        <input type="checkbox" id="swon"
+                          ${sessionScope.filterPayload.tags.isOpen ? "checked" : null}
+                          ${sessionScope.filterPayload.tags.isSell ? null : "disabled"}>
                         <label for="swon">ventes terminées</label>
                       </div>
                     </div>
