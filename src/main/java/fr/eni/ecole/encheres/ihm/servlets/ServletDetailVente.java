@@ -7,6 +7,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @WebServlet(name = "ServletDetailVente", value = "/afficherEnchere")
 public class ServletDetailVente extends HttpServlet {
@@ -16,6 +17,7 @@ public class ServletDetailVente extends HttpServlet {
             var articleId = Integer.parseInt(request.getParameter("id"));
             var article = ArticleManager.getManager().getOneArticleById(articleId);
             request.setAttribute("article", article);
+            request.setAttribute("date", LocalDateTime.now());
             request.getRequestDispatcher("/WEB-INF/afficherEnchere/enchere.jsp").forward(request, response);
         }catch (NumberFormatException e){
             response.sendError(404);
