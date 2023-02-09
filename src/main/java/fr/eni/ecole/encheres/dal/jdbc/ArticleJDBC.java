@@ -197,6 +197,7 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 		for(var e : mapResult.entrySet()){
 			query = e.getKey();
 			params = e.getValue();
+			System.out.println(query);
 		}
 		try(var con = ConnectionProvider.getConnection()){
 			var ps = con.prepareStatement(query);
@@ -235,7 +236,7 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 		var list = new ArrayList<QueryParams>();
 		sb.append(GET_ALL).append(" left join ENCHERES e on e.no_article = a.no_article WHERE ");
 		if(tags.getCount() == 0){
-			sb.append(" a.etat_vente = 'EC'");
+			sb.append("a.etat_vente = 'EC'");
 			var map = new HashMap<String, ArrayList<QueryParams>>();
 			map.put(sb.toString(), list);
 			return map;

@@ -55,6 +55,7 @@ public class ServletHome extends HttpServlet {
 			var categorieParam = Integer.parseInt(request.getParameter("selectedCategory"));
 			var queryParam = request.getParameter("search-field");
 			var categorie = categorieParam != 0 ? CategorieManager.getManager().getOneById(categorieParam) : null;
+			System.out.println("user null "+Objects.isNull(user));
 			if (Objects.isNull(user)) {
 				var payload = FilterPayload.getVisitorPayload(queryParam, categorie);
 				request.getSession().setAttribute("filterPayload", payload);
@@ -66,12 +67,14 @@ public class ServletHome extends HttpServlet {
 				var buySelfParam = request.getParameter("bself");
 				var buyWonParam = request.getParameter("bwon");
 				var sellOpenParam = request.getParameter("sopen");
+				System.out.println(sellOpenParam);
 				var sellPreParam = request.getParameter("spre");
 				var sellWonParam = request.getParameter("swon");
 				var isQuery = (!Objects.isNull(queryParam) && !queryParam.isBlank());
 				var isCategory = !Objects.isNull(categorie);
 				var isSell = radioValueParam.equals("sell");
 				var isOpen = (!Objects.isNull(buyOpenParam) && Objects.isNull(sellOpenParam)) || (Objects.isNull(buyOpenParam) && !Objects.isNull(sellOpenParam));
+				System.out.println(isOpen);
 				var isBuySelf = !Objects.isNull(buySelfParam);
 				var isBuyWon = !Objects.isNull(buyWonParam);
 				var isSellPre = !Objects.isNull(sellPreParam);

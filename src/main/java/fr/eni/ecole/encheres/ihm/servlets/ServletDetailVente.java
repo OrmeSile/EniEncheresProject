@@ -2,6 +2,7 @@ package fr.eni.ecole.encheres.ihm.servlets;
 
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bll.ArticleManager;
+import fr.eni.ecole.encheres.bo.Enchere;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -29,6 +30,5 @@ public class ServletDetailVente extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

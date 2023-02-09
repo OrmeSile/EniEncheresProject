@@ -52,7 +52,7 @@ public class FilterTags {
 		if(Stream.of(buyWon, sellPre, sellFin).anyMatch(x -> x)){
 			count++;
 		}
-		if(Stream.of(query, cat, sellPre, sellFin, buyWon, buySelf).noneMatch(x -> x)){
+		if(Stream.of(sell, query, cat, sellPre, sellFin, buyWon, buySelf).noneMatch(x -> x)){
 			count = 0;
 		}
 	}

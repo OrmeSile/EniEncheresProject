@@ -44,7 +44,7 @@
             <label for="vendeur">Vendeur :</label>
             <c:choose>
               <c:when test="${!empty sessionScope.user}">
-                <a id="vendeur" href="<c:url value="/profil?userId=${article.vendeur.noUtilisateur}"/>">${article.vendeur.pseudo}</a>
+                <a id="vendeur" href="<c:url value="/profil?userid=${article.vendeur.noUtilisateur}"/>">${article.vendeur.pseudo}</a>
               </c:when>
               <c:otherwise>
                 <p id="vendeur">${article.vendeur.pseudo}</p>
@@ -62,7 +62,7 @@
                 </form>
               </c:when>
               <c:otherwise>
-                <a href="<c:url value="/"/>"></a> <input type="button" value="Modifier">
+                <a href="<c:url value="/"/>"></a><input type="button" value="Modifier">
               </c:otherwise>
             </c:choose>
 
