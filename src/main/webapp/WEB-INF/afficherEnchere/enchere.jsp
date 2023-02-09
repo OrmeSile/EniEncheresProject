@@ -57,6 +57,7 @@
               <c:when test="${sessionScope.user.noUtilisateur != article.vendeur.noUtilisateur && article.enchere.encherisseur.noUtilisateur != sessionScope.user.noUtilisateur}">
                 <form method="post" action="<c:url value="/afficherEnchere"/> ">
                   <label for="proposition">Ma proposition :</label>
+                  <input type="hidden" name="itemId" value="${article.noArticle}">
                   <input type="number" id="proposition" name="proposition" value="${!empty article.enchere ? article.enchere.montantEnchere + 1 : article.miseAPrix +1}">
                   <input type="submit" value="Enchérir">
                 </form>

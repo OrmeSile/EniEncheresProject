@@ -25,7 +25,7 @@
 				</div>
 				<div class="label-field">
 					<label for="mdp">Mot de passe :</label>
-					<input type="password" id="mdp" name="mdp" />
+					<input type="password" id="mdp" name="mdp"/>
 				</div>
 				<div class="form-submit-block">
 					<input type="submit" value="Connexion" />
