@@ -3,6 +3,7 @@ package fr.eni.ecole.encheres.bll;
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Categorie;
+import fr.eni.ecole.encheres.bo.Enchere;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.bo.utils.FilterPayload;
 import fr.eni.ecole.encheres.bo.utils.FilterTags;
@@ -62,6 +63,16 @@ public class ArticleManager {
 			}
 		}
 	}
+	public ArticleVendu updateArticleWithEnchere(Utilisateur user, int montant, int id) throws BusinessException{
+		var article = dao.getOneById(id);
+		if(enchere.getMontantEnchere() > article.getEnchere().getMontantEnchere()){
+			article.setEnchere(EnchereManager.getManager().addEnchereOnArticle(enchere, id));
+		}else{
+			throw new BusinessException("can't set montant < existing one");
+		}
+		return article;
+
+	}
 
 	public ArticleVendu getOneArticleById(int id) throws BusinessException {
 		return dao.getOneById(id);
@@ -72,55 +83,56 @@ public class ArticleManager {
 	public ArrayList<ArticleVendu> getAll() throws BusinessException{
 		return dao.getAll();
 	}
+
 	public ArticleVendu addArticle (ArticleVendu article) throws BusinessException{
 		BusinessException be = new BusinessException();
-		addnomArticle(article.getNomArticle(), be);
-		addescription(article.getDescription(), be);
-		addmiseAprix(article.getMiseAPrix(), be);
-		addDaterenseigner(article.getDateDebutEncheres(), article.getDateFinEncheres(), be);
-		addDateOrdre(article.getDateDebutEncheres(), article.getDateFinEncheres(), be);
-		addRue(article.getLieuRetrait().getRue(), be);
-		addCp(article.getLieuRetrait().getCodePostal(), be);
-		addville(article.getLieuRetrait().getVille(), be);
+		checkNomArticle(article.getNomArticle(), be);
+		checkDescription(article.getDescription(), be);
+		checkMiseAPrix(article.getMiseAPrix(), be);
+		checkDates(article.getDateDebutEncheres(), article.getDateFinEncheres(), be);
+		checkDateLogic(article.getDateDebutEncheres(), article.getDateFinEncheres(), be);
+		checkRue(article.getLieuRetrait().getRue(), be);
+		checkCP(article.getLieuRetrait().getCodePostal(), be);
+		checkVille(article.getLieuRetrait().getVille(), be);
 		return dao.insert(article);
 	}
 	
-	private void addnomArticle (String nomArticle, BusinessException be ) {
+	private void checkNomArticle(String nomArticle, BusinessException be ) {
 		if(nomArticle == null || nomArticle.isBlank()) {
 			be.addExceptionMessage("le nom de l'article doit être renseigner");
 		}
 	}
-	private void addmiseAprix (int miseAPrix, BusinessException be ) {
+	private void checkMiseAPrix(int miseAPrix, BusinessException be ) {
 		if(miseAPrix<=0) {
 			be.addExceptionMessage("Veuillez renseigner le prix de l'article");
 		}
 	}
-	private void addDaterenseigner (LocalDateTime dateDebutEncheres,LocalDateTime dateFinEncheres, BusinessException be ) {
+	private void checkDates(LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, BusinessException be ) {
 		if( dateDebutEncheres == null || dateFinEncheres == null) {
 			be.addExceptionMessage("veuillez renseigner les dates d'enchères");
 		}
 	}
-	private void addDateOrdre (LocalDateTime dateDebutEncheres,LocalDateTime dateFinEncheres, BusinessException be ) {
+	private void checkDateLogic(LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres, BusinessException be ) {
 		if(dateFinEncheres.isAfter(dateDebutEncheres)||dateDebutEncheres.isBefore(LocalDateTime.now())|| dateFinEncheres.isBefore(LocalDateTime.now())) {
 			be.addExceptionMessage("veuillez respecter l'ordre des dates");
 		}
 	}
-	private void addRue (String rue, BusinessException be ) {
+	private void checkRue(String rue, BusinessException be ) {
 		if(rue == null || rue.isBlank()) {
 			be.addExceptionMessage("La rue doit être renseigner");
 		}
 	}
-	private void addCp (String codePostal, BusinessException be ) {
+	private void checkCP(String codePostal, BusinessException be ) {
 		if(codePostal == null || codePostal.isBlank()) {
 			be.addExceptionMessage("Le code postal doit être renseigner");
 		}
 	}
-	private void addville (String ville, BusinessException be ) {
+	private void checkVille(String ville, BusinessException be ) {
 		if(ville == null || ville.isBlank()) {
 			be.addExceptionMessage("la ville doit être renseigner");
 		}
 	}
-	private void addescription (String description, BusinessException be ) {
+	private void checkDescription(String description, BusinessException be ) {
 		if(description == null || description.isBlank()) {
 			be.addExceptionMessage("la description de l'article doit être renseigner");
 		}

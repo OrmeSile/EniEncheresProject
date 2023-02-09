@@ -8,6 +8,7 @@ import fr.eni.ecole.encheres.dal.DAOFactory;
 import fr.eni.ecole.encheres.dal.ItemFetchable;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -34,7 +35,7 @@ public class EnchereJDBC implements ItemFetchable<Enchere, Utilisateur> {
                 var montant = rs.getInt(4);
                 return new Enchere(date, montant, user);
             }
-            throw new BusinessException("can't find enchere");
+            return null;
         }catch(SQLException e){
             e.printStackTrace();
             throw new BusinessException(e.getMessage());
@@ -45,19 +46,46 @@ public class EnchereJDBC implements ItemFetchable<Enchere, Utilisateur> {
     public ArrayList<Enchere> getAll() throws BusinessException{
         return null;
     }
+
     @Override
-    public Enchere insert(Enchere object) {
-        return null;
+    public Enchere insert(Enchere object) throws BusinessException {
+        try(var con = ConnectionProvider.getConnection()){
+            var ps = con.prepareStatement("insert into ENCHERES values ?,?,?,?");
+            ps.setInt(1,object.getEncherisseur().getNoUtilisateur());
+            ps.setInt(2, object.getArticle().getNoArticle());
+            ps.setTimestamp(3,Timestamp.valueOf(object.getDateEnchere()));
+            ps.setInt(4,object.getMontantEnchere());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new BusinessException(e.getMessage());
+        }
+        return object;
     }
 
     @Override
     public void update(Enchere object) throws BusinessException {
-
+        try(var con = ConnectionProvider.getConnection()){
+            var ps = con.prepareStatement("update encheres set no_utilisateur = ?, date_enchere = ?, montant_enchere = ? where no_article = ?");
+            ps.setInt(1, object.getEncherisseur().getNoUtilisateur());
+            ps.setTimestamp(2, Timestamp.valueOf(object.getDateEnchere()));
+            ps.setInt(3, object.getMontantEnchere());
+            ps.setInt(4, object.getArticle().getNoArticle());
+            ps.executeUpdate();
+        }catch (SQLException e){
+            throw new BusinessException(e.getMessage());
+        }
     }
+
 
     @Override
     public void delete(int id) throws BusinessException {
-
+        try(var con = ConnectionProvider.getConnection()){
+            var ps = con.prepareStatement("delete from ENCHERES where no_article = ?");
+            ps.setInt(1,id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new BusinessException(e.getMessage());
+        }
     }
 
     @Override
