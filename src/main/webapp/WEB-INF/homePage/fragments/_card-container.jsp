@@ -3,6 +3,7 @@
   <div class="card-container">
     <c:forEach items="${param.items}" var="item">
         <jsp:include page="/WEB-INF/homePage/fragments/_object-card.jsp">
+          <jsp:param name="id" value="${item.noArticle}"/>
           <jsp:param name="nom" value="${item.nom}"/>
           <jsp:param name="prix" value="${item.prix}"/>
           <jsp:param name="finEnchere" value="${item.dateFinEncheres.toLocalDate()}"/>

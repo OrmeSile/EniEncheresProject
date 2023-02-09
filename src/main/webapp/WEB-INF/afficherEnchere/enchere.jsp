@@ -51,12 +51,20 @@
               </c:otherwise>
             </c:choose>
           </div>
-          <c:if test="${!empty sessionScope.user}">
-            <form method="post" action="<c:url value="/afficherEnchere"/> ">
-              <label for="proposition">Ma proposition :</label>
-              <input type="number" id="proposition" name="proposition" value="${!empty article.enchere ? article.enchere.montantEnchere + 1 : article.miseAPrix +1}">
-              <input type="submit" value="Enchérir">
-            </form>
+          <c:if test="${!empty sessionScope.user && article.dateFinEncheres.is}">
+            <c:choose>
+              <c:when test="${sessionScope.user.noUtilisateur != article.vendeur.noUtilisateur && article.enchere.encherisseur.noUtilisateur != sessionScope.user.noUtilisateur}">
+                <form method="post" action="<c:url value="/afficherEnchere"/> ">
+                  <label for="proposition">Ma proposition :</label>
+                  <input type="number" id="proposition" name="proposition" value="${!empty article.enchere ? article.enchere.montantEnchere + 1 : article.miseAPrix +1}">
+                  <input type="submit" value="Enchérir">
+                </form>
+              </c:when>
+              <c:otherwise>
+                <a href="<c:url value="/"/>"></a> <input type="button" value="Modifier">
+              </c:otherwise>
+            </c:choose>
+
           </c:if>
         </div>
       </div>

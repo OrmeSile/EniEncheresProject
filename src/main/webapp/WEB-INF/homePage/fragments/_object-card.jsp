@@ -6,7 +6,7 @@
     <div class="card-body">
       <ul>
         <li>
-          <a<span class="article-title">${param.nom}</span>
+          <a href="<c:url value="/afficherEnchere?id=${param.id}"/>"><span class="article-title">${param.nom}</span></a>
         </li>
         <li>
           <span class="article-price">${param.prix} €</span>

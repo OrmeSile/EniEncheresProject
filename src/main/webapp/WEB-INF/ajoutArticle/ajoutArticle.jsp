@@ -27,8 +27,8 @@
 			<input type="text" id="description" name="description" />
 		</div> 
 	    <div>
-		    <label for="categories">Catégorie : </label>
-			<select name="selectedCategory">
+		    <label for="selected-category">Catégorie : </label>
+			<select id="selected-category" name="selectedCategory">
 				<c:forEach var="categorie" items="${requestScope.categories}">
 					<option>${categorie.libelle}</option>
 				</c:forEach>

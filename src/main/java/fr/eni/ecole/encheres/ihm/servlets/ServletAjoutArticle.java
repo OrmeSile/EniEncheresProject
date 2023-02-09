@@ -35,15 +35,19 @@ public class ServletAjoutArticle extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		try {
+			var requestId = request.getParameter("id");
+			if(!Objects.isNull(requestId) && !requestId.isBlank()){
+
+			}
 			ArrayList<Categorie> categories = CategorieManager.getManager().getCategories();
 			request.setAttribute("categories", categories);
+			request.getRequestDispatcher("/WEB-INF/ajoutArticle/ajoutArticle.jsp").forward(request, response);
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+		} catch (NumberFormatException e) {
+			response.sendError(404);
 		}
-		request.getRequestDispatcher("/WEB-INF/ajoutArticle/ajoutArticle.jsp").forward(request, response);
 	}
 
 	/**
