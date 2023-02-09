@@ -71,7 +71,7 @@
 	<div class="btn">
 	    <input type="submit" name="Enregistrer"> 
         <input type="button" name="Annuler" />
-        <input type="button" name="Annuler la vente" />
+        <input type="button" name="Annuler-la-vente" value="Annuler la vente"/>
     </div>    
   </form>
  </div>
