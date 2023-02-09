@@ -35,6 +35,7 @@ public class ServletAjoutArticle extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("date", LocalDateTime.now());
 		try {
 			var requestId = request.getParameter("id");
 			if(!Objects.isNull(requestId) && !requestId.isBlank()){
