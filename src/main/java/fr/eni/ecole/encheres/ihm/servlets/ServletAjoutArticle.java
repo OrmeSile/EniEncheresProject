@@ -39,8 +39,6 @@ public class ServletAjoutArticle extends HttpServlet {
 		try {
 			ArrayList<Categorie> categories = CategorieManager.getManager().getCategories();
 			request.setAttribute("categories", categories);
-			
-			
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

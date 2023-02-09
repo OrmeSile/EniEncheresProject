@@ -6,7 +6,7 @@
     <div class="card-body">
       <ul>
         <li>
-          <span class="article-title">${param.nom}</span>
+          <a<span class="article-title">${param.nom}</span>
         </li>
         <li>
           <span class="article-price">${param.prix} €</span>
