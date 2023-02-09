@@ -17,6 +17,8 @@ import fr.eni.ecole.encheres.bo.utils.FilterTags;
 
 @WebServlet(name = "ServletHome", value = "/home")
 public class ServletHome extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		var user = (Utilisateur)request.getSession().getAttribute("user");
