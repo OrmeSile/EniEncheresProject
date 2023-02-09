@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		pageEncoding="UTF-8"%>
+<jsp:useBean id="date" scope="request" type="java.time.LocalDateTime"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,7 +74,7 @@
 	     <div><input type="submit" name="enregistrer" value="Enregistrer"></div> 
          <div><a href="<c:url value="/"/>"><input type="button" name="annuler" value="Annuler" /></a></div>
          <div>
-         <c:if test="">
+         <c:if test="${ requestScope.article.vendeur.noUtilisateur == sessionScope.user.noUtilisateur && requestScope.article.dateDebutEnchere.isAfter(date)}">
          	<input type="button" name="annuler-la-vente" value="Annuler la vente" />
 		</c:if>         
          </div>
