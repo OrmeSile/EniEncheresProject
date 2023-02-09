@@ -51,7 +51,8 @@
               </c:otherwise>
             </c:choose>
           </div>
-          <c:if test="${!empty sessionScope.user && article.dateFinEncheres.is}">
+          <jsp:useBean id="date" scope="request" type="java.time.LocalDateTime"/>
+          <c:if test="${!empty sessionScope.user && article.dateDebutEncheres.isAfter(date)}">
             <c:choose>
               <c:when test="${sessionScope.user.noUtilisateur != article.vendeur.noUtilisateur && article.enchere.encherisseur.noUtilisateur != sessionScope.user.noUtilisateur}">
                 <form method="post" action="<c:url value="/afficherEnchere"/> ">
