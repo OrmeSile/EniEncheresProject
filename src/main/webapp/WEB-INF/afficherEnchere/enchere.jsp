@@ -7,17 +7,27 @@
     <title>Eni Enchères - ${requestScope.article.nomArticle}</title>
   <link rel="stylesheet" href=<c:url value="/css/afficherEnchere/afficherEnchere.css"/>>
   <link rel="stylesheet" href="<c:url value="/css/fragments/_errors/errors.css"/>">
+  <link rel="stylesheet" href="<c:url value="/css/shared/header.css"/>">
+  <jsp:include page="/WEB-INF/fragments/_normalize-import.jsp"/>
 </head>
 <body>
   <div class="container">
-    <jsp:include page="/WEB-INF/fragments/_error-messages.jsp"/>
-    <h2>Détail vente</h2>
-    <div class="main-container">
-      <div class="image-container">
-        <div class="image">
-          <img src="<c:url value="/img/article_placeholder.jpg"/>" alt="image de l'article"/>
-        </div>
+    <header class="navbar">
+      <div class="brand-container">
+        <jsp:include page="/WEB-INF/fragments/_header.jsp"/>
       </div>
+    </header>
+    <jsp:include page="/WEB-INF/fragments/_error-messages.jsp"/>
+    <div class="main-container">
+      <div class="title-container">
+        <h2>Détail vente</h2>
+      </div>
+      <div class="info-container">
+        <div class="image-container">
+          <div class="image">
+            <img src="<c:url value="/img/article_placeholder.jpg"/>" alt="image de l'article"/>
+          </div>
+        </div>
         <div class="main-fields">
           <div>
             <h4>${article.nomArticle}</h4>
@@ -68,10 +78,10 @@
                 <a href="<c:url value="/"/>"></a><input type="button" value="Modifier">
               </c:otherwise>
             </c:choose>
-
           </c:if>
         </div>
       </div>
+    </div>
     </div>
 </body>
 </html>

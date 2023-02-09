@@ -1,14 +1,16 @@
 .container{
-  min-height: 90vh;
+  min-height: 100vh;
   display: flex;
   flex-flow : column nowrap;
   background: #EEE;
 }
 .container-main{
+  width: 20em;
+  height: 14em;
   background: white;
-  padding: 5vh 10vh;
+  padding: 3em 3em;
   display: flex;
-  margin-top: 5vh;
+  margin-top: 3em;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
@@ -49,4 +51,38 @@ form{
 }
 .register>a>button{
   flex-grow: 1;
+}
+@media(max-width:960px){
+  .container-main{
+    width: 11em;
+    height: 14em;
+  }
+  .label-field{
+    display: flex;
+    flex-flow: column nowrap;
+  }
+  .form-submit-block{
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+  .form-submit-block>input{
+    height: 4em;
+  }
+  .form-misc{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .form-misc>*{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  .register{
+    padding: 0;
+  }
+  .register>a{
+    height: inherit;
+  }
 }
