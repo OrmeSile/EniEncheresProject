@@ -113,6 +113,7 @@
                           <input type="checkbox" id="swon" name="swon"
                             ${sessionScope.tags.sell ? null : "disabled"}
                             ${(sessionScope.tags.sellFin && sessionScope.tags.sell) ? "checked" : null}
+                            />
                           <label for="swon">ventes terminées</label>
                         </div>
                       </div>
