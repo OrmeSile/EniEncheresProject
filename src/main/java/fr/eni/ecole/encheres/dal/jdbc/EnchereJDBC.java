@@ -50,7 +50,7 @@ public class EnchereJDBC implements ItemFetchable<Enchere, Utilisateur> {
     @Override
     public Enchere insert(Enchere object) throws BusinessException {
         try(var con = ConnectionProvider.getConnection()){
-            var ps = con.prepareStatement("insert into ENCHERES values ?,?,?,?");
+            var ps = con.prepareStatement("insert into ENCHERES values (?,?,?,?)");
             ps.setInt(1,object.getEncherisseur().getNoUtilisateur());
             ps.setInt(2, object.getArticle().getNoArticle());
             ps.setTimestamp(3,Timestamp.valueOf(object.getDateEnchere()));

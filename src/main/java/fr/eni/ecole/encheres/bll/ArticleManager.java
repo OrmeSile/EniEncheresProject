@@ -3,7 +3,6 @@ package fr.eni.ecole.encheres.bll;
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Categorie;
-import fr.eni.ecole.encheres.bo.Enchere;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.bo.utils.FilterPayload;
 import fr.eni.ecole.encheres.bo.utils.FilterTags;
@@ -62,16 +61,6 @@ public class ArticleManager {
 				return dao.getFilteredObjects(payload);
 			}
 		}
-	}
-	public ArticleVendu updateArticleWithEnchere(Utilisateur user, int montant, int id) throws BusinessException{
-		var article = dao.getOneById(id);
-		if(enchere.getMontantEnchere() > article.getEnchere().getMontantEnchere()){
-			article.setEnchere(EnchereManager.getManager().addEnchereOnArticle(enchere, id));
-		}else{
-			throw new BusinessException("can't set montant < existing one");
-		}
-		return article;
-
 	}
 
 	public ArticleVendu getOneArticleById(int id) throws BusinessException {

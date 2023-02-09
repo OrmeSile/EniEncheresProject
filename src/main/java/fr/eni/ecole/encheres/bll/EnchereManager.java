@@ -23,13 +23,22 @@ public class EnchereManager {
 		return manager;
 	}
 
-	public Enchere addEnchereOnArticle(Utilisateur user, int montant, int articleId) throws BusinessException {
-		var dbEnchere = dao.getOneById(id);
-		if (Objects.isNull(dbEnchere)) {
-			dao.insert(enchere);
-		} else {
-			dao.update(enchere);
+	public Enchere addEnchere(Utilisateur user, int montant, int articleId, Enchere previous) throws BusinessException {
+		if(montant <= 0){
+			throw new BusinessException("negative amount");
 		}
+		var article = ArticleManager.getManager().getOneArticleById(articleId);
+		if(Objects.isNull(previous)) {
+			dao.insert(new Enchere(LocalDateTime.now(), montant, article, user));
+			return dao.getOneById(articleId);
+		} else if (previous.getMontantEnchere() < montant) {
+			dao.update(new Enchere(LocalDateTime.now(), montant, article, user));
+			return dao.getOneById(articleId);
+		}else {
+			throw new BusinessException("invalid amount");
+		}
+	}
+	public Enchere getEnchere(int id) throws BusinessException{
 		return dao.getOneById(id);
 	}
 }

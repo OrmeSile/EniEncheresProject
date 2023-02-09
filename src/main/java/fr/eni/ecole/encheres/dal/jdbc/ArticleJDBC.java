@@ -52,20 +52,20 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 		}
 	}
 
-	public ArrayList<ArticleVendu> getAllByCategorie(Categorie categorie) throws BusinessException{
-		try(var con = ConnectionProvider.getConnection()){
-			var ps = con.prepareStatement(GET_ALL + " where a.no_categorie = ?");
-			ps.setInt(1, categorie.getNoCategorie());
-			var rs = ps.executeQuery();
-			ArrayList<ArticleVendu> articles = new ArrayList<>();
-			while(rs.next()){
-				articles.add(buildArticleFromResultSet(rs));
-			}
-			return articles;
-		}catch (SQLException e){
-			throw new BusinessException("can't get by categorie");
-		}
-	}
+//	public ArrayList<ArticleVendu> getAllByCategorie(Categorie categorie) throws BusinessException{
+//		try(var con = ConnectionProvider.getConnection()){
+//			var ps = con.prepareStatement(GET_ALL + " where a.no_categorie = ?");
+//			ps.setInt(1, categorie.getNoCategorie());
+//			var rs = ps.executeQuery();
+//			ArrayList<ArticleVendu> articles = new ArrayList<>();
+//			while(rs.next()){
+//				articles.add(buildArticleFromResultSet(rs));
+//			}
+//			return articles;
+//		}catch (SQLException e){
+//			throw new BusinessException("can't get by categorie");
+//		}
+//	}
 
 	@Override
 	public ArticleVendu insert(ArticleVendu object) throws BusinessException {
@@ -172,12 +172,10 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 			var retrait = retraitIsNull ? new Retrait(user.getRue(), user.getCodePostal(), user.getVille()) : new Retrait(rs.getString(15), rs.getString(16), rs.getString(17));
 			var article = new ArticleVendu(id, nom, description, dateDebut, dateFin, miseAPrix, prixVente, etatVente, user, retrait, categorie, image);
 			retrait.setArticle(article);
-			try{
-				var enchere = DAOFactory.getEnchereDAO().getOneById(article.getNoArticle());
+			var enchere = DAOFactory.getEnchereDAO().getOneById(article.getNoArticle());
+			if(!Objects.isNull(enchere)){
 				enchere.setArticle(article);
 				article.setEnchere(enchere);
-			}catch (BusinessException e){
-				article.setEnchere(null);
 			}
 			user.getArticles().add(article);
 			return article;

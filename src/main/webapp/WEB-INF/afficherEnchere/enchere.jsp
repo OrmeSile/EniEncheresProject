@@ -6,9 +6,11 @@
 <head>
     <title>Eni Enchères - ${requestScope.article.nomArticle}</title>
   <link rel="stylesheet" href=<c:url value="/css/afficherEnchere/afficherEnchere.css"/>>
+  <link rel="stylesheet" href="<c:url value="/css/fragments/_errors/errors.css"/>">
 </head>
 <body>
   <div class="container">
+    <jsp:include page="/WEB-INF/fragments/_error-messages.jsp"/>
     <h2>Détail vente</h2>
     <div class="main-container">
       <div class="image-container">
