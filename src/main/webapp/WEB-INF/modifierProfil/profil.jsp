@@ -7,6 +7,7 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="<c:url value="/css/shared/header.css"/>">
 	<link rel="stylesheet" href="<c:url value="/css/modifierProfil/modifierProfil.css"/> ">
+	<link rel="stylesheet" href="<c:url value="/css/fragments/_errors/errors.css"/> "/>
 	<script>const context = "${pageContext.request.contextPath}"</script>
 	<script defer src="<c:url value="/javascript/modifierProfil/deleteConfirm.js"/>" type="text/javascript"></script>
 	<jsp:include page="/WEB-INF/fragments/_normalize-import.jsp" />
@@ -14,9 +15,10 @@
 </head>
 <body>
 	<div class="container">
-		<header class="row navbar navbar-expand-md bg-body-tertiary">
+		<header class="navbar">
 			<jsp:include page="/WEB-INF/fragments/_header.jsp" />
 		</header>
+		<jsp:include page="/WEB-INF/fragments/_error-messages.jsp"/>
 		<h1>Mon profil</h1>
 		<form method="post" action=<c:url value="/"/>>
 			<input type="hidden" value="${sessionScope.user.noUtilisateur}">

@@ -6,8 +6,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<jsp:include page="/WEB-INF/fragments/_normalize-import.jsp"/>
-		<link rel="stylesheet" href="<c:url value="/css/shared/header.css"/>">
-		<link rel="stylesheet" href="<c:url value="/css/login/login-form.css"/> ">
+		<link rel="stylesheet" href="<c:url value="/css/shared/header.css"/>"/>
+		<link rel="stylesheet" href="<c:url value="/css/login/login-form.css"/> "/>
+		<link rel="stylesheet" href="<c:url value="/css/fragments/_errors/errors.css"/> "/>
 		<title>Connexion</title>
 	</head>
 	<body>
@@ -15,17 +16,8 @@
 		<header class="navbar">
 			<jsp:include page="/WEB-INF/fragments/_header.jsp" />
 		</header>
+		<jsp:include page="/WEB-INF/fragments/_error-messages.jsp"/>
 		<div class="container-main">
-		<c:if test="${!empty sessionScope.errors}">
-			<div class="error" role="alert">
-				<strong>Erreur!</strong>
-				<ul>
-					<c:forEach var="message" items="${sessionScope.errors}">
-						<li>${message}</li>
-					</c:forEach>
-				</ul>
-			</div>
-		</c:if>
 			<form method="post" action="<c:url value="/login"/>">
 				<div class="label-field">
 					<label for="identifiant"> Identifiant :</label>

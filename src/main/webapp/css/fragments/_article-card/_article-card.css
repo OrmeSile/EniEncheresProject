@@ -1,7 +1,7 @@
 .container-article-card{
   display: flex;
   flex-flow: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
 }
 .card-container{

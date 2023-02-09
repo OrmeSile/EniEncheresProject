@@ -1,5 +1,5 @@
-const buyGroup = document.querySelectorAll(".buy-group>div>input");
-const sellGroup = document.querySelectorAll(".sell-group>div>input");
+const buyGroup = document.querySelectorAll(".buy-group>.checkbox-group>div>input");
+const sellGroup = document.querySelectorAll(".sell-group>.checkbox-group>div>input");
 const achatRadio = document.querySelector('#buy');
 const venteRadio = document.querySelector('#sell');
 achatRadio.addEventListener('click', () => {

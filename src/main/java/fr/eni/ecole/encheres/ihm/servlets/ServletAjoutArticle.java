@@ -38,13 +38,15 @@ public class ServletAjoutArticle extends HttpServlet {
 		try {
 			var requestId = request.getParameter("id");
 			if(!Objects.isNull(requestId) && !requestId.isBlank()){
-
+				var id = Integer.parseInt(requestId);
+				request.setAttribute("article",ArticleManager.getManager().getOneArticleById(id));
 			}
 			ArrayList<Categorie> categories = CategorieManager.getManager().getCategories();
 			request.setAttribute("categories", categories);
 			request.getRequestDispatcher("/WEB-INF/ajoutArticle/ajoutArticle.jsp").forward(request, response);
 		} catch (BusinessException e) {
-			
+			request.setAttribute("errors", e.getExceptionMessages());
+			request.getRequestDispatcher("/WEB-INF/ajoutArticle/ajoutArticle.jsp").forward(request, response);
 		} catch (NumberFormatException e) {
 			response.sendError(404);
 		}
