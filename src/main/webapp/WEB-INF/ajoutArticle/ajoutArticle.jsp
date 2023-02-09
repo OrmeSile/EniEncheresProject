@@ -11,44 +11,45 @@
 <title>Ajout Article</title>
 </head>
 <body>
-	<div class="container">
+	
 	<header class="row navbar navbar-expand-md bg-body-tertiary">
 		<jsp:include page="/WEB-INF/fragments/_header.jsp" />
   	</header>
+  	<div class="container">
 	<h1 align="center">Nouvelle Vente</h1>
 	<form method="post" action=<c:url value="/AjoutArticle"/>>
 	<div class="formulaire"> 
 		<div>
-			<label for="Article">Article</label>
-			<input type="text" id="nomArticle" name="nomArticle" />
+			<label for="nom-article">Article</label>
+			<input type="text" id="nom-article" name="nom-article" />
 		</div>
 		<div>
-			<label for="Description">Description</label>
+			<label for="description">Description</label>
 			<input type="text" id="description" name="description" />
 		</div> 
 	    <div>
-		    <label for="categories">Catégorie : </label>
-			<select name="selectedCategory">
+		    <label for="selectedCategory">Catégorie : </label>
+			<select id="selectedCategory" name="selectedCategory">
 				<c:forEach var="categorie" items="${requestScope.categories}">
 					<option>${categorie.libelle}</option>
 				</c:forEach>
 	  	</select>
 	  	</div> 
 		<div>
-			<label for="photoArticle">Photo de l'article</label>
-			<input type="file" value="UPLOADER" name="photoArticle">
+			<label for="photo-article">Photo de l'article</label>
+			<input type="file" value="UPLOADER" id="photo-article" name="photo-article">
 		</div>
 	    <div>
-	    <label for="miseAPrix">Mise à prix :</label>
-		<input type="number" value="prix" id="miseAPrix" name="miseAPrix" />
+	    <label for="mise-a-prix">Mise à prix :</label>
+		<input type="number" value="prix" id="mise-a-prix" name="mise-a-prix" />
 		</div>
 		<div>
-		<label for="debutEnchere">Début de l'Enchère</label>
-		<input type="datetime-local" id="dateDebutEncheres" name="dateDebutEncheres" />
+		<label for="debut-enchere">Début de l'Enchère</label>
+		<input type="datetime-local" id="debut-enchere" name="debut-enchere" />
 		</div>
 	    <div>
-	    <label for="finEnchere">Fin de l'Enchère</label>
-	    <input type="datetime-local" id="dateFinEncheres" name="dateFinEncheres" />
+	    <label for="fin-enchere">Fin de l'Enchère</label>
+	    <input type="datetime-local" id="fin-enchere" name="fin-enchere" />
 	    </div>
 	    <div class="RTR">
 		    <fieldset>
@@ -58,8 +59,8 @@
 					<input type="text" id="rue" name="rue" value=" ${sessionScope.user.rue}"/>
 				</div>
 		     	<div>
-			     	<label for="codePostal">CodePostal : </label>
-			       	<input type="text" id="codePostal" name="codePostal" value=" ${sessionScope.user.codePostal}"/>
+			     	<label for="code-postal">CodePostal : </label>
+			       	<input type="text" id="code-postal" name="code-postal" value=" ${sessionScope.user.codePostal}"/>
 		       	</div>
 		      	<div>
 			      	<label for="ville">Ville : </label>
@@ -68,11 +69,15 @@
 			</fieldset>
 		</div>
 	</div>
-	<div class="btn">
-	    <input type="submit" name="Enregistrer"> 
-        <input type="button" name="Annuler" />
-        <input type="button" name="Annuler la vente" />
-    </div>    
+	<div class="btn-container">		
+	     <div><input type="submit" name="enregistrer" value="Enregistrer"></div> 
+         <div><a href="<c:url value="/"/>"><input type="button" name="annuler" value="Annuler" /></a></div>
+         <div>
+         <c:if test="">
+         	<input type="button" name="annuler-la-vente" value="Annuler la vente" />
+		</c:if>         
+         </div>
+    </div>   
   </form>
  </div>
 </body>
