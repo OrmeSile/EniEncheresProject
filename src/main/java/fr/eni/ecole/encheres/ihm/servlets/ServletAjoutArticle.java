@@ -40,6 +40,7 @@ public class ServletAjoutArticle extends HttpServlet {
 			var requestId = request.getParameter("id");
 			if(!Objects.isNull(requestId) && !requestId.isBlank()){
 				var id = Integer.parseInt(requestId);
+				ArticleVendu art = ArticleManager.getManager().getOneArticleById(id);
 				request.setAttribute("article",ArticleManager.getManager().getOneArticleById(id));
 			}
 			ArrayList<Categorie> categories = CategorieManager.getManager().getCategories();

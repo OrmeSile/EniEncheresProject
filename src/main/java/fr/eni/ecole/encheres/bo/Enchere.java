@@ -28,7 +28,7 @@ public class Enchere {
 		this.dateEnchere = dateEnchere;
 	}
 
-	public double getMontantEnchere() {
+	public int getMontantEnchere() {
 		return montantEnchere;
 	}
 

@@ -14,10 +14,11 @@
 <title>Mon profil</title>
 </head>
 <body>
-	<div class="container">
+	
 		<header class="navbar">
 			<jsp:include page="/WEB-INF/fragments/_header.jsp" />
 		</header>
+		<div class="container">	
 		<jsp:include page="/WEB-INF/fragments/_error-messages.jsp"/>
 		<h1>Mon profil</h1>
 		<form method="post" action=<c:url value="/"/>>
@@ -71,8 +72,10 @@
 		</form>
 		<c:choose>
 			<c:when test="${!empty sessionScope.user}">
-				<input type="submit" value="Enregistrer"/>
-				<button class="delete">Supprimer mon compte</button>
+				<div>
+					<input type="submit" value="Enregistrer"/>
+					<button class="delete">Supprimer mon compte</button>
+				</div>
 			</c:when>
 			<c:otherwise>
 				<input type="submit" value="Modifier"/>

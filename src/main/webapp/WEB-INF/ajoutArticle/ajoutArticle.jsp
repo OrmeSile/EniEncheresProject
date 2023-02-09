@@ -22,17 +22,17 @@
 	<div class="formulaire"> 
 		<div>
 			<label for="nom-article">Article</label>
-			<input type="text" id="nom-article" name="nom-article" />
+			<input type="text" id="nom-article" name="nom-article" value="${requestScope.article.nomArticle }"/>
 		</div>
 		<div>
 			<label for="description">Description</label>
-			<input type="text" id="description" name="description" />
+			<input type="text" id="description" name="description" value="${requestScope.article.description }"/>
 		</div> 
 	    <div>
 		    <label for="selectedCategory">Catégorie : </label>
 			<select id="selectedCategory" name="selectedCategory">
 				<c:forEach var="categorie" items="${requestScope.categories}">
-					<option>${categorie.libelle}</option>
+					<option ${requestScope.article.categorieArticle.noCategorie == categorie.noCategorie ? "selected": ""}>${categorie.libelle}</option >
 				</c:forEach>
 	  	</select>
 	  	</div> 
@@ -42,15 +42,15 @@
 		</div>
 	    <div>
 	    <label for="mise-a-prix">Mise à prix :</label>
-		<input type="number" value="prix" id="mise-a-prix" name="mise-a-prix" />
+		<input type="number" id="mise-a-prix" name="mise-a-prix" value="${requestScope.article.miseAPrix}"/>
 		</div>
 		<div>
 		<label for="debut-enchere">Début de l'Enchère</label>
-		<input type="datetime-local" id="debut-enchere" name="debut-enchere" />
+		<input type="datetime-local" id="debut-enchere" name="debut-enchere" value="${requestScope.article.dateDebutEncheres }"/>
 		</div>
 	    <div>
 	    <label for="fin-enchere">Fin de l'Enchère</label>
-	    <input type="datetime-local" id="fin-enchere" name="fin-enchere" />
+	    <input type="datetime-local" id="fin-enchere" name="fin-enchere"  value=" ${requestScope.article.dateFinEncheres}" />
 	    </div>
 	    <div class="RTR">
 		    <fieldset>
@@ -74,9 +74,9 @@
 	     <div><input type="submit" name="enregistrer" value="Enregistrer"></div> 
          <div><a href="<c:url value="/"/>"><input type="button" name="annuler" value="Annuler" /></a></div>
          <div>
-         <c:if test="${ requestScope.article.vendeur.noUtilisateur == sessionScope.user.noUtilisateur && requestScope.article.dateDebutEnchere.isAfter(date)}">
+         <c:if test="${ requestScope.article.vendeur.noUtilisateur == sessionScope.user.noUtilisateur && requestScope.article.dateDebutEncheres.isAfter(date)}">
          	<input type="button" name="annuler-la-vente" value="Annuler la vente" />
-		</c:if>         
+		</c:if>
          </div>
     </div>   
   </form>

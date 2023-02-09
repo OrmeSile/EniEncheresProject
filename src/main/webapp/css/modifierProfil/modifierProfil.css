@@ -1,1 +1,36 @@
-@charset "UTF-8";
+.container{
+	display: flex;
+	flex-flow: column nowrap;
+    background-color: #EEE; 
+  justify-content: center;
+ align-items: center;
+}
+
+*{
+	font-family: sans-serif;
+}
+.container>div{
+ justify-content: space-between;
+ 
+ width: 19%;
+ display:flex;
+ flex-grow: 1;
+ flex-flow: row nowrap;
+ border-bottom: solid #CCC 1px;
+ margin-bottom: 10px;
+ texte-align: center;
+}
+
+body{
+      background-color: #EEE;
+}
+form{
+ display:flex;
+ flex-direction: column;
+ gap:10px;
+}
+
+form>*{
+ display:flex;
+ justify-content:space-between;
+}

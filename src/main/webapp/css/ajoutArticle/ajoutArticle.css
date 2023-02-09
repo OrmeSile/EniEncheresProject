@@ -28,8 +28,8 @@ align-items: center;
 flex-direction: column;	
 }
 .btn-container{
-text-align: center;
-background-color: green;
+ display: flex;
+ justify-content: center; 
 }
 
 
