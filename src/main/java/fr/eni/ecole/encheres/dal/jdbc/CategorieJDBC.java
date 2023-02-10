@@ -12,10 +12,22 @@ import java.util.ArrayList;
 public class CategorieJDBC implements ItemFetchable<Categorie, ArticleVendu> {
 
     private final String GET_ALL = "select * from categories";
+    private final String GET_ONE_BY_ID = "select * from categories where no_categorie = ?";
 
     @Override
-    public Categorie getOneById(int id) {
-        return null;
+    public Categorie getOneById(int id) throws BusinessException {
+        try(var con = ConnectionProvider.getConnection()){
+            var ps = con.prepareStatement(GET_ONE_BY_ID);
+            ps.setInt(1,id);
+            var rs = ps.executeQuery();
+            if(rs.next()){
+                var libelle = rs.getString(2);
+                return new Categorie(id, libelle);
+            }
+            throw new BusinessException("category not found");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

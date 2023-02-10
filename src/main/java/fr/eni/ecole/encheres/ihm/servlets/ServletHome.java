@@ -55,6 +55,7 @@ public class ServletHome extends HttpServlet {
 			var categorieParam = Integer.parseInt(request.getParameter("selectedCategory"));
 			var queryParam = request.getParameter("search-field");
 			var categorie = categorieParam != 0 ? CategorieManager.getManager().getOneById(categorieParam) : null;
+			System.out.println(categorie+"->"+categorieParam);
 			if (Objects.isNull(user)) {
 				var payload = FilterPayload.getVisitorPayload(queryParam, categorie);
 				request.getSession().setAttribute("filterPayload", payload);
@@ -78,8 +79,7 @@ public class ServletHome extends HttpServlet {
 				var isSellWon = !Objects.isNull(sellWonParam);
 				var tags = new FilterTags(isQuery, isCategory, isSell, isOpen, isBuySelf, isBuyWon, isSellPre, isSellWon);
 				var payload = new FilterPayload(tags, queryParam, categorie, user);
-				request.getSession().setAttribute("filterPayload", payload);
-				request.getSession().setAttribute("tags", payload.getTags());
+				request.getSession().setAttribute("payload", payload);
 				doGet(request, response);
 			}
 		} catch (BusinessException e) {
