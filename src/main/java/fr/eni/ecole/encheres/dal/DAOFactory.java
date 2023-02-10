@@ -11,9 +11,9 @@ public class DAOFactory {
 		return new UtilisateurJDBC();
 	}
 //	TODO: uncomment and implement
-	public static ItemFetchable<ArticleVendu, Utilisateur> getArticleDAO(){return new ArticleJDBC();}
+	public static FilterFetchable<ArticleVendu, Utilisateur> getArticleDAO(){return new ArticleJDBC();}
 	public static ItemFetchable<Categorie, ArticleVendu> getCategorieDAO(){return new CategorieJDBC();}
-	public static BiItemFetchable<Enchere, Utilisateur, ArticleVendu> getEnchereDAO(){
+	public static ItemFetchable<Enchere, Utilisateur> getEnchereDAO(){
 		return new EnchereJDBC();
 	};
 //	public static DAO<Retrait> getRetraitDAO();

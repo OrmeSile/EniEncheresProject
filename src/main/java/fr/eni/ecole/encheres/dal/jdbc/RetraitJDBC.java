@@ -82,9 +82,8 @@ public class RetraitJDBC implements ItemFetchable<Retrait, ArticleVendu> {
                 var rue = rs.getString(1);
                 var codePostal = rs.getString(2);
                 var ville = rs.getString(3);
-                var article = DAOFactory.getArticleDAO().getOneById(rs.getInt(1));
                 var list = new ArrayList<Retrait>();
-                list.add(new Retrait(rue, codePostal, ville, article));
+                list.add(new Retrait(rue, codePostal, ville, parent));
                 return list;
             }
         }

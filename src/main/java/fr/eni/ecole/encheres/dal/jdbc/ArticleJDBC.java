@@ -2,36 +2,35 @@ package fr.eni.ecole.encheres.dal.jdbc;
 
 import fr.eni.ecole.encheres.BusinessException;
 import fr.eni.ecole.encheres.bo.*;
-import fr.eni.ecole.encheres.dal.ConnectionProvider;
-import fr.eni.ecole.encheres.dal.DAOFactory;
-import fr.eni.ecole.encheres.dal.ItemFetchable;
+import fr.eni.ecole.encheres.bo.utils.FilterPayload;
+import fr.eni.ecole.encheres.bo.utils.FilterTags;
+import fr.eni.ecole.encheres.dal.*;
+import fr.eni.ecole.encheres.dal.utils.QueryParams;
 import fr.eni.ecole.encheres.tools.ArticleStateConverter;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Stream;
 
-public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
-	private final String UPDATE = "update articles_vendus set nom_article=?, 'description'=?,date_debut_enchere = ?,date_fin_enchere = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ?, etat_vente = ?, image = ? where no_article = ?";
-	private final String INSERT = "INSERT INTO ARTICLES_VENDUS('nom_article','description',date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, 'etat_vente', image ) values ?,?,?,?,?,?,?,?,?,?";
+public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
+	private final String UPDATE = "update articles_vendus set nom_article=?, description=?,date_debut_enchere = ?,date_fin_enchere = ?, prix_initial = ?, prix_vente = ?, no_utilisateur = ?, no_categorie = ?, etat_vente = ?, image = ? where no_article = ?";
+	private final String INSERT = "INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_enchere,date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, etat_vente, image ) values (?,?,?,?,?,?,?,?,?,?)";
 	private final String GET_ALL = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article";
-	private final String GET_ALL_BY_PARENT = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie left join RETRAITS r on a.no_article = r.no_article where no_utilisateur = ?";
-	private final String GET_ONE_BY_ID = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie join RETRAITS r on a.no_article = r.no_article where a.no_article = ?";
-	private final String GET_ALL_BY_CATEGORIE = "select * from articles_vendus a join CATEGORIES c on a.no_categorie = c.no_categorie join RETRAITS r on a.no_article = r.no_article where a.no_categorie = ?";
+	private final String _AND = " AND ";
 
 	@Override
 	public ArticleVendu getOneById(int id) throws BusinessException {
 		try (Connection con = ConnectionProvider.getConnection()) {
-			PreparedStatement ps = con.prepareStatement(GET_ONE_BY_ID);
+			PreparedStatement ps = con.prepareStatement(GET_ALL + " where a.no_article = ?");
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				return buildArticleFromResultSet(rs);
 			}
-			throw new BusinessException("no article found");
+			throw new BusinessException("no article found for id " + id);
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new BusinessException(e.getMessage());
 		}
 	}
@@ -48,24 +47,25 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 			}
 			return articles;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new BusinessException(e.getMessage());
 		}
 	}
 
-	public ArrayList<ArticleVendu> getAllByCategorie(Categorie categorie) throws BusinessException{
-		try(var con = ConnectionProvider.getConnection()){
-			var ps = con.prepareStatement(GET_ALL_BY_CATEGORIE);
-			ps.setInt(1, categorie.getNoCategorie());
-			var rs = ps.executeQuery();
-			ArrayList<ArticleVendu> articles = new ArrayList<>();
-			while(rs.next()){
-				articles.add(buildArticleFromResultSet(rs));
-			}
-			return articles;
-		}catch (SQLException e){
-			throw new BusinessException("can't get by categorie");
-		}
-	}
+//	public ArrayList<ArticleVendu> getAllByCategorie(Categorie categorie) throws BusinessException{
+//		try(var con = ConnectionProvider.getConnection()){
+//			var ps = con.prepareStatement(GET_ALL + " where a.no_categorie = ?");
+//			ps.setInt(1, categorie.getNoCategorie());
+//			var rs = ps.executeQuery();
+//			ArrayList<ArticleVendu> articles = new ArrayList<>();
+//			while(rs.next()){
+//				articles.add(buildArticleFromResultSet(rs));
+//			}
+//			return articles;
+//		}catch (SQLException e){
+//			throw new BusinessException("can't get by categorie");
+//		}
+//	}
 
 	@Override
 	public ArticleVendu insert(ArticleVendu object) throws BusinessException {
@@ -88,6 +88,7 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 			}
 			throw new BusinessException("can't insert user");
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new BusinessException(e.getMessage());
 		}
 	}
@@ -121,7 +122,7 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 	@Override
 	public ArrayList<ArticleVendu> getAllByParent(Utilisateur parent) throws BusinessException {
 		try (var con = ConnectionProvider.getConnection()) {
-			var pr = con.prepareStatement(GET_ALL_BY_PARENT);
+			var pr = con.prepareStatement((GET_ALL + " where no_utilisateur = ?"));
 			pr.setInt(1, parent.getNoUtilisateur());
 			var rs = pr.executeQuery();
 			var returnList = new ArrayList<ArticleVendu>();
@@ -139,8 +140,12 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 				var retrait = new Retrait(rs.getString(15), rs.getString(16), rs.getString(17));
 				var article = new ArticleVendu(noArticle, nom, description, dateDebut, dateFin, miseAPrix, prixVente, etatVente, parent, retrait, categorie, image);
 				retrait.setArticle(article);
-				var encheres = DAOFactory.getEnchereDAO().getAllBySecondParent(article);
-				article.setEncheres(encheres);
+				try {
+					var encheres = DAOFactory.getEnchereDAO().getOneById(article.getNoArticle());
+					article.setEnchere(encheres);
+				}catch(BusinessException e) {
+					article.setEnchere(null);
+				}
 				returnList.add(article);
 			}
 			parent.setArticles(returnList);
@@ -167,11 +172,128 @@ public class ArticleJDBC implements ItemFetchable<ArticleVendu, Utilisateur> {
 			var retrait = retraitIsNull ? new Retrait(user.getRue(), user.getCodePostal(), user.getVille()) : new Retrait(rs.getString(15), rs.getString(16), rs.getString(17));
 			var article = new ArticleVendu(id, nom, description, dateDebut, dateFin, miseAPrix, prixVente, etatVente, user, retrait, categorie, image);
 			retrait.setArticle(article);
-			article.setEncheres(DAOFactory.getEnchereDAO().getAllBySecondParent(article));
+			var enchere = DAOFactory.getEnchereDAO().getOneById(article.getNoArticle());
+			if(!Objects.isNull(enchere)){
+				enchere.setArticle(article);
+				article.setEnchere(enchere);
+			}
 			user.getArticles().add(article);
 			return article;
 		} catch (SQLException e) {
 			throw new BusinessException(e.getMessage());
 		}
+	}
+	public ArrayList<ArticleVendu> getLoggedOutObjects() throws BusinessException {
+		return getFilteredObjects(FilterPayload.getEmpty());
+	}
+
+	@Override
+	public ArrayList<ArticleVendu> getFilteredObjects(FilterPayload payload) throws BusinessException {
+		var mapResult = buildFilteredQuery(payload.getTags());
+		String query = null;
+		ArrayList<QueryParams> params = null;
+		for(var e : mapResult.entrySet()){
+			query = e.getKey();
+			params = e.getValue();
+//			System.out.println(query);
+		}
+		try(var con = ConnectionProvider.getConnection()){
+			var ps = con.prepareStatement(query);
+			for(int i = 1; i < Objects.requireNonNull(params).size()+1; i++){
+				switch (params.get(i-1)){
+					case QUERY:
+						ps.setString(i, "%"+payload.getQuery()+"%");
+						break;
+					case USER:
+						ps.setInt(i, payload.getUser().getNoUtilisateur());
+						break;
+					case CATEGORY:
+						ps.setInt(i, payload.getCategory().getNoCategorie());
+						break;
+					default:
+						throw new BusinessException("Something went wrong in QueryParams");
+				}
+			}
+			var rs = ps.executeQuery();
+			var list = new ArrayList<ArticleVendu>();
+			while(rs.next()){
+				list.add(buildArticleFromResultSet(rs));
+			}
+			return list;
+		}catch (SQLException e){
+			e.printStackTrace();
+			throw new BusinessException(e.getMessage());
+		}
+
+	}
+
+	private Map<String, ArrayList<QueryParams>> buildFilteredQuery(FilterTags tags) {
+		var sb = new StringBuilder();
+		ArrayList<String> stateParams = new ArrayList<>();
+		var itemState = new StringBuilder("a.etat_vente IN (");
+		var list = new ArrayList<QueryParams>();
+		sb.append(GET_ALL).append(" left join ENCHERES e on e.no_article = a.no_article WHERE ");
+		if(tags.getCount() == 0){
+			sb.append("a.etat_vente = 'EC'");
+			var map = new HashMap<String, ArrayList<QueryParams>>();
+			map.put(sb.toString(), list);
+			return map;
+		}
+		if(tags.isOpen() || tags.isBuySelf()) stateParams.add("EC");
+		if(tags.isSellPre()) stateParams.add("CR");
+		if(tags.isBuyWon() || tags.isSellFin()){
+			stateParams.add("VD");
+			stateParams.add("RT");
+		}
+		if(tags.isQuery()){
+			sb.append("a.nom_article LIKE ?");
+			list.add(QueryParams.QUERY);
+			if (decrCount(tags)){
+				sb.append(_AND);
+			}
+		}
+		if(tags.isCat()) {
+			sb.append("a.no_categorie = ?");
+			list.add(QueryParams.CATEGORY);
+			if (decrCount(tags)) {
+				sb.append(_AND);
+			}
+		}
+		if(tags.isSell()) {
+			sb.append("a.no_utilisateur = ?");
+			list.add(QueryParams.USER);
+			if (decrCount(tags)) {
+				sb.append(_AND);
+			}
+		}else {
+			if (tags.isBuySelf()) {
+				sb.append("e.no_utilisateur = ?");
+				list.add(QueryParams.USER);
+				if (decrCount(tags)) {
+					sb.append(_AND);
+				}
+			}
+			if (tags.isBuyWon()) {
+				sb.append("e.no_utilisateur = ?");
+				list.add(QueryParams.USER);
+				if (decrCount(tags)) {
+					sb.append(_AND);
+				}
+			}
+		}
+		if (stateParams.size() > 0) {
+			for(int i = 0; i < stateParams.size(); i++){
+				itemState.append("'").append(stateParams.get(i)).append("'").append((i==stateParams.size()-1 )?"":",");
+			}
+			itemState.append(")");
+			sb.append(itemState);
+		}
+		var map = new HashMap<String, ArrayList<QueryParams>>();
+		map.put(sb.toString(), list);
+		return map;
+	}
+	private boolean decrCount(FilterTags tags){
+		tags.setCount(tags.getCount()-1);
+		return tags.getCount() >= 0;
 	}
 }

@@ -1,4 +1,4 @@
-package fr.eni.ecole.encheres.bo;
+package fr.eni.ecole.encheres.bo.utils;
 
 public enum EtatVente {
     CREE("CR"), EN_COURS("EC"), VENDU("VD"), RETIRE("RT");

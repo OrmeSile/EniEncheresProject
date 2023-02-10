@@ -1,0 +1,29 @@
+.error-container{
+    display: flex;
+    justify-content: center;
+}
+.error-container>ul{
+    padding: 10px;
+    border-radius: 10px;
+    flex-basis: 80vw;
+    background: #EF5555;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    border: solid 4px #FFABAB;
+}
+.error-container>ul>li{
+    font-size: 1.2rem;
+    width: 100%;
+    border-bottom: solid #FFABAB 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    flex-basis: 4vh;
+}
+.error-container>ul>li:nth-last-child(1){
+    border: none;
+}

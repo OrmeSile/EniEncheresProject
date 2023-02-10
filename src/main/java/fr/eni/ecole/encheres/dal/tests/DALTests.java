@@ -1,15 +1,14 @@
 package fr.eni.ecole.encheres.dal.tests;
 
-import fr.eni.ecole.encheres.BusinessException;
-import fr.eni.ecole.encheres.dal.DAOFactory;
+import fr.eni.ecole.encheres.bo.utils.FilterTags;
+import fr.eni.ecole.encheres.dal.jdbc.ArticleJDBC;
 
 public class DALTests {
 	public static void main(String[] args) {
-		try{
-			var user = DAOFactory.getUtilisateurDAO().getOneById(1);
-			var articles = DAOFactory.getArticleDAO().getAllByParent(user);
-		} catch (BusinessException e) {
-			throw new RuntimeException(e);
-		}
+		var params = new FilterTags(true, true, true, true, false, false, true, false);
+		var dao = new ArticleJDBC();
+	}
+	public void printQuery(){
+
 	}
 }
