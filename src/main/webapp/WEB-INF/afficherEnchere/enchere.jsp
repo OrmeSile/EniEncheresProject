@@ -61,9 +61,9 @@
             </c:choose>
           </div>
           <jsp:useBean id="date" scope="request" type="java.time.LocalDateTime"/>
-          <c:if test="${!empty sessionScope.user && article.dateDebutEncheres.isAfter(date)}">
+          <c:if test="${!empty sessionScope.user}">
             <c:choose>
-              <c:when test="${sessionScope.user.noUtilisateur != article.vendeur.noUtilisateur && article.enchere.encherisseur.noUtilisateur != sessionScope.user.noUtilisateur}">
+              <c:when test="${sessionScope.user.noUtilisateur != article.vendeur.noUtilisateur}">
                 <form method="post" action="<c:url value="/afficherEnchere"/> ">
                   <label for="proposition">Ma proposition :</label>
                   <input type="hidden" name="itemId" value="${article.noArticle}">
@@ -71,7 +71,7 @@
                   <input type="submit" value="Enchérir">
                 </form>
               </c:when>
-              <c:when test="${sessionScope.user.noUtilisateur == article.vendeur.noUtilisateur}">
+              <c:when test="${sessionScope.user.noUtilisateur == article.vendeur.noUtilisateur && article.dateDebutEncheres.isAfter(date)}">
                 <a href="<c:url value="/"/>"></a><input type="button" value="Modifier">
               </c:when>
             </c:choose>

@@ -195,7 +195,7 @@ public class ArticleJDBC implements FilterFetchable<ArticleVendu, Utilisateur> {
 		for(var e : mapResult.entrySet()){
 			query = e.getKey();
 			params = e.getValue();
-			System.out.println(query);
+//			System.out.println(query);
 		}
 		try(var con = ConnectionProvider.getConnection()){
 			var ps = con.prepareStatement(query);

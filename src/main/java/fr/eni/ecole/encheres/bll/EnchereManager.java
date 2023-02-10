@@ -27,12 +27,20 @@ public class EnchereManager {
 		if(montant <= 0){
 			throw new BusinessException("negative amount");
 		}
+		if(montant > user.getCredit()){
+			throw new BusinessException("low credits");
+		}
 		var article = ArticleManager.getManager().getOneArticleById(articleId);
 		if(Objects.isNull(previous)) {
 			dao.insert(new Enchere(LocalDateTime.now(), montant, article, user));
 			return dao.getOneById(articleId);
 		} else if (previous.getMontantEnchere() < montant) {
+			user.setCredit(user.getCredit() - montant);
+			var prevUser = previous.getEncherisseur();
+			prevUser.setCredit(prevUser.getCredit()+previous.getMontantEnchere());
+			UtilisateurManager.getUtilisateurManager().updateUser(prevUser);
 			dao.update(new Enchere(LocalDateTime.now(), montant, article, user));
+			UtilisateurManager.getUtilisateurManager().updateUser(user);
 			return dao.getOneById(articleId);
 		}else {
 			throw new BusinessException("invalid amount");

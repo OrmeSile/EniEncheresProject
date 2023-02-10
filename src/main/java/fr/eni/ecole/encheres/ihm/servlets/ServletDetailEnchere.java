@@ -26,7 +26,6 @@ public class ServletDetailEnchere extends HttpServlet {
                 var id = !Objects.isNull(parId) ? Integer.parseInt(parId) : !Objects.isNull(attId) ? (int) attId : -1;
                 if (id > 0) {
                     var article = ArticleManager.getManager().getOneArticleById(id);
-                    System.out.println(article.getEtatVente());
                     if (article.getEtatVente().equals(EtatVente.CREE)) {
                         response.sendRedirect(request.getContextPath() + "/AjoutArticle?id=" + article.getNoArticle());
                     } else {

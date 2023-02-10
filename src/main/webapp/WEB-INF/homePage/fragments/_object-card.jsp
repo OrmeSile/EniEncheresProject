@@ -25,9 +25,17 @@
         <li>
           <c:choose>
             <c:when test="${empty sessionScope.user}">
-              <p><span class="article-seller">${param.vnom}</span></p>
+              <p>
+                <span class="article-seller lastname">${param.vprenom}</span>
+                <span class="article-seller firstname">${param.vnom}</span>
+              </p>
             </c:when>
-            <c:otherwise><a href=<c:url value="/profil?userid=${param.userId}"/>> <span class="article-seller">${param.vnom}</span></a></c:otherwise>
+            <c:otherwise>
+              <a href=<c:url value="/profil?userid=${param.userId}"/>>
+                <span class="article-seller lastname">${param.vprenom}</span>
+                <span class="article-seller firstname">${param.vnom}</span>
+              </a>
+            </c:otherwise>
           </c:choose>
         </li>
       </ul>

@@ -85,7 +85,6 @@ public class ServletAjoutArticle extends HttpServlet {
 				ArrayList<Categorie> cats = CategorieManager.getManager().getCategories();
 				Categorie cat = cats.stream().filter(x -> x.getLibelle().equals(categories)).collect(Collectors.toList()).get(0);
 				var sessionUser = (Utilisateur) request.getSession().getAttribute("user");
-				System.out.println(sessionUser);
 				if (Stream.of(rue, codePostal, ville).anyMatch(Objects::isNull) || Stream.of(rue, codePostal, ville).anyMatch(String::isBlank)) {
 					rue = sessionUser.getRue();
 					codePostal = sessionUser.getCodePostal();

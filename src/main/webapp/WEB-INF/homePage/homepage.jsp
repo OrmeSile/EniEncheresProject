@@ -115,6 +115,7 @@
             <jsp:param name="finEnchere" value="${item.dateFinEncheres.toLocalDate()}"/>
             <jsp:param name="userId" value="${item.vendeur.noUtilisateur}"/>
             <jsp:param name="vnom" value="${item.vendeur.nom}"/>
+            <jsp:param name="vprenom" value="${item.vendeur.prenom}"/>
           </jsp:include>
         </c:forEach>
       </div>
