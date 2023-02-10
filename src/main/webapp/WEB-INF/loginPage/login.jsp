@@ -13,9 +13,7 @@
 	</head>
 	<body>
 	<div class="container">
-		<header class="navbar">
-			<jsp:include page="/WEB-INF/fragments/_header.jsp" />
-		</header>
+		<jsp:include page="/WEB-INF/fragments/_fullHeader.jsp"/>
 		<jsp:include page="/WEB-INF/fragments/_error-messages.jsp"/>
 		<div class="container-main">
 			<form method="post" action="<c:url value="/login"/>">

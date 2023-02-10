@@ -6,7 +6,15 @@
     <div class="card-body">
       <ul>
         <li>
-          <a href="<c:url value="/afficherEnchere?id=${param.id}"/>"><span class="article-title">${param.nom}</span></a>
+          <c:choose>
+            <c:when test="${not empty sessionScope.user}">
+              <a href="<c:url value="/afficherEnchere?id=${param.articleId}"/>"><span class="article-title">${param.nom}</span></a>
+            </c:when>
+            <c:otherwise>
+              <p class="article-title">${param.nom}</p>
+            </c:otherwise>
+          </c:choose>
+          <h3>${param.idArticle}</h3>
         </li>
         <li>
           <span class="article-price">${param.prix} €</span>
@@ -19,7 +27,7 @@
             <c:when test="${empty sessionScope.user}">
               <p><span class="article-seller">${param.vnom}</span></p>
             </c:when>
-            <c:otherwise><a href=<c:url value="/profil?userid=${param.id}"/>> <span class="article-seller">${param.vnom}</span></a></c:otherwise>
+            <c:otherwise><a href=<c:url value="/profil?userid=${param.userId}"/>> <span class="article-seller">${param.vnom}</span></a></c:otherwise>
           </c:choose>
         </li>
       </ul>

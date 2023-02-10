@@ -14,10 +14,7 @@
 <title>Mon profil</title>
 </head>
 <body>
-	
-		<header class="navbar">
-			<jsp:include page="/WEB-INF/fragments/_header.jsp" />
-		</header>
+<jsp:include page="/WEB-INF/fragments/_fullHeader.jsp"/>
 		<div class="container">	
 		<jsp:include page="/WEB-INF/fragments/_error-messages.jsp"/>
 		<h1>Mon profil</h1>

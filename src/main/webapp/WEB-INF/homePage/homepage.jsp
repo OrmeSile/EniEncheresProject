@@ -15,30 +15,7 @@
 </head>
 <body>
   <div class="container">
-    <header class="navbar">
-      <div class="brand-container">
-        <jsp:include page="/WEB-INF/fragments/_header.jsp"/>
-      </div>
-      <div class="navbar-clickable-list-container">
-        <ul class="navbar-clickable-list">
-          <c:choose>
-            <c:when test="${empty sessionScope.user}">
-              <a class="navbar-clickable active" href=<c:url value="/login"/>>
-                <li>S'inscrire/Se connecter</li>
-              </a>
-            </c:when>
-            <c:otherwise>
-              <a class="navbar-clickable" href=<c:url value="/profil"/>>
-                <li>Mon Profil</li>
-              </a>
-              <a class="navbar-clickable" href=<c:url value="/logout"/>>
-                <li>Déconnexion</li>
-              </a>
-            </c:otherwise>
-          </c:choose>
-        </ul>
-      </div>
-    </header>
+    <jsp:include page="/WEB-INF/fragments/_fullHeader.jsp"/>
     <jsp:include page="/WEB-INF/fragments/_error-messages.jsp"/>
     <div class="container-main">
       <div class="container-form-filter">
@@ -132,10 +109,11 @@
       <div class="container-article-card">
         <c:forEach items="${requestScope.articles}" var="item">
           <jsp:include page="/WEB-INF/homePage/fragments/_object-card.jsp">
+            <jsp:param name="articleId" value="${item.noArticle}"/>
             <jsp:param name="nom" value="${item.nomArticle}"/>
             <jsp:param name="prix" value="${item.prixVente}"/>
             <jsp:param name="finEnchere" value="${item.dateFinEncheres.toLocalDate()}"/>
-            <jsp:param name="id" value="${item.vendeur.noUtilisateur}"/>
+            <jsp:param name="userId" value="${item.vendeur.noUtilisateur}"/>
             <jsp:param name="vnom" value="${item.vendeur.nom}"/>
           </jsp:include>
         </c:forEach>

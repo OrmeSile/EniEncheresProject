@@ -9,11 +9,7 @@
 </head>
 <body>
 	<div class="container">
-		<header class="navbar">
-			<div >
-				<jsp:include page="/WEB-INF/fragments/_header.jsp" />
-			</div>
-		</header>
+		<jsp:include page="/WEB-INF/fragments/_fullHeader.jsp"/>
 		<div class="body-container">
 			<div class="fields-container">
 				<div><p>Pseudo : </p><h3>${requestScope.user.pseudo}</h3></div>

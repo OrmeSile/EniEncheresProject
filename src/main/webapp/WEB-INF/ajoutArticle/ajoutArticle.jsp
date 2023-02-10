@@ -9,15 +9,12 @@
 <link rel="stylesheet" href="<c:url value="/css/ajoutArticle/ajoutArticle.css"/> ">
 <jsp:include page="/WEB-INF/fragments/_normalize-import.jsp" />
 <meta charset="UTF-8">
-<title>Ajout Article</title>
+<title>${not empty requestScope.article ? requestScope.article.nomArticle : 'Nouvelle vente'}</title>
 </head>
 <body>
-	
-	<header class="row navbar navbar-expand-md bg-body-tertiary">
-		<jsp:include page="/WEB-INF/fragments/_header.jsp" />
-  	</header>
+<jsp:include page="/WEB-INF/fragments/_fullHeader.jsp"/>
   	<div class="container">
-	<h1 align="center">Nouvelle Vente</h1>
+	<h1>${not empty requestScope.article ? 'Modifier '+=(requestScope.article.nomArticle) : 'Nouvelle vente'}</h1>
 	<form method="post" action=<c:url value="/AjoutArticle"/>>
 	<div class="formulaire"> 
 		<div>

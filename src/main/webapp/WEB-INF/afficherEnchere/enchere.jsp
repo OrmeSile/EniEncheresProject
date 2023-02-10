@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="article" scope="request" type="fr.eni.ecole.encheres.bo.ArticleVendu"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="f" uri="https://tools.encheres.ecole.eni.fr/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,11 +13,7 @@
 </head>
 <body>
   <div class="container">
-    <header class="navbar">
-      <div class="brand-container">
-        <jsp:include page="/WEB-INF/fragments/_header.jsp"/>
-      </div>
-    </header>
+  <jsp:include page="/WEB-INF/fragments/_fullHeader.jsp"/>
     <jsp:include page="/WEB-INF/fragments/_error-messages.jsp"/>
     <div class="main-container">
       <div class="title-container">
@@ -49,8 +46,8 @@
             <p id="prix">${article.prixVente} points</p>
           </div>
           <div>
-            <label for="fin">Fin de l'enchère :</label>
-            <p id="fin">${article.dateFinEncheres}</p>
+            <label for="fin">Fin de l'enchère</label>
+            <p id="fin">${f:formatLocalDateTime(article.dateFinEncheres, "dd.MM.yyyy à HH:mm")}</p>
           </div>
           <div>
             <label for="vendeur">Vendeur :</label>
@@ -74,9 +71,9 @@
                   <input type="submit" value="Enchérir">
                 </form>
               </c:when>
-              <c:otherwise>
+              <c:when test="${sessionScope.user.noUtilisateur == article.vendeur.noUtilisateur}">
                 <a href="<c:url value="/"/>"></a><input type="button" value="Modifier">
-              </c:otherwise>
+              </c:when>
             </c:choose>
           </c:if>
         </div>
