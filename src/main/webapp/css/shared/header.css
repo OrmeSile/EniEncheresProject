@@ -43,7 +43,8 @@
 .active{
   font-weight: bold;
 }
-.navbar-clickable>*:hover{
-  
-  
+@media(max-width:960px){
+  .navbar{
+    font-size: 0.8rem;
+  }
 }

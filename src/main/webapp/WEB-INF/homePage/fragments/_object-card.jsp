@@ -4,36 +4,33 @@
   <div class="article-card">
     <img class="card-img" src="<c:url value="/img/article_placeholder.jpg"/>" alt="placeholder">
     <div class="card-body">
-      <ul>
+      <ul class="card-fields">
         <li>
           <c:choose>
             <c:when test="${not empty sessionScope.user}">
               <a href="<c:url value="/afficherEnchere?id=${param.articleId}"/>"><span class="article-title">${param.nom}</span></a>
             </c:when>
             <c:otherwise>
-              <p class="article-title">${param.nom}</p>
+              <h3 class="article-title">${param.nom}</h3>
             </c:otherwise>
           </c:choose>
-          <h3>${param.idArticle}</h3>
         </li>
         <li>
-          <span class="article-price">${param.prix} €</span>
+          <p>Enchère actuelle :</p><p>${param.prix} €</p>
         </li>
         <li>
-          <span class="article-bidding-end-date"> ${param.finEnchere}</span>
+          <p class="article-bidding-end-date">Fin d'enchère le :</p><p>${param.finEnchere}</p>
         </li>
         <li>
           <c:choose>
             <c:when test="${empty sessionScope.user}">
-              <p>
-                <span class="article-seller lastname">${param.vprenom}</span>
-                <span class="article-seller firstname">${param.vnom}</span>
-              </p>
+              <p>Vendeur :</p>
+              <p><span class="article-seller lastname">${param.vprenom}</span> <span class="article-seller firstname">${param.vnom}</span></p>
             </c:when>
             <c:otherwise>
+              <p>Vendeur :</p>
               <a href=<c:url value="/profil?userid=${param.userId}"/>>
-                <span class="article-seller lastname">${param.vprenom}</span>
-                <span class="article-seller firstname">${param.vnom}</span>
+                <p><span class="article-seller lastname">${param.vprenom}</span> <span class="article-seller firstname">${param.vnom}</span></p>
               </a>
             </c:otherwise>
           </c:choose>

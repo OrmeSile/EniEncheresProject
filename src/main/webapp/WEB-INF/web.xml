@@ -8,4 +8,6 @@
     <servlet-name>ServletHome</servlet-name>
     <url-pattern></url-pattern>
   </servlet-mapping>
+  <response-character-encoding>UTF-8</response-character-encoding>
+  <request-character-encoding>UTF-8</request-character-encoding>
 </web-app>

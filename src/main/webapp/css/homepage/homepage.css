@@ -74,7 +74,7 @@ body{
   flex-direction: row;
   justify-content: space-around;
 }
-@media(max-width: 600px){
+@media(max-width: 960px){
   .container-form-filter>form{
     flex-direction: column;
     text-align: center;

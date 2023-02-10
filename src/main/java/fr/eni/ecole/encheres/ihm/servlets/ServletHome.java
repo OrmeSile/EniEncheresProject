@@ -72,7 +72,6 @@ public class ServletHome extends HttpServlet {
 				var isCategory = !Objects.isNull(categorie);
 				var isSell = radioValueParam.equals("sell");
 				var isOpen = (!Objects.isNull(buyOpenParam) && Objects.isNull(sellOpenParam)) || (Objects.isNull(buyOpenParam) && !Objects.isNull(sellOpenParam));
-				System.out.println(isOpen);
 				var isBuySelf = !Objects.isNull(buySelfParam);
 				var isBuyWon = !Objects.isNull(buyWonParam);
 				var isSellPre = !Objects.isNull(sellPreParam);

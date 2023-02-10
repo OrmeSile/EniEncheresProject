@@ -13,7 +13,6 @@ public class TestServletErrorDisplay extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		var errors = new ArrayList<>(List.of("error 1", "error 2", "error 3"));
 		for(String e : errors){
-			System.out.println(e);
 		}
         request.setAttribute("errors", errors);
         request.getRequestDispatcher("/WEB-INF/tests/error-dummy-container.jsp").forward(request, response);
